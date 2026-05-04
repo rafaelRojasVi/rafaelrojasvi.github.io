@@ -3,20 +3,20 @@ import BaseLayout from "@/layouts/BaseLayout.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
 import { projects } from "@/data/projects";
+import { profile } from "@/data/profile";
 
 const title = "Projects";
-const description =
-  "Case studies and systems: automation, APIs, data pipelines, and backend platforms by Rafael Rojas.";
+const description = profile.seo.projects;
 ---
 
 <BaseLayout title={title} description={description}>
-  <div class="mx-auto max-w-6xl px-4 pb-20 pt-12 sm:px-6 sm:pt-16">
+  <div class="mx-auto max-w-6xl px-4 pb-24 pt-12 sm:px-6 sm:pt-16">
     <SectionHeading
-      eyebrow="Archive"
-      title="Project grid"
-      description="Each card is a dossier: stack, focus, status, and a longer write-up when you want the architecture story."
+      eyebrow="Projects"
+      title="Work samples & write-ups"
+      description="Skim the cards for stack and status; open a case study for architecture, data flow, integrations, and what I’d test or harden next. OrigenLab details are sanitized—no client data."
     />
-    <div class="mt-12 grid gap-6 md:grid-cols-2">
+    <div class="mt-12 grid gap-7 md:grid-cols-2 md:gap-8">
       {projects.map((p) => <ProjectCard project={p} />)}
     </div>
   </div>

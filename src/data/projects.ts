@@ -23,7 +23,7 @@ export const projects: Project[] = [
     slug: "origenlab",
     title: "OrigenLab",
     subtitle:
-      "Business automation and email intelligence monorepo for a laboratory-equipment company",
+      "Employed build: email intelligence, SQLite reporting, and safe outbound for a Chilean lab-equipment company",
     stack: [
       "Python",
       "SQLite",
@@ -35,72 +35,71 @@ export const projects: Project[] = [
       "LLM-assisted drafting",
     ],
     shortDescription:
-      "A real business monorepo combining a static marketing site with a local-first backend and data pipeline for email intelligence, lead review, reporting, and guarded outbound workflows.",
+      "Monorepo I contribute to in production: Astro marketing site plus a Python/SQLite layer for email ingestion, lead review, operational exports, and outreach tooling with explicit gates—not bulk automation.",
     engineeringFocus: [
-      "Email ingestion & SQLite archive",
-      "Operational reporting & exports",
-      "Lead tracking & outreach gates",
-      "Monorepo documentation",
+      "Real business monorepo: Astro/Tailwind marketing site + Python/SQLite pipeline",
+      "Email & lead ingestion; Streamlit dashboards; export scripts & operational reports",
+      "Safe outbound: Sent-history, suppression, duplicate prevention, human-reviewed LLM drafting",
+      "pytest on parsers/exporters; documentation; no private data in this write-up",
     ],
-    status: "Production / active",
+    status: "Production (employed)",
     privacyNote:
-      "This case study uses abstract diagrams and sanitized descriptions only—no private business data.",
+      "Abstract diagrams and generic descriptions only—no customer or message content.",
     caseStudyIntro:
-      "OrigenLab is a Chilean laboratory-equipment business. The repository mirrors how the work actually runs: a public-facing site, a Python data layer, and internal tools that keep humans in the loop.",
+      "OrigenLab sells laboratory equipment in Chile. My work sits in the internal stack: turning inbox-level chaos into structured SQLite, reports operators trust, and outbound flows that default to safe behavior.",
     sections: [
       {
         id: "problem",
         title: "Problem",
         body: [
-          "Operational email and lead flow lived in inboxes and ad hoc spreadsheets. Reporting was slow, outreach risked duplicates and tone-deaf follow-ups, and there was no single place to review what had already been sent.",
-          "The goal was not a flashy demo—it was a maintainable system that matched how the business operates day to day.",
+          "Leads and threads lived across mailboxes and ad hoc sheets. Reporting meant manual copy-paste; outreach risked duplicates and emails that ignored prior sends.",
+          "The business needed software that matched real process: review before send, traceable exports, and a schema that could answer operational questions without exposing raw mail to everyone.",
         ],
       },
       {
         id: "built",
         title: "What I built",
         bullets: [
-          "Marketing website with Astro + Tailwind.",
-          "Python/SQLite pipeline to ingest and structure email archives.",
-          "Exports and operational reports aligned to business questions.",
-          "Lead/contact tracking with views that support review before action.",
-          "Internal Streamlit dashboards for operators.",
-          "Heavy documentation and a deliberate monorepo layout.",
+          "Python services/scripts to ingest and normalize email archives into SQLite.",
+          "Reporting and export jobs driven off relational views—not one-off spreadsheets.",
+          "Streamlit dashboards for operators; Astro + Tailwind marketing site in the same monorepo.",
+          "Safe outbound: Sent-history checks, suppression, duplicate prevention, and human-reviewed LLM draft assistance (no auto-send).",
+          "pytest around parsing, joins, and export logic; READMEs for how to run and extend.",
         ],
       },
       {
         id: "architecture",
         title: "Architecture",
         body: [
-          "At a high level: static site for presence, Python services and scripts for data movement, SQLite as a local-first store, and Streamlit as the human-facing control surface.",
-          "The architecture prioritizes traceability—every export should be explainable from the underlying tables and scripts.",
+          "Split by responsibility: static marketing (Astro), data plane (Python + SQLite), human UI (Streamlit). The SQLite database is the system of record for structured operational views.",
+          "Traceability is the design goal: a report row should map back to ingestion time, source batch, and the script version that produced it.",
         ],
       },
       {
         id: "pipeline",
         title: "Backend / data pipeline",
         body: [
-          "Email data is ingested, normalized, and stored so it can be queried like any other operational dataset. That unlocks reporting that is repeatable instead of hand-compiled.",
+          "Ingestion is incremental where possible; normalization steps are tested because email is never clean. Business views separate facts (what was received/sent) from proposed next actions.",
         ],
         bullets: [
-          "Ingestion paths designed for incremental updates.",
-          "Business views that separate “what happened” from “what we think we should do next.”",
-          "pytest coverage around fragile parsing and export logic.",
+          "Idempotent-ish ingestion patterns for re-runs and partial failures.",
+          "Exports as code: same query, same columns—reduces “works on my laptop” reporting.",
+          "pytest fixtures for messy samples; failures surface at commit time, not in production.",
         ],
       },
       {
         id: "safety",
         title: "Safety and outbound gates",
         body: [
-          "Outreach tooling is guarded: Sent-history checks, suppression rules, duplicate prevention, and LLM-assisted drafting that still expects human review before anything leaves the building.",
+          "Automation stops at the risky edge: humans confirm sends. Software enforces what can be queued—history, suppression, duplicates—and makes the safe path obvious in the UI.",
         ],
       },
       {
         id: "learned",
         title: "What I learned",
         body: [
-          "The most valuable automation is often the boring kind: idempotency, audit trails, and UI that makes the safest path the easiest path.",
-          "When data is sensitive, documentation and structure matter as much as code—future you is also a stakeholder.",
+          "The highest leverage features are often auditability and guardrails, not more model calls.",
+          "When data is sensitive, folder layout and runbooks are part of the product, not an afterthought.",
         ],
       },
     ],
@@ -109,7 +108,7 @@ export const projects: Project[] = [
     slug: "tattoo-booking-bot",
     title: "Tattoo Booking Bot",
     subtitle:
-      "WhatsApp automation platform for tattoo consultation, payment, and booking",
+      "Freelance platform: FastAPI, PostgreSQL, Stripe, and Meta WhatsApp with production-style webhook discipline",
     stack: [
       "FastAPI",
       "PostgreSQL",
@@ -124,66 +123,65 @@ export const projects: Project[] = [
       "GitHub Actions",
     ],
     shortDescription:
-      "A production-oriented WhatsApp system for consultation, qualification, deposits via Stripe, and calendar-aware booking—not only a chatbot, but a small automation platform with operational safeguards.",
+      "End-to-end booking stack: WhatsApp webhooks into FastAPI, durable conversation/payment state in PostgreSQL, Stripe deposits with webhook reconciliation, and Google Calendar/Sheets integrations—with pytest on critical paths and Docker + GHA for delivery.",
     engineeringFocus: [
-      "Webhook processing & idempotency",
-      "Payments & calendar integrations",
-      "Stateful multi-step flows",
-      "Admin tooling & hardening",
+      "Idempotent WhatsApp webhooks & duplicate-safe Stripe reconciliation",
+      "PostgreSQL, SQLAlchemy, Alembic migrations; durable session + payment state",
+      "13-question consultation flow with validation; admin / artist approval before commit",
+      "Docker, pytest, GitHub Actions; production safeguards on critical paths",
     ],
-    status: "Production / freelance",
+    status: "Production (freelance)",
     caseStudyIntro:
-      "This project sits at the intersection of conversational UX and backend engineering: a 13-question consultation flow, real money movement, and integrations that must fail safely.",
+      "This is not a toy chatbot—it is a small integration-heavy backend. Money, third-party APIs, and asynchronous events land in the same service; the engineering work is state, retries, and tests.",
     sections: [
       {
         id: "problem",
         title: "Problem",
         body: [
-          "Booking and consultation traffic arrived as unstructured WhatsApp messages. Artists needed qualification, deposits, and scheduling without losing track of state or double-charging clients.",
+          "Consultations arrived as unstructured WhatsApp traffic. The studio needed qualification, deposits, and scheduling without double charges, lost threads, or ambiguous handoff to artists.",
         ],
       },
       {
         id: "flow",
         title: "User flow",
         bullets: [
-          "13-question consultation with validation at each step.",
-          "Budget checks and location parsing to route requests sensibly.",
-          "Stripe Checkout for deposits with webhook confirmation.",
-          "Google Calendar slot suggestions aligned to artist availability.",
-          "Secure artist approval before commitments solidify.",
+          "13-question consultation flow with per-step validation (budget, location parsing, intent).",
+          "Stripe Checkout for deposits; webhooks confirm payment before state advances.",
+          "Google Calendar slot suggestions; Google Sheets for lead logging.",
+          "Admin and artist approval workflow before hard commitments.",
         ],
       },
       {
         id: "architecture",
         title: "Architecture",
         body: [
-          "FastAPI receives WhatsApp webhooks, persists conversation and payment state in PostgreSQL, and coordinates outbound API calls to Stripe, Sheets, and Calendar.",
-          "Migrations via Alembic keep schema changes reviewable; Docker and CI support repeatable deploys.",
+          "FastAPI fronts Meta webhooks; PostgreSQL holds authoritative state. Outbound calls to Stripe, Google APIs, and WhatsApp are sequenced with explicit failure handling—no “best effort” on money movement.",
+          "Alembic tracks schema evolution; Docker packages the runtime; GitHub Actions runs automated checks.",
         ],
       },
       {
         id: "reliability",
         title: "Reliability and safety",
         bullets: [
-          "Idempotent webhook handling and duplicate prevention.",
-          "Operational safeguards for edge cases (retries, partial failures, out-of-order events).",
-          "Admin tools to inspect and correct state when humans need to intervene.",
-          "pytest coverage on critical paths.",
+          "Webhook idempotency keys / dedupe strategies to survive retries and out-of-order delivery.",
+          "Explicit handling for partial failures (API down, webhook late, user abandons mid-flow).",
+          "Admin paths to inspect and correct state when automation is wrong.",
+          "pytest coverage on parsers, state transitions, and payment edge cases.",
         ],
       },
       {
         id: "integrations",
         title: "Integrations",
         body: [
-          "Stripe Checkout and webhooks for deposits. Google Sheets for lead logging. Google Calendar for proposed slots. Each integration is a contract: timeouts, retries, and clear failure modes.",
+          "Each vendor is a contract: timeouts, structured errors, and logging that identifies which side failed. Stripe webhooks are reconciled against Checkout session state; Google APIs are treated as flaky dependencies.",
         ],
       },
       {
         id: "learned",
         title: "What I learned",
         body: [
-          "Conversation state is just another domain model—name it, version it, and test transitions the way you would any state machine.",
-          "When money moves, logs and idempotency keys are not optional polish; they are the product.",
+          "Conversational products are state machines—model the transitions, test illegal transitions, log decisions.",
+          "If Stripe is involved, idempotency and reconciliation are core features, not polish.",
         ],
       },
     ],
@@ -191,7 +189,8 @@ export const projects: Project[] = [
   {
     slug: "ledger-bank-api",
     title: "LedgerBank API",
-    subtitle: "Banking-style backend with jobs, auth, and clean boundaries",
+    subtitle:
+      "University-grade Phoenix API: JWT auth, PostgreSQL ledger, Oban jobs, Docker/CI",
     stack: [
       "Elixir",
       "Phoenix",
@@ -202,54 +201,54 @@ export const projects: Project[] = [
       "CI/CD",
     ],
     shortDescription:
-      "An enterprise-flavored financial API emphasizing authentication, background processing, transaction modelling, and resilient backend patterns.",
+      "Banking-style Elixir/Phoenix API: JWT authentication, transactional ledger modelling in PostgreSQL, Oban background jobs, and clean architecture—focused on invariants and backend reliability, not UI polish.",
     engineeringFocus: [
-      "Phoenix API design",
-      "JWT auth & permissions",
-      "Oban background jobs",
-      "Transactional integrity",
+      "JWT-secured routes with role-aware permissions",
+      "Transactional account/transfer modelling",
+      "Oban for async, retried jobs",
+      "Docker + CI for reproducible builds",
     ],
     status: "Academic / portfolio",
     caseStudyIntro:
-      "LedgerBank API was an exercise in building a backend that feels like infrastructure: explicit boundaries, durable jobs, and data rules that survive concurrency.",
+      "A structured answer to “what breaks when money and concurrency meet?” Phoenix handles HTTP; PostgreSQL enforces data rules; Oban carries work that must survive restarts.",
     sections: [
       {
         id: "problem",
         title: "Problem",
         body: [
-          "Financial-ish domains punish vague models. The challenge was to represent accounts and movements clearly, authenticate callers, and run asynchronous work without losing guarantees.",
+          "Ledger-like systems fail when balances are implicit or updates race. The brief was to model accounts and movements clearly, authenticate callers, and run async jobs without losing work.",
         ],
       },
       {
         id: "architecture",
         title: "Architecture",
         body: [
-          "Phoenix exposes HTTP boundaries; PostgreSQL holds the ledger; Oban runs retries and scheduled work with observability hooks.",
-          "JWT authentication and role-aware permissions keep endpoints explicit about who can move money—or read it.",
+          "Phoenix contexts keep domain boundaries explicit (clean architecture style). PostgreSQL transactions guard balance changes. Oban workers process retries and scheduled tasks with supervision-friendly failure modes.",
+          "JWT authentication encodes roles; endpoints declare which operations are allowed per principal.",
         ],
       },
       {
         id: "why-elixir",
         title: "Why Elixir",
         body: [
-          "BEAM processes and supervision trees reward systems that need reliability and graceful failure. For background jobs and concurrent requests, Elixir’s defaults push you toward patterns that scale in complexity without becoming spaghetti.",
+          "BEAM gives cheap concurrency and supervision—useful when HTTP requests and background settlement overlap. The goal was readable, testable domain code rather than clever macros.",
         ],
       },
       {
         id: "reliability",
         title: "Reliability patterns",
         bullets: [
-          "Transactional boundaries around balance changes.",
-          "Oban for durable, retryable work.",
-          "Dockerized environments and CI for repeatable builds.",
+          "Database transactions as the source of truth for balance invariants.",
+          "Oban for durable jobs; failures retry with backoff instead of silent drops.",
+          "Dockerized app + CI pipeline so “works locally” matches what the pipeline builds.",
         ],
       },
       {
         id: "learned",
         title: "What I learned",
         body: [
-          "Money-like domains teach you to love explicit invariants and boring tests.",
-          "Good Elixir reads like a set of small, supervised services—even inside one repo.",
+          "Money domains reward boring tests: double-spend attempts, concurrent transfers, partial job failure.",
+          "Elixir shines when you lean on OTP patterns instead of hiding side effects in controllers.",
         ],
       },
     ],
@@ -257,7 +256,8 @@ export const projects: Project[] = [
   {
     slug: "misinformation-classifier",
     title: "Political Misinformation Classifier",
-    subtitle: "BERT-based detection with serious evaluation and humility",
+    subtitle:
+      "Applied ML: BERT fine-tuning, evaluation discipline, honest limitations",
     stack: [
       "Python",
       "BERT",
@@ -267,52 +267,52 @@ export const projects: Project[] = [
       "Data pipelines",
     ],
     shortDescription:
-      "An applied NLP project classifying political misinformation with transformer models, careful preprocessing, and evaluation pipelines—framed with clear limitations.",
+      "Python NLP project: BERT-based political misinformation / fake-news classification with data preprocessing, train/validation discipline, model evaluation, and explicit limitations for responsible use.",
     engineeringFocus: [
-      "Transformer fine-tuning",
-      "Train/val discipline",
-      "Metrics beyond accuracy",
-      "Responsible framing",
+      "Tokenizer-aligned preprocessing",
+      "Train/val rigor and confusion analysis",
+      "Reproducible scripts & data hygiene",
+      "Responsible framing (limitations first)",
     ],
     status: "Academic",
     caseStudyIntro:
-      "This work sits in the uncomfortable overlap of language, politics, and statistical models. The engineering goal was rigorous evaluation; the ethical goal was to avoid overclaiming.",
+      "ML work with an engineering mindset: the artifact is not only weights—it is the preprocessing contract, evaluation notebook, and clear statement of where the model will lie.",
     sections: [
       {
         id: "problem",
         title: "Problem",
         body: [
-          "Political misinformation spreads quickly and resists simple keyword rules. The project asked whether a BERT-style classifier could provide signal while remaining honest about failure modes.",
+          "Keyword filters miss nuanced propaganda. The project tested whether a fine-tuned transformer could add signal while staying humble about politics, language shift, and dataset bias.",
         ],
       },
       {
         id: "pipeline",
         title: "Model pipeline",
         bullets: [
-          "Text preprocessing aligned to the tokenizer and task.",
-          "Fine-tuned BERT classifier for the chosen label scheme.",
-          "Reproducible training scripts and data splits.",
+          "Text preprocessing aligned to tokenizer and task (no silent truncation surprises).",
+          "Fine-tuned BERT classifier for political misinformation labels.",
+          "Versioned training scripts and frozen splits for reproducible comparison.",
         ],
       },
       {
         id: "evaluation",
         title: "Evaluation",
         body: [
-          "Beyond headline accuracy: confusion patterns, robustness notes, and qualitative spot checks. Models like this fail in public if you only report one number.",
+          "Reported precision/recall tradeoffs, confusion patterns, and qualitative failures—not a single leaderboard number. The goal is to know when the model should refuse to classify.",
         ],
       },
       {
         id: "limitations",
         title: "Limitations",
         body: [
-          "Classifiers inherit dataset bias and temporal drift. They are aids for exploration—not arbiters of truth—and should be deployed only with governance, monitoring, and human oversight appropriate to the context.",
+          "Temporal and demographic drift break political classifiers silently. These models belong behind human review, monitoring, and governance—not as autonomous truth engines.",
         ],
       },
       {
         id: "learned",
         title: "What I learned",
         body: [
-          "Evaluation is where ML becomes engineering. The model is the easy part; the contract with reality is hard.",
+          "Most of the “backend” in ML is evaluation and data contracts; the forward pass is the short part.",
         ],
       },
     ],

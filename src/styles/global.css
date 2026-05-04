@@ -5,10 +5,11 @@
 @layer base {
   html {
     @apply scroll-smooth antialiased;
+    overflow-x: clip;
   }
 
   body {
-    @apply min-h-screen bg-surface font-sans text-ink;
+    @apply min-h-screen max-w-[100vw] bg-surface font-sans text-ink;
     background-image:
       radial-gradient(
         ellipse 120% 80% at 50% -40%,

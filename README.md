@@ -41,4 +41,4 @@ For a user/organization Pages site (`username.github.io`), the site is served fr
 - `src/data/` — `profile.ts` and `projects.ts` (editable content)
 - `src/styles/global.css` — global styles and Tailwind layers
 
-Update contact links and social URLs in `src/data/profile.ts`.
+Contact email, GitHub, and LinkedIn live in `src/data/profile.ts` (`profile.contact`).

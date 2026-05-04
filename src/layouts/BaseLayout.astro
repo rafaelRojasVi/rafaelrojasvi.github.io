@@ -2,6 +2,7 @@
 import "@/styles/global.css";
 import Navbar from "@/components/Navbar.astro";
 import Footer from "@/components/Footer.astro";
+import { profile } from "@/data/profile";
 
 interface Props {
   title: string;
@@ -11,7 +12,7 @@ interface Props {
 
 const {
   title,
-  description = "Portfolio of Rafael Rojas — junior backend engineer focused on Python, APIs, automation, and data tools.",
+  description = profile.metaDescription,
   ogImage,
 } = Astro.props;
 

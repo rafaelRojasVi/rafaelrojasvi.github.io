@@ -4,16 +4,36 @@ export const profile = {
   location: "Valdivia, Chile",
   role: "Junior Backend Software Engineer",
   tagline: "Python · APIs · Automation · Data Tools",
+  /** Home + default OG when a page omits its own description */
+  metaDescription:
+    "Rafael Rojas — Junior Backend Software Engineer, Valdivia, Chile. First Class Honours CS (Westminster). Python, APIs, automation, PostgreSQL/SQLite, webhooks, integrations.",
+  seo: {
+    home: "Rafael Rojas — Junior Backend Software Engineer (they/them), Valdivia, Chile. First Class Honours CS. Python, APIs, automation, data tools, databases, integrations.",
+    about:
+      "About Rafael Rojas: backend engineer in Valdivia, Chile; First Class Honours; Python, APIs, automation, databases, and contact.",
+    experience:
+      "Experience & education: Rafael Rojas — OrigenLab data & automation, freelance FastAPI/WhatsApp/Stripe platform, Westminster First Class Honours, Brighton foundation year.",
+    projects:
+      "Projects: OrigenLab monorepo, Tattoo Booking Bot (FastAPI, PostgreSQL, Stripe, WhatsApp), LedgerBank API (Phoenix), Political Misinformation Classifier (BERT).",
+  },
   headline:
-    "I build practical backend systems that turn messy real-world workflows into structured, reliable software.",
-  bio: `Computer Science graduate with First Class Honours, focused on backend development, automation, APIs, and data-driven tools. I enjoy turning messy real-world problems into structured, reliable systems, with a careful approach to databases, integrations, and backend logic. Friendly, adaptable, and detail oriented, I bring strong communication skills alongside hands-on experience building Python applications, API integrations, and automation workflows.`,
-  aboutExtended: `Rafael is a Computer Science graduate with First Class Honours from the University of Westminster. They focus on backend engineering, automation, APIs, data tools, and systems that stay understandable as they grow.
+    "I enjoy turning messy real-world problems into structured, reliable systems—with solid databases, integrations, and backend logic behind them.",
+  /** Scannable lines for recruiters (homepage). */
+  atAGlance: [
+    "Computer Science graduate with First Class Honours (University of Westminster, 2025).",
+    "Focused on backend development, automation, APIs, and data-driven tools.",
+    "Strong with relational databases, integrations, Python applications, API integrations, and automation workflows.",
+    "Currently: Software Engineer (Data & Automation) at OrigenLab; freelance backend and integration work (London / remote).",
+  ],
+  /** Short paragraph for reuse (e.g. structured data later). */
+  bio: `Computer Science graduate with First Class Honours, focused on backend development, automation, APIs, and data-driven tools. Hands-on with Python applications, PostgreSQL and SQLite, webhooks, Stripe and WhatsApp integrations, pytest, and Docker. Enjoys turning messy real-world problems into structured, reliable systems.`,
+  aboutExtended: `I’m Rafael (they/them), based in Valdivia, Chile, open to remote or hybrid backend roles.
 
-They like software with clear flows, careful boundaries, and enough structure to survive real-world messiness—not just code that works once, but systems you can reason about later.
+I’m a Computer Science graduate with First Class Honours, focused on backend development, automation, APIs, and data-driven tools. I like work where the hard parts are clear: relational models, webhook and REST integrations, validation, migrations, idempotency, and tests that protect the fragile paths.
 
-Based in Valdivia, Chile, they are open to remote and hybrid opportunities. Technically, they gravitate toward Elixir, developer tooling, automation, platform work, and backend architecture.
+Recent work includes a Python and SQLite pipeline for email and lead intelligence (OrigenLab), and a FastAPI + PostgreSQL service behind WhatsApp with Stripe, Google Sheets, and Calendar—plus university projects in Phoenix/Oban and applied NLP. I care about operational reliability and documentation another engineer can run.
 
-Away from the keyboard, they care about fine arts, weird fiction, music, neuroscience, and writing—interests that show up as patience for ambiguity, taste for pattern, and respect for narrative.`,
+Outside engineering I read, write, and pay attention to art and music—that mostly shows up as patience for ambiguity and a bias toward clear explanations in code and runbooks.`,
   skills: {
     languages: ["Python", "Elixir", "Scala", "Java"],
     backend: ["FastAPI", "Django", "Phoenix", "REST APIs"],
@@ -25,9 +45,9 @@ Away from the keyboard, they care about fine arts, weird fiction, music, neurosc
       "Oban",
       "Google Workspace APIs",
       "WhatsApp API",
+      "Webhooks",
     ],
     concepts: [
-      "Webhooks",
       "API integrations",
       "Authentication flows",
       "Backend validation",
@@ -35,6 +55,10 @@ Away from the keyboard, they care about fine arts, weird fiction, music, neurosc
       "Automation",
       "NLP",
       "Model evaluation",
+      "Testing",
+      "Migrations",
+      "Idempotency",
+      "Operational reliability",
     ],
   },
   humanLanguages: [
@@ -50,33 +74,34 @@ Away from the keyboard, they care about fine arts, weird fiction, music, neurosc
   ],
   contact: {
     email: "rafarojasv6@gmail.com",
-    linkedIn: "https://www.linkedin.com/in/PLACEHOLDER",
-    github: "https://github.com/PLACEHOLDER",
+    linkedIn: "https://www.linkedin.com/in/rafael-rojas-001906263",
+    github: "https://github.com/rafaelRojasVi",
   },
   pillars: [
     {
-      title: "Backend systems",
-      body: "Services, data models, and boundaries that stay coherent when requirements shift.",
+      title: "Services & data models",
+      body: "HTTP APIs and schemas with explicit validation—so invalid state fails in one place, not across three integrations.",
     },
     {
-      title: "Automation workflows",
-      body: "Pipelines that reduce manual work without hiding the important decision points.",
+      title: "Automation with guardrails",
+      body: "Pipelines and outbound workflows with suppression, history checks, and human review where risk is high.",
     },
     {
-      title: "API integrations",
-      body: "Webhooks, auth flows, and third-party systems wired together with idempotency in mind.",
+      title: "Integration-heavy backends",
+      body: "Stripe, Meta, Google: webhooks, retries, timeouts, and tests around the paths that move money or messages.",
     },
     {
-      title: "Data-driven internal tools",
-      body: "Reports, dashboards, and exports that help operators see what actually happened.",
+      title: "Operator-facing tools",
+      body: "Exports, dashboards, and runbooks so the team can answer “what happened?” without opening raw logs.",
     },
   ],
-  personalNote: `I'm interested in systems that are not only functional, but understandable: software with clear flows, careful boundaries, and enough structure to survive real-world messiness.`,
+  personalNote: `I optimize for backends another engineer can extend: explicit data rules, migrations you can trust, and tests on parsers, webhooks, and payment edges—where production usually breaks.`,
 } as const;
 
 export type ExperienceItem = {
   title: string;
-  org: string;
+  /** Company or engagement label; omit when the title already names the org. */
+  org?: string;
   dates: string;
   location: string;
   bullets: string[];
@@ -85,13 +110,12 @@ export type ExperienceItem = {
 
 export const experience: ExperienceItem[] = [
   {
-    title: "Software Engineer — Data & Automation",
-    org: "OrigenLab",
+    title: "Software Engineer at OrigenLab — Data & Automation",
     dates: "January 2026 — Present",
     location: "Chile / Remote",
     featured: true,
     bullets: [
-      "Built a Python/SQLite backend pipeline to ingest emails, generate business reports, track leads, and support safe outbound workflows.",
+      "Built a Python/SQLite backend pipeline for OrigenLab to ingest emails, generate business reports, track leads, and support safe outbound workflows.",
       "Implemented guarded outreach tooling with Sent-history checks, suppression logic, duplicate prevention, and human-reviewed LLM draft assistance.",
       "Developed internal Streamlit dashboards, export scripts, operational reports, and monorepo documentation across a Python backend and Astro marketing site.",
     ],
@@ -160,6 +184,6 @@ export const education: EducationItem[] = [
     school: "University of Brighton International College",
     dates: "September 2021 — August 2022",
     detail:
-      "Pass with Distinction. Student Representative; supported international students.",
+      "Pass with Distinction. Student Representative — supported international students.",
   },
 ];
