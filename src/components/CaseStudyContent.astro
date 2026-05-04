@@ -2,8 +2,6 @@
 import { getProjectBySlug } from "@/data/projects";
 import SectionHeading from "@/components/SectionHeading.astro";
 import TechPill from "@/components/TechPill.astro";
-import SystemDiagram from "@/components/SystemDiagram.astro";
-
 interface Props {
   slug: string;
   /** When set, render `<slot name="after-section" />` immediately after this section's id. */
@@ -27,7 +25,7 @@ if (!project) {
     <span class="text-ink">{project.title}</span>
   </nav>
 
-  <header class="mt-10 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start lg:gap-12">
+  <header class="mt-10">
     <div>
       <p class="font-mono text-xs uppercase tracking-[0.28em] text-accent/90">
         Case study
@@ -59,7 +57,6 @@ if (!project) {
         ))}
       </div>
     </div>
-    <SystemDiagram variant="hero" class="lg:mt-8" />
   </header>
 
   <div class="mt-16 space-y-10 sm:space-y-12">
