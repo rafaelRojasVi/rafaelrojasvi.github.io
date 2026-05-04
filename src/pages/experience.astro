@@ -1,0 +1,166 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SectionHeading from "@/components/SectionHeading.astro";
+import TimelineItem from "@/components/TimelineItem.astro";
+import TechPill from "@/components/TechPill.astro";
+import {
+  profile,
+  experience,
+  otherRoles,
+  education,
+} from "@/data/profile";
+
+const title = "Experience";
+const description =
+  "Engineering roles, education, and earlier customer-facing work — timeline for Rafael Rojas.";
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="mx-auto max-w-6xl px-4 pb-20 pt-12 sm:px-6 sm:pt-16">
+    <SectionHeading
+      eyebrow="Timeline"
+      title="Experience & education"
+      description="A through-line of backend work, client projects, and the softer skills that come from real-world service roles."
+    />
+
+    <section class="mt-14" aria-labelledby="work-heading">
+      <h2 id="work-heading" class="sr-only">Work experience</h2>
+      <ul class="space-y-6">
+        {
+          experience.map((item) => (
+            <TimelineItem
+              title={item.title}
+              org={item.org}
+              dates={item.dates}
+              location={item.location}
+              bullets={[...item.bullets]}
+              featured={item.featured}
+            />
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="mt-16" aria-labelledby="education-heading">
+      <SectionHeading
+        id="education-heading"
+        eyebrow="Education"
+        title="Formal training"
+      />
+      <ul class="mt-8 space-y-6">
+        {
+          education.map((ed) => (
+            <li class="rounded-xl border border-line bg-surface-overlay/35 p-6 sm:p-7">
+              <div class="flex flex-wrap items-baseline justify-between gap-2">
+                <div>
+                  <h3 class="text-lg font-semibold text-ink">{ed.degree}</h3>
+                  <p class="text-sm text-accent/90">{ed.school}</p>
+                </div>
+                <p class="font-mono text-[11px] uppercase tracking-wider text-ink-faint">
+                  {ed.dates}
+                </p>
+              </div>
+              {ed.focus && (
+                <div class="mt-4">
+                  <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-faint">
+                    Focus
+                  </p>
+                  <div class="mt-2 flex flex-wrap gap-1.5">
+                    {ed.focus.map((f) => (
+                      <TechPill label={f} />
+                    ))}
+                  </div>
+                </div>
+              )}
+              {ed.grades && (
+                <ul class="mt-4 grid gap-2 sm:grid-cols-2">
+                  {ed.grades.map((g) => (
+                    <li class="flex items-center justify-between gap-3 rounded-lg border border-line/60 bg-surface/50 px-3 py-2 font-mono text-xs text-ink-muted">
+                      <span>{g.course}</span>
+                      <span class="text-accent/90">{g.score}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {ed.detail && (
+                <p class="mt-4 text-sm leading-relaxed text-ink-muted">
+                  {ed.detail}
+                </p>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="mt-16" aria-labelledby="other-heading">
+      <SectionHeading
+        id="other-heading"
+        eyebrow="Earlier roles"
+        title="Customer-facing & adaptive work"
+        description="Short stints that sharpened communication, reliability, and reading the room — useful skills when software meets real people."
+      />
+      <ul class="mt-8 space-y-4">
+        {
+          otherRoles.map((role) => (
+            <TimelineItem
+              title={role.title}
+              org={role.org}
+              dates={role.dates}
+              location="London, UK"
+              compact
+            />
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="mt-16 rounded-2xl border border-line/80 bg-surface-overlay/25 p-6 sm:p-8">
+      <p class="font-mono text-xs uppercase tracking-[0.22em] text-accent/90">
+        Skills snapshot
+      </p>
+      <div class="mt-6 grid gap-8 lg:grid-cols-2">
+        <div>
+          <h3 class="text-sm font-semibold text-ink">Languages</h3>
+          <div class="mt-3 flex flex-wrap gap-1.5">
+            {profile.skills.languages.map((s) => (
+              <TechPill label={s} />
+            ))}
+          </div>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-ink">Backend</h3>
+          <div class="mt-3 flex flex-wrap gap-1.5">
+            {profile.skills.backend.map((s) => (
+              <TechPill label={s} />
+            ))}
+          </div>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-ink">Databases</h3>
+          <div class="mt-3 flex flex-wrap gap-1.5">
+            {profile.skills.databases.map((s) => (
+              <TechPill label={s} />
+            ))}
+          </div>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-ink">Tools</h3>
+          <div class="mt-3 flex flex-wrap gap-1.5">
+            {profile.skills.tools.map((s) => (
+              <TechPill label={s} />
+            ))}
+          </div>
+        </div>
+        <div class="lg:col-span-2">
+          <h3 class="text-sm font-semibold text-ink">Concepts</h3>
+          <div class="mt-3 flex flex-wrap gap-1.5">
+            {profile.skills.concepts.map((s) => (
+              <TechPill label={s} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

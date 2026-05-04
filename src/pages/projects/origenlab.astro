@@ -1,0 +1,14 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import CaseStudyContent from "@/components/CaseStudyContent.astro";
+import { getProjectBySlug } from "@/data/projects";
+
+const project = getProjectBySlug("origenlab")!;
+---
+
+<BaseLayout
+  title={`${project.title} — Case study`}
+  description={project.shortDescription}
+>
+  <CaseStudyContent slug="origenlab" />
+</BaseLayout>

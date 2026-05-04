@@ -1,0 +1,112 @@
+---
+import { getProjectBySlug } from "@/data/projects";
+import SectionHeading from "@/components/SectionHeading.astro";
+import TechPill from "@/components/TechPill.astro";
+import SystemDiagram from "@/components/SystemDiagram.astro";
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const project = getProjectBySlug(slug);
+
+if (!project) {
+  throw new Error(`Unknown project slug: ${slug}`);
+}
+---
+
+<div class="mx-auto max-w-6xl px-4 pb-16 pt-10 sm:px-6 sm:pt-14">
+  <nav aria-label="Breadcrumb" class="font-mono text-xs text-ink-faint">
+    <a href="/projects" class="text-ink-muted transition hover:text-accent"
+      >Projects</a
+    >
+    <span class="mx-2 text-ink-faint">/</span>
+    <span class="text-ink">{project.title}</span>
+  </nav>
+
+  <header class="mt-8 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
+    <div>
+      <p class="font-mono text-xs uppercase tracking-[0.28em] text-accent/90">
+        Case study
+      </p>
+      <h1
+        class="mt-3 text-balance text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
+      >
+        {project.title}
+      </h1>
+      <p class="mt-3 text-lg text-ink-muted">{project.subtitle}</p>
+      <p class="mt-5 max-w-2xl text-pretty leading-relaxed text-ink-muted">
+        {project.caseStudyIntro}
+      </p>
+      <div class="mt-6 flex flex-wrap items-center gap-3">
+        <span
+          class="rounded-full border border-line bg-surface-overlay/80 px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-accent"
+        >
+          {project.status}
+        </span>
+        {project.privacyNote && (
+          <span class="max-w-xl text-xs leading-relaxed text-ink-faint">
+            {project.privacyNote}
+          </span>
+        )}
+      </div>
+      <div class="mt-6 flex flex-wrap gap-1.5">
+        {project.stack.map((s) => (
+          <TechPill label={s} />
+        ))}
+      </div>
+    </div>
+    <SystemDiagram variant="hero" class="lg:mt-8" />
+  </header>
+
+  <div class="mt-14 space-y-14">
+    {
+      project.sections.map((section) => (
+        <section
+          class="scroll-mt-28 rounded-2xl border border-line/80 bg-surface-overlay/25 p-6 sm:p-8"
+          id={section.id}
+          aria-labelledby={`${section.id}-heading`}
+        >
+          <SectionHeading
+            id={`${section.id}-heading`}
+            eyebrow="Section"
+            title={section.title}
+          />
+          <div class="mt-6 max-w-3xl space-y-4 text-sm leading-relaxed text-ink-muted sm:text-base">
+            {section.body?.map((p) => (
+              <p>{p}</p>
+            ))}
+            {section.bullets && section.bullets.length > 0 && (
+              <ul class="mt-2 space-y-2">
+                {section.bullets.map((b) => (
+                  <li class="flex gap-2">
+                    <span
+                      class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent/70"
+                      aria-hidden="true"
+                    />
+                    <span>{b}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </section>
+      ))
+    }
+  </div>
+
+  <footer
+    class="mt-16 flex flex-col gap-4 border-t border-line/80 pt-10 sm:flex-row sm:items-center sm:justify-between"
+  >
+    <p class="font-mono text-sm text-ink-muted">
+      End of dossier · <span class="text-ink">{project.title}</span>
+    </p>
+    <a
+      href="/projects"
+      class="inline-flex items-center gap-2 font-mono text-sm font-medium text-accent transition hover:text-ink"
+    >
+      ← All projects
+    </a>
+  </footer>
+</div>

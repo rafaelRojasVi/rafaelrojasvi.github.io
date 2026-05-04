@@ -1,0 +1,46 @@
+---
+import { profile } from "@/data/profile";
+---
+
+<footer class="mt-20 border-t border-line/80 bg-surface-raised/40">
+  <div
+    class="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-end sm:justify-between sm:px-6"
+  >
+    <div>
+      <p class="font-mono text-xs uppercase tracking-[0.2em] text-ink-faint">
+        Signal
+      </p>
+      <p class="mt-2 max-w-md text-sm text-ink-muted">
+        Built with Astro & Tailwind. Dark editorial layout, static-only, ready
+        for GitHub Pages.
+      </p>
+    </div>
+    <div class="flex flex-wrap gap-4 font-mono text-sm">
+      <a
+        class="text-ink-muted transition hover:text-accent"
+        href={`mailto:${profile.contact.email}`}
+      >
+        Email
+      </a>
+      <a
+        class="text-ink-muted transition hover:text-accent"
+        href={profile.contact.github}
+        rel="noopener noreferrer"
+      >
+        GitHub
+      </a>
+      <a
+        class="text-ink-muted transition hover:text-accent"
+        href={profile.contact.linkedIn}
+        rel="noopener noreferrer"
+      >
+        LinkedIn
+      </a>
+    </div>
+  </div>
+  <p
+    class="border-t border-line/60 py-4 text-center font-mono text-[11px] text-ink-faint"
+  >
+    © {new Date().getFullYear()} {profile.name} · {profile.location}
+  </p>
+</footer>

@@ -1,0 +1,14 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import CaseStudyContent from "@/components/CaseStudyContent.astro";
+import { getProjectBySlug } from "@/data/projects";
+
+const project = getProjectBySlug("ledger-bank-api")!;
+---
+
+<BaseLayout
+  title={`${project.title} — Case study`}
+  description={project.shortDescription}
+>
+  <CaseStudyContent slug="ledger-bank-api" />
+</BaseLayout>
