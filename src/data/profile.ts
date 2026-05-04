@@ -3,14 +3,14 @@ export const profile = {
   pronouns: "they/them",
   location: "Valdivia, Chile",
   role: "Junior Backend Software Engineer",
-  tagline: "Python · APIs · Automation · Data Tools",
+  tagline: "Python · Elixir · APIs · Automation · Data Tools",
   /** Home + default OG when a page omits its own description */
   metaDescription:
-    "Rafael Rojas — Junior Backend Software Engineer, Valdivia, Chile. First Class Honours CS (Westminster). Python, APIs, automation, PostgreSQL/SQLite, webhooks, integrations.",
+    "Rafael Rojas — Junior Backend Software Engineer, Valdivia, Chile. First Class Honours CS (Westminster). Python, Elixir, APIs, automation, PostgreSQL/SQLite, webhooks, integrations.",
   seo: {
-    home: "Rafael Rojas — Junior Backend Software Engineer (they/them), Valdivia, Chile. First Class Honours CS. Python, APIs, automation, data tools, databases, integrations.",
+    home: "Rafael Rojas — Junior Backend Software Engineer (they/them), Valdivia, Chile. First Class Honours CS. Python, Elixir, APIs, automation, data tools, databases, integrations.",
     about:
-      "About Rafael Rojas: backend engineer in Valdivia, Chile; First Class Honours; Python, APIs, automation, databases, and contact.",
+      "About Rafael Rojas: backend engineer in Valdivia, Chile; First Class Honours; Python, Elixir, APIs, automation, databases, and contact.",
     experience:
       "Experience & education: Rafael Rojas — OrigenLab data & automation, freelance FastAPI/WhatsApp/Stripe platform, Westminster First Class Honours, Brighton foundation year.",
     projects:

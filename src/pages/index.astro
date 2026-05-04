@@ -2,7 +2,6 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import SectionHeading from "@/components/SectionHeading.astro";
 import ProjectCard from "@/components/ProjectCard.astro";
-import SystemDiagram from "@/components/SystemDiagram.astro";
 import { profile } from "@/data/profile";
 import { projects } from "@/data/projects";
 
@@ -15,8 +14,7 @@ const description = profile.seo.home;
   <section
     class="relative mx-auto max-w-6xl px-4 pb-20 pt-12 sm:px-6 sm:pb-24 sm:pt-16 lg:pt-20"
   >
-    <div class="grid gap-12 lg:grid-cols-[1.12fr_0.88fr] lg:items-start lg:gap-14">
-      <div>
+    <div>
         <p class="font-mono text-xs uppercase tracking-[0.22em] text-accent/90">
           {profile.location} · open to remote / hybrid
         </p>
@@ -76,8 +74,6 @@ const description = profile.seo.home;
             Email
           </a>
         </div>
-      </div>
-      <SystemDiagram variant="hero" class="opacity-95 lg:mt-4" />
     </div>
   </section>
 
@@ -131,20 +127,165 @@ const description = profile.seo.home;
 
   <section class="mx-auto max-w-6xl px-4 pb-24 sm:px-6 sm:pb-28">
     <div
-      class="relative overflow-hidden rounded-2xl border border-line/80 bg-gradient-to-br from-surface-overlay/80 to-surface/90 px-6 py-8 sm:px-10 sm:py-10"
+      id="engineering-terminal"
+      class="overflow-hidden rounded-md shadow-[0_12px_40px_-12px_rgba(0,0,0,0.55)] ring-1 ring-[#3b4261]/80"
     >
       <div
-        class="pointer-events-none absolute -right-24 -top-24 h-56 w-56 rounded-full bg-accent/10 blur-3xl"
-        aria-hidden="true"
-      />
-      <p class="font-mono text-xs uppercase tracking-[0.2em] text-accent/90">
-        Engineering default
-      </p>
-      <p
-        class="relative mt-4 max-w-3xl text-pretty text-base leading-[1.7] text-ink-muted sm:text-lg"
+        class="flex items-center gap-3 bg-[#24283b] px-3 py-2 text-[#c0caf5]"
+        role="presentation"
       >
-        {profile.personalNote}
-      </p>
+        <div class="flex gap-1.5" aria-hidden="true">
+          <span class="h-2.5 w-2.5 rounded-full bg-[#f7768e]" />
+          <span class="h-2.5 w-2.5 rounded-full bg-[#e0af68]" />
+          <span class="h-2.5 w-2.5 rounded-full bg-[#9ece6a]" />
+        </div>
+        <span class="min-w-0 flex-1 truncate text-center font-mono text-[11px] sm:text-xs">
+          <span class="text-[#9ece6a]">rafael@portfolio</span>
+          <span class="text-[#565f89]">:</span>
+          <span class="text-[#7aa2f7]"> ~/</span>
+          <span class="text-[#7dcfff]">rafaelrojasvi.github.io</span>
+          <span class="text-[#565f89]"> — </span>
+          <span class="text-[#bb9af7]">iex -S mix</span>
+        </span>
+        <span class="w-[52px] shrink-0 sm:w-14" aria-hidden="true" />
+      </div>
+
+      <div class="space-y-3 bg-[#1a1b26] px-4 py-4 text-[#c0caf5] sm:px-5 sm:py-5">
+        <div id="eng-terminal-output" class="text-sm leading-relaxed" aria-live="polite">
+          <pre
+            class="mb-0 mt-0 max-w-full overflow-x-auto whitespace-pre-wrap break-words font-mono"
+          ><code><span class="text-[#565f89]"># What I default to on backend work</span>
+<span class="text-[#e0af68]">engineering_default</span><span class="text-[#89ddff]"> = </span><span class="text-[#bb9af7]">%{`{`}</span>
+  <span class="text-[#bb9af7]">title:</span> <span class="text-[#9ece6a]">"Engineering default"</span><span class="text-[#89ddff]">,</span>
+  <span class="text-[#bb9af7]">note:</span>
+    <span class="text-[#9ece6a]">"{profile.personalNote}"</span>
+<span class="text-[#c0caf5]">{`}`}</span></code></pre>
+          <p class="mb-0 mt-3 font-mono">
+            <span class="text-[#7aa2f7]">iex(1)&gt;</span>
+            <span class="text-[#c0caf5]">&nbsp;</span>
+            <span class="text-[#e0af68]">Portfolio</span><span class="text-[#565f89]">.</span><span class="text-[#ff9e64]">EngineeringDefault</span><span class="text-[#565f89]">.</span><span class="text-[#7dcfff]">run</span><span class="text-[#c0caf5]">()</span>
+          </p>
+        </div>
+
+        <form id="eng-terminal-form" class="border-t border-[#3b4261] pt-3 font-mono text-sm">
+          <label class="flex items-center gap-2">
+            <span class="inline-flex items-center gap-0.5 whitespace-nowrap">
+              <span class="text-[#7aa2f7]">iex(2)&gt;</span>
+            </span>
+            <input
+              id="eng-terminal-input"
+              type="text"
+              autocomplete="off"
+              spellcheck="false"
+              class="ml-2 min-w-0 w-full border-0 bg-transparent text-[#c0caf5] outline-none placeholder:text-[#565f89]"
+              placeholder="Portfolio.EngineeringDefault.run()"
+            />
+          </label>
+        </form>
+      </div>
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  const root = document.querySelector("#engineering-terminal");
+  if (root) {
+    const form = root.querySelector("#eng-terminal-form");
+    const input = root.querySelector("#eng-terminal-input");
+    const output = root.querySelector("#eng-terminal-output");
+
+    let hasRun = false;
+    const expectedCmd = "Portfolio.EngineeringDefault.run()";
+
+    function normalizeIexCommand(s) {
+      return s.replace(/\s+/g, "");
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"']/g, (ch) => {
+        const map = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+        return map[ch] ?? ch;
+      });
+    }
+
+    function formatTypedCommandHtml(typed) {
+      if (normalizeIexCommand(typed) === normalizeIexCommand(expectedCmd)) {
+        return (
+          '<span class="text-[#e0af68]">Portfolio</span><span class="text-[#565f89]">.</span>' +
+          '<span class="text-[#ff9e64]">EngineeringDefault</span><span class="text-[#565f89]">.</span>' +
+          '<span class="text-[#7dcfff]">run</span><span class="text-[#c0caf5]">()</span>'
+        );
+      }
+      return escapeHtml(typed);
+    }
+
+    if (form instanceof HTMLFormElement && input instanceof HTMLInputElement && output) {
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const value = input.value.trim();
+        if (!value || hasRun) return;
+
+        const userLine = document.createElement("p");
+        userLine.className = "mt-1 font-mono";
+        userLine.innerHTML =
+          '<span class="text-[#7aa2f7]">iex(2)&gt;</span><span class="text-[#c0caf5]">&nbsp;' +
+          formatTypedCommandHtml(value) +
+          "</span>";
+        output.append(userLine);
+
+        const isCorrect =
+          normalizeIexCommand(value) === normalizeIexCommand(expectedCmd);
+
+        if (!isCorrect) {
+          const err = document.createElement("p");
+          err.className = "mt-1 text-[#f7768e]";
+          err.textContent =
+            "** (UndefinedFunctionError) undefined function: " +
+            value +
+            " is undefined or private";
+          output.append(err);
+          input.value = "";
+          return;
+        }
+
+        hasRun = true;
+        input.disabled = true;
+        input.classList.add("opacity-60", "cursor-not-allowed");
+        input.placeholder = "already executed";
+
+        const loading1 = document.createElement("p");
+        loading1.className = "text-[#565f89]";
+        loading1.textContent = "Compiling 1 file (.ex)";
+
+        const loading2 = document.createElement("p");
+        loading2.className = "text-[#565f89]";
+        loading2.textContent = "Generated portfolio app";
+
+        const loading3 = document.createElement("p");
+        loading3.className = "text-[#565f89]";
+        loading3.textContent = "Running ExUnit with seed 0...";
+
+        const done = document.createElement("p");
+        done.className = "text-[#9ece6a]";
+        done.textContent = "test passed - {:ok, :good_run}";
+
+        window.setTimeout(() => output.append(loading1), 160);
+        window.setTimeout(() => output.append(loading2), 380);
+        window.setTimeout(() => output.append(loading3), 620);
+        window.setTimeout(() => output.append(done), 920);
+        input.value = "";
+      });
+
+      input.addEventListener("keydown", (e) => {
+        if (e.key !== "Tab" || e.shiftKey) return;
+        e.preventDefault();
+        if (hasRun || input.disabled) return;
+
+        const cur = input.value;
+        if (expectedCmd.startsWith(cur) && cur.length < expectedCmd.length) {
+          input.value = expectedCmd;
+        }
+      });
+    }
+  }
+</script>

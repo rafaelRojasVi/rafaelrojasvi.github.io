@@ -1,0 +1,263 @@
+---
+/** Structure mirrors combined commercial email HTML — abstract placeholders only (no embed dump) */
+const LIVE = "https://origenlab.cl";
+---
+
+<div
+  id="olab-email-root"
+  class="min-w-0 max-w-full overflow-hidden rounded-xl border border-line bg-surface-overlay/60 shadow-card"
+  aria-label="Sanitized mock of OrigenLab commercial HTML email"
+>
+  <!-- Portfolio toolbar -->
+  <div class="flex flex-wrap items-center justify-between gap-2 border-b border-line/80 bg-surface-overlay/90 px-3 py-2">
+    <p class="font-mono text-[10px] uppercase tracking-wider text-ink-faint">
+      HTML email mock
+    </p>
+    <div class="flex flex-wrap items-center gap-2">
+      <span class="font-mono text-[10px] text-ink-muted">Ancho:</span>
+      <div
+        class="inline-flex rounded-lg border border-line p-0.5"
+        role="group"
+        aria-label="Email viewport width"
+      >
+        <label class="cursor-pointer">
+          <input
+            type="radio"
+            name="olab-email-viewport"
+            value="desktop"
+            class="peer sr-only"
+            checked
+          />
+          <span
+            class="rounded-md px-2.5 py-1 font-mono text-[10px] uppercase text-ink-muted peer-checked:bg-accent/20 peer-checked:text-accent"
+          >
+            Desktop
+          </span>
+        </label>
+        <label class="cursor-pointer">
+          <input
+            type="radio"
+            name="olab-email-viewport"
+            value="mobile"
+            class="peer sr-only"
+          />
+          <span
+            class="rounded-md px-2.5 py-1 font-mono text-[10px] uppercase text-ink-muted peer-checked:bg-accent/20 peer-checked:text-accent"
+          >
+            Mobile
+          </span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="min-w-0 overflow-x-hidden bg-[#eef4f5]">
+    <!-- Outer table simulation -->
+    <div class="mx-auto max-w-full px-2 py-3 sm:px-3">
+      <div
+        id="olab-email-body"
+        class="olab-email-body mx-auto w-full min-w-0 max-w-[680px] transition-[max-width] duration-300 ease-out"
+      >
+        <!-- Top meta bar (matches email header row) -->
+        <div
+          class="flex flex-wrap items-center justify-between gap-2 rounded-t-md px-3 py-2.5 text-[11px] leading-snug text-[#dff9f5] sm:px-4"
+          style="background-color:#042f2e;"
+        >
+          <span>
+            <strong>OrigenLab</strong> · Equipos para laboratorio en Chile
+          </span>
+          <a
+            href={LIVE}
+            class="shrink-0 font-semibold text-[#ccfbf1] underline-offset-2 hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            origenlab.cl
+          </a>
+        </div>
+
+        <!-- Hero image strip (placeholder — production uses hosted assets) -->
+        <div
+          class="flex min-h-[120px] items-center justify-center bg-gradient-to-br from-slate-100 to-teal-50 sm:min-h-[160px]"
+        >
+          <div class="px-4 text-center">
+            <p class="font-mono text-[9px] uppercase tracking-wider text-slate-500">
+              Hero / catálogo
+            </p>
+            <p class="mt-1 text-xs text-slate-600">
+              Bloque visual (producto o slideshow) — placeholder en este preview
+            </p>
+          </div>
+        </div>
+
+        <!-- Hero copy block: gradients aligned with .hero-bg pattern -->
+        <div
+          class="hero-bg-mock px-4 py-6 text-center text-white sm:px-6 sm:py-8"
+        >
+          <p class="mb-2 text-[10px] font-bold uppercase tracking-wider text-[#ccfbf1]">
+            Presentación comercial · OrigenLab
+          </p>
+          <p class="text-lg font-extrabold leading-snug sm:text-xl">
+            OrigenLab para sus necesidades de laboratorio
+          </p>
+          <p
+            class="mx-auto mt-3 max-w-md text-xs leading-relaxed text-[#ecfffc] sm:text-sm"
+          >
+            Presentación breve y visual, con líneas disponibles para cotización y
+            conversaciones iniciales.
+          </p>
+          <div
+            class="mt-4 flex flex-col gap-2 sm:mt-5 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-2"
+          >
+            <span
+              class="inline-flex justify-center bg-white px-4 py-2.5 text-xs font-bold text-[#0f766e] shadow-sm"
+            >
+              Solicitar información
+            </span>
+            <span
+              class="inline-flex justify-center border border-[#dff9f5] px-4 py-2.5 text-xs font-semibold text-white"
+            >
+              WhatsApp
+            </span>
+            <span
+              class="inline-flex justify-center border border-[#dff9f5] px-4 py-2.5 text-xs font-semibold text-white"
+            >
+              Ver sitio web
+            </span>
+          </div>
+        </div>
+
+        <!-- Quiénes somos -->
+        <div class="bg-white px-4 py-5 text-center sm:px-6">
+          <p class="text-base font-bold text-[#134e4a]">Quiénes somos</p>
+          <p
+            class="mx-auto mt-2 max-w-lg text-left text-[11px] leading-relaxed text-[#35545d] sm:text-sm"
+          >
+            Enfoque en equipos para laboratorios de servicio e investigación, con
+            presencia comercial en todo Chile y asesoría previa a la compra.
+          </p>
+          <div
+            class="mx-auto mt-3 max-w-lg border-l-4 border-[#0f766e] bg-[#f7fbfb] p-3 text-left text-[11px] leading-relaxed text-[#21434c] sm:text-sm"
+          >
+            Pensado para universidades, clínicas, hospitales e industria — cotización
+            estructurada y documentación de apoyo según línea.
+          </div>
+        </div>
+
+        <!-- Product grid -->
+        <div class="bg-white px-3 pb-4 pt-1 sm:px-5">
+          <p
+            class="mb-3 text-center text-base font-bold text-[#134e4a]"
+          >
+            Líneas destacadas del catálogo
+          </p>
+          <div class="grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
+            {
+              [
+                {
+                  brand: "SERVA",
+                  title: "Electroforesis",
+                  blurb: "Reactivos, geles y sistemas HPE™.",
+                  sw: "from-slate-100 to-blue-50",
+                },
+                {
+                  brand: "Ortoalresa",
+                  title: "BIOCEN 22",
+                  blurb: "Microcentrífuga compacta.",
+                  sw: "from-slate-100 to-emerald-50",
+                },
+                {
+                  brand: "Löser / KNAUER",
+                  title: "Osmometría",
+                  blurb: "Opciones por punto de congelación.",
+                  sw: "from-slate-100 to-cyan-50",
+                },
+                {
+                  brand: "IKA / Hielscher",
+                  title: "Dispersión y ultrasonidos",
+                  blurb: "Dispersión rotor-estator y ultrasonidos.",
+                  sw: "from-slate-100 to-violet-50",
+                },
+              ].map((tile) => (
+                <div class="min-w-0 border border-[#d9e9e7] bg-white">
+                  <div
+                    class:list={[
+                      "flex min-h-[100px] items-center justify-center bg-gradient-to-br sm:min-h-[120px]",
+                      tile.sw,
+                    ]}
+                  >
+                    <span class="font-mono text-[10px] uppercase text-slate-400">
+                      Imagen producto
+                    </span>
+                  </div>
+                  <div class="px-3 py-2.5 sm:px-3.5">
+                    <p class="text-[10px] font-bold uppercase text-[#0f766e]">
+                      {tile.brand}
+                    </p>
+                    <p class="mt-1 text-sm font-bold text-[#16333a]">{tile.title}</p>
+                    <p class="mt-1 text-[11px] leading-snug text-[#486069]">
+                      {tile.blurb}
+                    </p>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="flex flex-wrap justify-center gap-x-3 gap-y-1 border-t border-line/80 bg-surface-overlay/40 px-2 py-2"
+  >
+    {
+      [
+        "Responsive email",
+        "Mobile fallbacks",
+        "Dark-mode resilience",
+        "Table-based HTML",
+      ].map((t) => (
+        <span class="font-mono text-[9px] uppercase tracking-wide text-ink-faint">
+          {t}
+        </span>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .hero-bg-mock {
+    background-color: #0f766e;
+    background-image:
+      radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 22%),
+      radial-gradient(circle at 14% 82%, rgba(20, 184, 166, 0.28) 0%, rgba(20, 184, 166, 0) 30%),
+      radial-gradient(circle at 88% 72%, rgba(255, 255, 255, 0.12) 0 1.5px, rgba(255, 255, 255, 0) 1.5px),
+      linear-gradient(135deg, #0b4e4a 0%, #0f766e 55%, #1db7aa 100%);
+    background-size: auto, auto, 18px 18px, auto;
+    background-repeat: no-repeat, no-repeat, repeat, no-repeat;
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var root = document.getElementById("olab-email-root");
+    if (!root) return;
+    var body = root.querySelector("#olab-email-body");
+    var inputs = root.querySelectorAll('input[name="olab-email-viewport"]');
+    function apply() {
+      var v = Array.from(inputs).find(function (i) {
+        return i.checked;
+      });
+      v = v ? v.value : "desktop";
+      if (!body) return;
+      body.classList.remove("max-w-[680px]", "max-w-[320px]");
+      if (v === "mobile") body.classList.add("max-w-[320px]");
+      else body.classList.add("max-w-[680px]");
+    }
+    inputs.forEach(function (i) {
+      i.addEventListener("change", apply);
+    });
+    apply();
+  })();
+</script>

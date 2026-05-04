@@ -46,7 +46,7 @@ export const projects: Project[] = [
     privacyNote:
       "Abstract diagrams and generic descriptions only—no customer or message content.",
     caseStudyIntro:
-      "OrigenLab sells laboratory equipment in Chile. My work sits in the internal stack: turning inbox-level chaos into structured SQLite, reports operators trust, and outbound flows that default to safe behavior.",
+      "OrigenLab sells laboratory equipment in Chile. My work sits in the internal stack: turning inbox-level chaos into structured SQLite, reports operators trust, and outbound flows that default to safe behavior. This page includes abstract previews of the marketing site and HTML email patterns, plus an interactive pipeline map—no production HTML or data embedded.",
     sections: [
       {
         id: "problem",

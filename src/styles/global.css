@@ -33,3 +33,33 @@
     text-wrap: balance;
   }
 }
+
+/* OrigenLab case study: subtle connector pulse (used by OrigenLabFlowDiagram) */
+@keyframes olab-conn-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.olab-connector-pulse {
+  animation: olab-conn-pulse 2.8s ease-in-out infinite;
+}
+
+/* OrigenLab flow diagram: selected node */
+.olab-flow-node--active {
+  border-color: rgba(52, 211, 199, 0.55) !important;
+  background-color: rgba(52, 211, 199, 0.12) !important;
+  box-shadow:
+    0 0 0 1px rgba(52, 211, 199, 0.35),
+    0 12px 36px -12px rgba(52, 211, 199, 0.28);
+  transform: scale(1.02);
+}
+@media (prefers-reduced-motion: reduce) {
+  .olab-flow-node--active {
+    transform: none;
+  }
+}

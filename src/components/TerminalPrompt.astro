@@ -1,0 +1,103 @@
+---
+interface Props {
+  class?: string;
+  /** Directory segment after the arrow (repo folder name). */
+  cwd?: string;
+  branch?: string;
+  /** When true, shows the amber ✗ dirty indicator. */
+  dirty?: boolean;
+  /** Tab title text, e.g. `zsh - rafaelrojasvi.github.io`. */
+  tabLabel?: string;
+}
+
+const {
+  class: className = "",
+  cwd = "rafaelrojasvi.github.io",
+  branch = "main",
+  dirty = true,
+  tabLabel,
+} = Astro.props;
+
+const resolvedTab = tabLabel ?? `zsh - ${cwd}`;
+---
+
+<div
+  class:list={[
+    "terminal-prompt overflow-hidden rounded-2xl border border-line/80 bg-[#0d1117] shadow-card",
+    className,
+  ]}
+  role="figure"
+  aria-label={`Terminal-style prompt in ${cwd} on git branch ${branch}${dirty ? ", with uncommitted changes" : ""}.`}
+>
+  <div
+    class="flex items-center gap-2 border-b border-white/[0.06] bg-[#18181b] px-3 py-2"
+  >
+    <span
+      class="font-mono text-[11px] text-zinc-500"
+      aria-hidden="true"
+    >
+      &gt;_
+    </span>
+    <span
+      class="min-w-0 flex-1 truncate font-mono text-[11px] text-zinc-400"
+    >
+      {resolvedTab}
+    </span>
+    <div
+      class="flex shrink-0 items-center gap-2 text-zinc-500"
+      aria-hidden="true"
+    >
+      <span class="font-mono text-sm leading-none">+</span>
+      <svg
+        class="h-3 w-3 opacity-80"
+        viewBox="0 0 12 12"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path d="M6 8.5 1.5 4h9L6 8.5z" />
+      </svg>
+    </div>
+  </div>
+  <div class="px-4 py-3.5">
+    <p
+      class="font-mono text-[13px] leading-relaxed tracking-tight text-zinc-100 sm:text-[13px]"
+    >
+      <span class="text-emerald-400">➜</span>
+      <span class="text-zinc-100">&nbsp;&nbsp;</span>
+      <span class="text-sky-400">{cwd}</span>
+      <span class="text-zinc-300">&nbsp;git:(</span>
+      <span class="text-red-400">{branch}</span>
+      <span class="text-zinc-300">)</span>
+      {
+        dirty && (
+          <>
+            <span class="text-orange-400">&nbsp;✗</span>
+          </>
+        )
+      }
+      <span
+        class="terminal-prompt-cursor ml-1 inline-block h-[1.05em] w-2 translate-y-[0.12em] border border-zinc-100 align-middle"
+        aria-hidden="true"
+      />
+    </p>
+    </div>
+</div>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .terminal-prompt-cursor {
+      animation: terminal-cursor-blink 1.05s step-end infinite;
+    }
+  }
+
+  @keyframes terminal-cursor-blink {
+    0%,
+    49% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+</style>

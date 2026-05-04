@@ -1,6 +1,9 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import CaseStudyContent from "@/components/CaseStudyContent.astro";
+import OrigenLabWebsitePreview from "@/components/origenlab/OrigenLabWebsitePreview.astro";
+import OrigenLabEmailPreview from "@/components/origenlab/OrigenLabEmailPreview.astro";
+import OrigenLabFlowDiagram from "@/components/origenlab/OrigenLabFlowDiagram.astro";
 import { getProjectBySlug } from "@/data/projects";
 
 const project = getProjectBySlug("origenlab")!;
@@ -10,5 +13,84 @@ const project = getProjectBySlug("origenlab")!;
   title={`${project.title} — Case study`}
   description={project.shortDescription}
 >
-  <CaseStudyContent slug="origenlab" />
+  <CaseStudyContent slug="origenlab" insertAfterSectionId="problem">
+    <div slot="after-section" class="space-y-12">
+      <section
+        class="scroll-mt-28 rounded-2xl border border-line/80 bg-surface-overlay/20 px-5 py-8 sm:px-8 sm:py-10"
+        aria-labelledby="origenlab-connected-heading"
+      >
+        <h2
+          id="origenlab-connected-heading"
+          class="text-xl font-semibold tracking-tight text-ink sm:text-2xl"
+        >
+          From public presence to commercial intelligence
+        </h2>
+        <p class="mt-4 max-w-3xl text-pretty leading-relaxed text-ink-muted">
+          OrigenLab was not just a website. It became a connected business stack:
+          a public marketing surface, reusable HTML marketing material, and a
+          local-first backend pipeline for commercial operations.
+        </p>
+
+        <div class="mt-10 border-t border-line/60 pt-10">
+          <h3 class="text-lg font-semibold text-ink">System surfaces</h3>
+          <p class="mt-3 max-w-3xl text-pretty leading-relaxed text-ink-muted">
+            The project had three visible surfaces: a public website, reusable
+            commercial HTML, and an internal review layer. The backend pipeline
+            connects them through data, safety rules, and operator workflows.
+          </p>
+          <p class="mt-3 font-mono text-xs text-ink-faint">
+            Live marketing site:{" "}
+            <a
+              href="https://origenlab.cl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-accent transition hover:text-ink"
+            >
+              origenlab.cl
+            </a>
+            · Previews below are sanitized mocks (no proprietary HTML pasted in).
+          </p>
+
+          <!-- Site first, email below: reading order matches site → campaign asset -->
+          <div class="mt-8 flex flex-col gap-10 sm:gap-12">
+            <div class="min-w-0">
+              <p
+                class="mb-2 font-mono text-[10px] uppercase tracking-wider text-ink-faint"
+              >
+                01 · Public website (mock)
+              </p>
+              <OrigenLabWebsitePreview />
+            </div>
+            <div class="relative min-w-0">
+              <div
+                class="pointer-events-none absolute -top-6 left-1/2 hidden h-6 w-px -translate-x-1/2 bg-gradient-to-b from-accent/40 to-transparent sm:block"
+                aria-hidden="true"
+              />
+              <p
+                class="mb-2 font-mono text-[10px] uppercase tracking-wider text-ink-faint"
+              >
+                02 · Commercial HTML email (mock)
+              </p>
+              <p class="mb-3 max-w-2xl text-xs leading-relaxed text-ink-muted">
+                Same value proposition, packaged for inboxes: table-based layout,
+                mobile fallbacks, and dark-mode-safe surfaces.
+              </p>
+              <div class="mx-auto w-full max-w-[720px]">
+                <OrigenLabEmailPreview />
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-10 min-w-0">
+            <p
+              class="mb-2 font-mono text-[10px] uppercase tracking-wider text-ink-faint"
+            >
+              03 · Data &amp; safety flow
+            </p>
+            <OrigenLabFlowDiagram />
+          </div>
+        </div>
+      </section>
+    </div>
+  </CaseStudyContent>
 </BaseLayout>

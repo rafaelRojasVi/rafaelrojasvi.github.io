@@ -6,9 +6,11 @@ import SystemDiagram from "@/components/SystemDiagram.astro";
 
 interface Props {
   slug: string;
+  /** When set, render `<slot name="after-section" />` immediately after this section's id. */
+  insertAfterSectionId?: string;
 }
 
-const { slug } = Astro.props;
+const { slug, insertAfterSectionId } = Astro.props;
 const project = getProjectBySlug(slug);
 
 if (!project) {
@@ -63,31 +65,38 @@ if (!project) {
   <div class="mt-16 space-y-10 sm:space-y-12">
     {
       project.sections.map((section) => (
-        <section
-          class="scroll-mt-28 rounded-2xl border border-line/80 bg-surface-overlay/25 px-6 py-7 sm:p-8"
-          id={section.id}
-          aria-labelledby={`${section.id}-heading`}
-        >
-          <SectionHeading id={`${section.id}-heading`} title={section.title} />
-          <div class="mt-5 max-w-3xl space-y-4 text-sm leading-[1.7] text-ink-muted sm:text-base">
-            {section.body?.map((p) => (
-              <p>{p}</p>
-            ))}
-            {section.bullets && section.bullets.length > 0 && (
-              <ul class="mt-2 space-y-2">
-                {section.bullets.map((b) => (
-                  <li class="flex gap-2">
-                    <span
-                      class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent/70"
-                      aria-hidden="true"
-                    />
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </section>
+        <>
+          <section
+            class="scroll-mt-28 rounded-2xl border border-line/80 bg-surface-overlay/25 px-6 py-7 sm:p-8"
+            id={section.id}
+            aria-labelledby={`${section.id}-heading`}
+          >
+            <SectionHeading id={`${section.id}-heading`} title={section.title} />
+            <div class="mt-5 max-w-3xl space-y-4 text-sm leading-[1.7] text-ink-muted sm:text-base">
+              {section.body?.map((p) => (
+                <p>{p}</p>
+              ))}
+              {section.bullets && section.bullets.length > 0 && (
+                <ul class="mt-2 space-y-2">
+                  {section.bullets.map((b) => (
+                    <li class="flex gap-2">
+                      <span
+                        class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent/70"
+                        aria-hidden="true"
+                      />
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </section>
+          {insertAfterSectionId === section.id && (
+            <div class="not-prose">
+              <slot name="after-section" />
+            </div>
+          )}
+        </>
       ))
     }
   </div>

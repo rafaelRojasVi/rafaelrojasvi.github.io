@@ -1,0 +1,368 @@
+---
+const flowNodes = [
+  {
+    id: "public-website",
+    short: "Public website",
+    group: "A",
+    what: "Astro/Tailwind marketing site — inbound trust, categories, contact paths.",
+    why: "Fast, static, easy to operate; first layer of product discovery.",
+    tech: "Astro · Tailwind · static deployment",
+  },
+  {
+    id: "commercial-html",
+    short: "Commercial HTML assets",
+    group: "A",
+    what: "Reusable HTML for email and commercial pieces (tables, CTAs, dark-mode-safe blocks).",
+    why: "Same story as the site, portable to the inbox without depending on the app backend.",
+    tech: "Responsive HTML · media queries · table-style layouts",
+  },
+  {
+    id: "gmail-ingest",
+    short: "Gmail / email archive ingest",
+    group: "B",
+    what: "Ingests mail history into a local, queryable archive.",
+    why: "Commercial memory lives in email; here it becomes structured data.",
+    tech: "Python · incremental ingest",
+  },
+  {
+    id: "sqlite-operational-store",
+    short: "SQLite operational store",
+    group: "B",
+    what: "Local-first SQLite: threads, contacts, signals, and pointers to documents.",
+    why: "Portable, easy to back up, auditable — fits a human-in-the-loop operation.",
+    tech: "SQLite · relational modelling",
+  },
+  {
+    id: "business-marts",
+    short: "Business marts",
+    group: "B",
+    what: "Normalized views: contacts, organizations, documents, opportunities.",
+    why: "Moves from raw rows to the questions sales actually asks.",
+    tech: "SQL · reproducible pipelines",
+  },
+  {
+    id: "reports-streamlit",
+    short: "Reports / Streamlit review",
+    group: "C",
+    what: "Dashboards, filters, and exports before any commercial outbound.",
+    why: "Operators need visible state, not only raw tables.",
+    tech: "Streamlit · Python · exports",
+  },
+  {
+    id: "safety-gates",
+    short: "Safety gates",
+    group: "C",
+    what: "Sent history, suppression, duplicates, and noise — explicit rules.",
+    why: "Prevents repeats and off-policy messages.",
+    tech: "Rules engine · diff against history",
+  },
+  {
+    id: "human-llm",
+    short: "Human-reviewed draft assistance",
+    group: "C",
+    what: "Suggested drafts after checks; no automatic sending.",
+    why: "Less blank-page friction, same human accountability.",
+    tech: "Assisted LLM · bounded UI · audit trail",
+  },
+  {
+    id: "manual-outreach",
+    short: "Manual outreach / follow-up",
+    group: "C",
+    what: "Human sends and logging; feeds the next ingest pass.",
+    why: "Closes the loop: what is sent becomes memory for the gates.",
+    tech: "Standard mail tools · re-ingest",
+  },
+] as const;
+
+const defaultId = "sqlite-operational-store";
+
+const jsonLd = JSON.stringify(
+  flowNodes.map((n) => ({
+    id: n.id,
+    short: n.short,
+    group: n.group,
+    what: n.what,
+    why: n.why,
+    tech: n.tech,
+  })),
+);
+---
+
+<div class="rounded-2xl border border-line/80 bg-surface-overlay/30 p-4 sm:p-6">
+  <div class="max-w-2xl">
+    <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-accent/90">
+      Interactive map
+    </p>
+    <h3 class="mt-2 text-lg font-semibold text-ink">Operational pipeline</h3>
+    <p class="mt-2 text-sm leading-snug text-ink-muted">
+      Tap a node — overview updates below. Three layers: public → data → safety.
+    </p>
+  </div>
+
+  <div
+    id="olab-flow-root"
+    class="olab-flow-root mt-6 min-w-0"
+    data-default={defaultId}
+  >
+    <script type="application/json" id="olab-flow-data" set:html={jsonLd} />
+
+    <div>
+      <p
+        class="mb-2.5 font-mono text-[10px] uppercase tracking-wider text-ink-faint"
+      >
+        A · Public / commercial
+      </p>
+      <div
+        class="grid min-w-0 grid-cols-1 gap-2.5 sm:grid-cols-2"
+        role="group"
+        aria-label="Public and commercial surfaces"
+      >
+        {
+          flowNodes
+            .filter((n) => n.group === "A")
+            .map((n) => (
+              <button
+                type="button"
+                class="olab-node min-w-0 text-left"
+                data-id={n.id}
+                aria-pressed="false"
+                aria-label={n.short}
+              >
+                <span class="block font-mono text-[9px] uppercase text-ink-faint">
+                  {n.id === "public-website" ? "Inbound" : "Assets"}
+                </span>
+                <span class="mt-0.5 block text-sm font-semibold leading-snug text-ink">
+                  {n.short}
+                </span>
+              </button>
+            ))
+        }
+      </div>
+    </div>
+
+    <div
+      class="olab-connector olab-connector-pulse my-3 h-px w-full max-w-md bg-gradient-to-r from-transparent via-accent/40 to-transparent sm:mx-auto"
+      aria-hidden="true"
+    />
+
+    <div class="min-w-0">
+      <p
+        class="mb-2.5 font-mono text-[10px] uppercase tracking-wider text-ink-faint"
+      >
+        B · Data / backend
+      </p>
+      <div class="flex min-w-0 flex-col gap-2 lg:flex-row lg:flex-nowrap lg:items-stretch lg:justify-center lg:gap-1">
+        {
+          flowNodes
+            .filter((n) => n.group === "B")
+            .map((n, i, arr) => (
+              <>
+                <button
+                  type="button"
+                  class="olab-node min-w-0 flex-1 text-left lg:max-w-[200px]"
+                  data-id={n.id}
+                  aria-pressed="false"
+                  aria-label={n.short}
+                >
+                  <span class="block font-mono text-[9px] uppercase text-ink-faint">
+                    {n.id === "gmail-ingest"
+                      ? "Ingest"
+                      : n.id === "sqlite-operational-store"
+                        ? "Store"
+                        : "Views"}
+                  </span>
+                  <span class="mt-0.5 block text-sm font-semibold leading-snug text-ink">
+                    {n.short}
+                  </span>
+                </button>
+                {i < arr.length - 1 && (
+                  <div
+                    class="hidden shrink-0 self-center px-0.5 text-accent/45 lg:flex"
+                    aria-hidden="true"
+                  >
+                    <span class="font-mono text-base">→</span>
+                  </div>
+                )}
+              </>
+            ))
+        }
+      </div>
+      <p class="mt-2 text-center font-mono text-[11px] text-ink-faint lg:hidden">
+        Ingest → store → marts
+      </p>
+    </div>
+
+    <div
+      class="olab-connector olab-connector-pulse my-3 h-px w-full max-w-md bg-gradient-to-r from-transparent via-accent/40 to-transparent sm:mx-auto"
+      aria-hidden="true"
+    />
+
+    <div>
+      <p
+        class="mb-2.5 font-mono text-[10px] uppercase tracking-wider text-ink-faint"
+      >
+        C · Operator / safety
+      </p>
+      <div
+        class="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4"
+        role="group"
+        aria-label="Review and safety stages"
+      >
+        {
+          flowNodes
+            .filter((n) => n.group === "C")
+            .map((n) => (
+              <button
+                type="button"
+                class="olab-node min-w-0 text-left"
+                data-id={n.id}
+                aria-pressed="false"
+                aria-label={n.short}
+              >
+                <span class="block font-mono text-[9px] uppercase text-ink-faint">
+                  {n.id === "manual-outreach" ? "Loop" : "Gate"}
+                </span>
+                <span class="mt-0.5 block text-sm font-semibold leading-snug text-ink">
+                  {n.short}
+                </span>
+              </button>
+            ))
+        }
+      </div>
+    </div>
+
+    <div
+      class="mt-5 rounded-lg border border-dashed border-accent/35 bg-surface/40 px-3 py-3 sm:px-4"
+    >
+      <p class="text-center font-mono text-xs font-medium text-accent/95">
+        Sent history becomes safety memory
+      </p>
+      <p class="mt-1.5 text-center text-xs leading-snug text-ink-muted">
+        Outbound is logged in normal mail channels, then re-ingested so future
+        checks and suppression stay accurate.
+      </p>
+    </div>
+
+    <div
+      id="olab-flow-detail"
+      class="mt-5 rounded-xl border border-line bg-surface-overlay/60 p-4 sm:p-5"
+      role="region"
+      aria-labelledby="olab-flow-detail-title"
+      tabindex="-1"
+    >
+      <h4
+        id="olab-flow-detail-title"
+        class="text-base font-semibold text-ink"
+      >
+        <span id="olab-d-title">—</span>
+      </h4>
+      <dl class="mt-3 space-y-2.5 text-sm text-ink-muted">
+        <div>
+          <dt class="font-mono text-[10px] uppercase tracking-wider text-ink-faint">
+            Role
+          </dt>
+          <dd id="olab-d-what" class="mt-0.5 leading-snug" />
+        </div>
+        <div>
+          <dt class="font-mono text-[10px] uppercase tracking-wider text-ink-faint">
+            Why
+          </dt>
+          <dd id="olab-d-why" class="mt-0.5 leading-snug" />
+        </div>
+        <div>
+          <dt class="font-mono text-[10px] uppercase tracking-wider text-ink-faint">
+            Tech
+          </dt>
+          <dd id="olab-d-tech" class="mt-0.5 font-mono text-xs text-accent/90" />
+        </div>
+      </dl>
+    </div>
+
+    <div class="mt-5 rounded-xl border border-line/80 bg-surface/60 p-4 sm:p-5">
+      <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-faint">
+        Engineering decisions
+      </p>
+      <ul class="mt-3 grid gap-2 text-sm leading-snug text-ink-muted sm:grid-cols-2">
+        {
+          [
+            "Local-first SQLite runtime",
+            "Rebuildable marts",
+            "Guarded outbound candidate exports",
+            "Human-in-the-loop drafting",
+            "Static public website",
+            "Documentation-heavy workflow",
+          ].map((line) => (
+            <li class="flex gap-2">
+              <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent/60" />
+              <span>{line}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var root = document.getElementById("olab-flow-root");
+    var dataEl = document.getElementById("olab-flow-data");
+    if (!root || !dataEl) return;
+    var nodes = [];
+    try {
+      nodes = JSON.parse(dataEl.textContent || "[]");
+    } catch (e) {
+      return;
+    }
+    var defaultId = root.getAttribute("data-default") || "sqlite-operational-store";
+    var buttons = root.querySelectorAll(".olab-node");
+    var dTitle = document.getElementById("olab-d-title");
+    var dWhat = document.getElementById("olab-d-what");
+    var dWhy = document.getElementById("olab-d-why");
+    var dTech = document.getElementById("olab-d-tech");
+
+    function findNode(id) {
+      for (var i = 0; i < nodes.length; i++) {
+        if (nodes[i].id === id) return nodes[i];
+      }
+      return null;
+    }
+
+    function select(id) {
+      var n = findNode(id);
+      if (!n || !dTitle || !dWhat || !dWhy || !dTech) return;
+      dTitle.textContent = n.short;
+      dWhat.textContent = n.what;
+      dWhy.textContent = n.why;
+      dTech.textContent = n.tech;
+      buttons.forEach(function (btn) {
+        var on = btn.getAttribute("data-id") === id;
+        btn.setAttribute("aria-pressed", on ? "true" : "false");
+        btn.classList.toggle("olab-flow-node--active", on);
+      });
+    }
+
+    buttons.forEach(function (btn) {
+      btn.classList.add(
+        "rounded-lg",
+        "border",
+        "border-line",
+        "bg-surface-overlay/50",
+        "p-2.5",
+        "transition",
+        "duration-150",
+        "focus-visible:outline",
+        "focus-visible:outline-2",
+        "focus-visible:outline-offset-2",
+        "focus-visible:outline-accent",
+        "hover:border-accent/30",
+      );
+      btn.addEventListener("click", function () {
+        var id = btn.getAttribute("data-id");
+        if (id) select(id);
+      });
+    });
+
+    select(defaultId);
+  })();
+</script>
