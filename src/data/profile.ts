@@ -18,9 +18,14 @@ export const profile = {
   },
   headline:
     "I enjoy turning messy real-world problems into structured, reliable systems—with solid databases, integrations, and backend logic behind them.",
-  /** Scannable lines for recruiters (homepage). */
+  /**
+   * First “At a glance” line (homepage). `homeEducationLocation` is styled as a highlight in index.
+   */
+  homeEducation:
+    "Computer Science graduate with First Class Honours (University of Westminster, 2025). Studied abroad in",
+  homeEducationLocation: "London, United Kingdom",
+  /** Remaining scannable lines for recruiters (homepage). */
   atAGlance: [
-    "Computer Science graduate with First Class Honours (University of Westminster, 2025).",
     "Focused on backend development, automation, APIs, and data-driven tools.",
     "Strong with relational databases, integrations, Python applications, API integrations, and automation workflows.",
     "Currently: Software Engineer (Data & Automation) at OrigenLab; freelance backend and integration work (London / remote).",

@@ -15,9 +15,9 @@ export default {
           faint: "#64748b",
         },
         accent: {
-          DEFAULT: "#34d3c9",
-          dim: "#0d9488",
-          glow: "rgba(52, 211, 199, 0.35)",
+          DEFAULT: "#818cf8",
+          dim: "#6366f1",
+          glow: "rgba(129, 140, 248, 0.35)",
         },
         line: "rgba(148, 163, 184, 0.12)",
       },

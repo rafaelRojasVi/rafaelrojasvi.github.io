@@ -31,9 +31,9 @@ const { class: className = "", variant = "inline" } = Astro.props;
     <title>Pipeline: ingest → validate → emit</title>
     <defs>
       <linearGradient id="sys-wire" x1="0" y1="0" x2="400" y2="0">
-        <stop offset="0%" stop-color="rgba(52,211,199,0)" />
-        <stop offset="50%" stop-color="rgba(52,211,199,0.4)" />
-        <stop offset="100%" stop-color="rgba(52,211,199,0)" />
+        <stop offset="0%" stop-color="rgba(129,140,248,0)" />
+        <stop offset="50%" stop-color="rgba(129,140,248,0.4)" />
+        <stop offset="100%" stop-color="rgba(129,140,248,0)" />
       </linearGradient>
     </defs>
 
@@ -65,7 +65,7 @@ const { class: className = "", variant = "inline" } = Astro.props;
         height="24"
         rx="6"
         class="sys-stage-rect"
-        stroke="rgba(52,211,199,0.45)"
+        stroke="rgba(129,140,248,0.45)"
         fill="rgba(12,16,24,0.6)"
       />
       <text
@@ -90,7 +90,7 @@ const { class: className = "", variant = "inline" } = Astro.props;
         height="28"
         rx="6"
         class="sys-stage-rect"
-        stroke="rgba(52,211,199,0.35)"
+        stroke="rgba(129,140,248,0.35)"
         fill="rgba(17,24,39,0.55)"
       />
       <text
@@ -115,7 +115,7 @@ const { class: className = "", variant = "inline" } = Astro.props;
         height="26"
         rx="6"
         class="sys-stage-rect"
-        stroke="rgba(52,211,199,0.4)"
+        stroke="rgba(129,140,248,0.4)"
         fill="rgba(12,16,24,0.65)"
       />
       <text
@@ -128,12 +128,12 @@ const { class: className = "", variant = "inline" } = Astro.props;
     </g>
 
     <g class="sys-dots" opacity="0.95" aria-hidden="true">
-      <circle class="sys-dot sys-dot--a" cx="128" cy="100" r="3" fill="rgba(52,211,199,0.85)" />
-      <circle class="sys-dot sys-dot--b" cx="248" cy="72" r="2.5" fill="rgba(52,211,199,0.55)" />
+      <circle class="sys-dot sys-dot--a" cx="128" cy="100" r="3" fill="rgba(129,140,248,0.85)" />
+      <circle class="sys-dot sys-dot--b" cx="248" cy="72" r="2.5" fill="rgba(129,140,248,0.55)" />
       <circle class="sys-dot sys-dot--c" cx="312" cy="118" r="2.5" fill="rgba(148,163,184,0.45)" />
     </g>
 
-    <g stroke="rgba(52,211,199,0.15)" stroke-width="1" aria-hidden="true">
+    <g stroke="rgba(129,140,248,0.15)" stroke-width="1" aria-hidden="true">
       <path class="sys-path-tertiary" d="M60 160 h80" stroke-dasharray="3 6" />
       <path class="sys-path-tertiary" d="M200 155 h100" stroke-dasharray="3 6" />
     </g>
@@ -178,9 +178,9 @@ const { class: className = "", variant = "inline" } = Astro.props;
     background: linear-gradient(
       105deg,
       transparent 0%,
-      rgba(52, 211, 199, 0.06) 45%,
-      rgba(52, 211, 199, 0.1) 50%,
-      rgba(52, 211, 199, 0.06) 55%,
+      rgba(129, 140, 248, 0.06) 45%,
+      rgba(129, 140, 248, 0.1) 50%,
+      rgba(129, 140, 248, 0.06) 55%,
       transparent 100%
     );
     opacity: 0.72;
@@ -231,8 +231,8 @@ const { class: className = "", variant = "inline" } = Astro.props;
 
   .system-diagram .sys-stage:hover .sys-stage-rect,
   .system-diagram .sys-stage:focus-visible .sys-stage-rect {
-    stroke: rgba(52, 211, 199, 0.95);
-    filter: drop-shadow(0 0 12px rgba(52, 211, 199, 0.28));
+    stroke: rgba(129, 140, 248, 0.95);
+    filter: drop-shadow(0 0 12px rgba(129, 140, 248, 0.28));
     fill: rgba(17, 24, 39, 0.75);
   }
 
