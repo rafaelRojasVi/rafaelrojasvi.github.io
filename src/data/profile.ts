@@ -12,7 +12,7 @@ export const profile = {
     about:
       "About Rafael Rojas: backend engineer in Valdivia, Chile; First Class Honours; Python, Elixir, APIs, automation, databases, and contact.",
     experience:
-      "Experience & education: Rafael Rojas — OrigenLab data & automation, freelance FastAPI/WhatsApp/Stripe platform, Westminster First Class Honours, Brighton foundation year.",
+      "Experience & education: Rafael Rojas — OrigenLab data & automation, freelance FastAPI/WhatsApp/Stripe platform, English tutor (IELTS prep), Westminster First Class Honours, Brighton foundation year.",
     projects:
       "Projects: OrigenLab monorepo, Tattoo Booking Bot (FastAPI, PostgreSQL, Stripe, WhatsApp), LedgerBank API (Phoenix), Political Misinformation Classifier (BERT).",
   },
@@ -114,6 +114,17 @@ export type ExperienceItem = {
 };
 
 export const experience: ExperienceItem[] = [
+  {
+    title: "English Tutor — IELTS Preparation Support",
+    org: "Freelance / Informal",
+    dates: "May 2026 — Present",
+    location: "Chile / Remote",
+    bullets: [
+      "Supported an English learner preparing for an international study-abroad English test, with focus on listening, spelling, pronunciation, and exam-style practice.",
+      "Created short structured exercises for IELTS-style dictation, names, postcodes, email spelling, and common listening traps.",
+      "Adapted explanations between English and Spanish to make grammar, vocabulary, and test instructions easier to understand.",
+    ],
+  },
   {
     title: "Software Engineer at OrigenLab — Data & Automation",
     dates: "January 2026 — Present",
