@@ -115,17 +115,6 @@ export type ExperienceItem = {
 
 export const experience: ExperienceItem[] = [
   {
-    title: "English Tutor — IELTS Preparation Support",
-    org: "Freelance / Informal",
-    dates: "May 2026 — Present",
-    location: "Chile / Remote",
-    bullets: [
-      "Supported an English learner preparing for an international study-abroad English test, with focus on listening, spelling, pronunciation, and exam-style practice.",
-      "Created short structured exercises for IELTS-style dictation, names, postcodes, email spelling, and common listening traps.",
-      "Adapted explanations between English and Spanish to make grammar, vocabulary, and test instructions easier to understand.",
-    ],
-  },
-  {
     title: "Software Engineer at OrigenLab — Data & Automation",
     dates: "January 2026 — Present",
     location: "Chile / Remote",
@@ -146,6 +135,17 @@ export const experience: ExperienceItem[] = [
       "Built a WhatsApp tattoo booking assistant using FastAPI, Meta Cloud API, Stripe Checkout/webhooks, Google Sheets logging, and Google Calendar slot suggestions.",
       "Developed backend automation workflows, validation logic, service integrations, and production-oriented safety checks.",
       "Built and deployed business web solutions including infrastructure setup, domain/DNS configuration, SSL, email configuration, and technical documentation.",
+    ],
+  },
+  {
+    title: "English Tutor — IELTS Preparation Support",
+    org: "Freelance / Informal",
+    dates: "May 2026 — Present",
+    location: "Chile / Remote",
+    bullets: [
+      "Supported an English learner preparing for an international study-abroad English test, with focus on listening, spelling, pronunciation, and exam-style practice.",
+      "Created short structured exercises for IELTS-style dictation, names, postcodes, email spelling, and common listening traps.",
+      "Adapted explanations between English and Spanish to make grammar, vocabulary, and test instructions easier to understand.",
     ],
   },
 ];
