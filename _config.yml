@@ -1,0 +1,17 @@
+# This repo is an Astro app (build: npm run build → dist). If GitHub Pages ever
+# runs the legacy Jekyll builder on the default branch, Jekyll must not read
+# src/**/*.astro: leading --- is Astro/TS, not YAML, and the build will fail.
+#
+# Prefer Pages → Build: GitHub Actions (.github/workflows/deploy.yml).
+exclude:
+  - src
+  - node_modules
+  - dist
+  - .github
+  - .astro
+  - astro.config.mjs
+  - package.json
+  - package-lock.json
+  - tsconfig.json
+  - tailwind.config.mjs
+  - postcss.config.mjs
