@@ -1,0 +1,65 @@
+---
+/** Header lockup matching origenlab.cl — animated three-body mark + wordmark. */
+import OrigenThreeBodyCanvas from './OrigenThreeBodyCanvas.astro';
+import OrigenLogoMarkStatic from './OrigenLogoMarkStatic.astro';
+import {
+  HEADER_CANVAS_PX,
+  HEADER_DISPLAY_PX,
+  lockupMarkPx,
+} from '@/lib/origenlab-logo/composition';
+import { getMotionPreset } from '@/lib/origenlab-logo/motionPresets';
+
+interface Props {
+  /** Slightly larger mark for case-study hero chip. */
+  size?: 'compact' | 'prominent';
+  /** Parent link already names the brand (e.g. preview mock). */
+  decorative?: boolean;
+}
+
+const { size = 'compact', decorative = false } = Astro.props;
+
+const preset = getMotionPreset('header');
+const displayPx = size === 'prominent' ? lockupMarkPx('lg') : HEADER_DISPLAY_PX;
+const canvasPx = size === 'prominent' ? 52 : HEADER_CANVAS_PX;
+const textClass =
+  size === 'prominent'
+    ? 'text-lg font-bold tracking-tight leading-none text-teal-50 sm:text-xl'
+    : 'text-sm font-bold tracking-tight leading-none text-teal-50 sm:text-base';
+
+const lockupAttrs = decorative
+  ? { 'aria-hidden': true as const }
+  : { role: 'img' as const, 'aria-label': 'OrigenLab' as const };
+---
+
+<span
+  class="inline-flex items-center gap-1.5 motion-reduce:hidden"
+  {...lockupAttrs}
+>
+  <OrigenThreeBodyCanvas
+    canvasSize={canvasPx}
+    displaySize={displayPx}
+    variant="dark"
+    solution="premium"
+    showRings={true}
+    loopSeconds={preset.loopSeconds}
+    trailLength={preset.trailLength}
+    motionContext="header"
+    class="shrink-0 -mr-1"
+  />
+  <span class:list={[textClass, 'shrink-0']}>OrigenLab</span>
+</span>
+
+<span
+  class="hidden motion-reduce:inline-flex items-center gap-1.5"
+  {...lockupAttrs}
+>
+  <OrigenLogoMarkStatic
+    size={displayPx}
+    variant="dark"
+    solution="premium"
+    showRings={true}
+    transparentBg={true}
+    class="-mr-1"
+  />
+  <span class:list={[textClass, 'shrink-0']}>OrigenLab</span>
+</span>

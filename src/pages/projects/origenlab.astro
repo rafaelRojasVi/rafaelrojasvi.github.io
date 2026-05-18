@@ -4,6 +4,7 @@ import CaseStudyContent from "@/components/CaseStudyContent.astro";
 import OrigenLabWebsitePreview from "@/components/origenlab/OrigenLabWebsitePreview.astro";
 import OrigenLabEmailPreview from "@/components/origenlab/OrigenLabEmailPreview.astro";
 import OrigenLabFlowDiagram from "@/components/origenlab/OrigenLabFlowDiagram.astro";
+import OrigenLabOpsStack from "@/components/origenlab/OrigenLabOpsStack.astro";
 import { getProjectBySlug } from "@/data/projects";
 
 const project = getProjectBySlug("origenlab")!;
@@ -13,7 +14,15 @@ const project = getProjectBySlug("origenlab")!;
   title={`${project.title} — Case study`}
   description={project.shortDescription}
 >
-  <CaseStudyContent slug="origenlab" insertAfterSectionId="problem">
+  <CaseStudyContent
+    slug="origenlab"
+    insertAfterSectionId="problem"
+    clientBranding={{
+      href: "https://origenlab.cl",
+      name: "OrigenLab",
+      animatedMark: "origenlab",
+    }}
+  >
     <div slot="after-section" class="space-y-12">
       <section
         class="scroll-mt-28 rounded-2xl border border-line/80 bg-surface-overlay/20 px-5 py-8 sm:px-8 sm:py-10"
@@ -26,9 +35,10 @@ const project = getProjectBySlug("origenlab")!;
           From public presence to commercial intelligence
         </h2>
         <p class="mt-4 max-w-3xl text-pretty leading-relaxed text-ink-muted">
-          OrigenLab was not just a website. It became a connected business stack:
-          a public marketing surface, reusable HTML marketing material, and a
-          local-first backend pipeline for commercial operations.
+          OrigenLab is a connected business stack: a product-forward public site,
+          reusable commercial HTML, and a local-first ops layer—SQLite marts,
+          Postgres mirror, read-only FastAPI, Streamlit deep review, and a React
+          KPI panel with health checks and sync metadata.
         </p>
 
         <div class="mt-10 border-t border-line/60 pt-10">
@@ -88,6 +98,15 @@ const project = getProjectBySlug("origenlab")!;
               03 · Data &amp; safety flow
             </p>
             <OrigenLabFlowDiagram />
+          </div>
+
+          <div class="mt-12 min-w-0 border-t border-line/60 pt-12">
+            <p
+              class="mb-2 font-mono text-[10px] uppercase tracking-wider text-ink-faint"
+            >
+              04 · Pipeline, Postgres mirror &amp; API
+            </p>
+            <OrigenLabOpsStack />
           </div>
         </div>
       </section>

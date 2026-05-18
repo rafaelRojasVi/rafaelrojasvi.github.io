@@ -1,0 +1,33 @@
+---
+interface Props {
+  title: string;
+  caption?: string;
+  /** Pre-formatted JSON string or serializable object */
+  data: string | Record<string, unknown> | unknown[];
+}
+
+const { title, caption, data } = Astro.props;
+const body =
+  typeof data === "string" ? data : JSON.stringify(data, null, 2);
+---
+
+<figure class="min-w-0 overflow-hidden rounded-xl border border-line/80 bg-[#0a0e14]">
+  <figcaption
+    class="flex items-center justify-between gap-2 border-b border-line/60 bg-surface-overlay/80 px-3 py-2 sm:px-4"
+  >
+    <span class="font-mono text-[10px] font-medium uppercase tracking-wider text-accent/90">
+      {title}
+    </span>
+    <span class="font-mono text-[9px] text-ink-faint">JSON</span>
+  </figcaption>
+  <pre
+    class="max-h-[min(420px,55vh)] overflow-auto p-3 text-[11px] leading-relaxed text-teal-100/90 sm:p-4 sm:text-xs"><code
+      class="font-mono">{body}</code></pre>
+  {
+    caption && (
+      <p class="border-t border-line/50 px-3 py-2 text-xs leading-relaxed text-ink-muted sm:px-4">
+        {caption}
+      </p>
+    )
+  }
+</figure>

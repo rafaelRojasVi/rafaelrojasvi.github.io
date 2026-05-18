@@ -4,9 +4,9 @@ const flowNodes = [
     id: "public-website",
     short: "Public website",
     group: "A",
-    what: "Astro/Tailwind marketing site — inbound trust, categories, contact paths.",
-    why: "Fast, static, easy to operate; first layer of product discovery.",
-    tech: "Astro · Tailwind · static deployment",
+    what: "Astro 5 marketing site — split hero, Ortoalresa/SERVA catalog, category hubs, logo system, WhatsApp/mailto CTAs.",
+    why: "Fast, static B2B funnel; product discovery without exposing ops data.",
+    tech: "Astro 5 · Tailwind 4 · catalog validator · static deploy",
   },
   {
     id: "commercial-html",
@@ -36,17 +36,41 @@ const flowNodes = [
     id: "business-marts",
     short: "Business marts",
     group: "B",
-    what: "Normalized views: contacts, organizations, documents, opportunities.",
-    why: "Moves from raw rows to the questions sales actually asks.",
-    tech: "SQL · reproducible pipelines",
+    what: "Rebuildable SQLite views: contacts, organizations, documents, opportunity signals, commercial purchase events.",
+    why: "Moves from raw mail rows to the questions sales actually asks—without mutating the archive.",
+    tech: "build_business_mart.py · SQL · pytest on joins",
+  },
+  {
+    id: "postgres-mirror",
+    short: "Postgres mirror sync",
+    group: "B",
+    what: "Alembic schemas (mart, outbound, commercial, reporting) filled by sync_dashboard_postgres_mirror from SQLite.",
+    why: "Stable read model for the API while ingest stays local-first and auditable.",
+    tech: "PostgreSQL · Alembic · sync script · canonical vs archive scope",
+  },
+  {
+    id: "fastapi-read-api",
+    short: "FastAPI (read-only)",
+    group: "B",
+    what: "Commercial Dashboard API: GET-only routes over Postgres—health, KPIs, classification, confirmed OCs, contacts.",
+    why: "Thin contract for the React panel; Pydantic response models; no ingest or send from HTTP.",
+    tech: "FastAPI · /health/dependencies · OpenAPI /docs",
   },
   {
     id: "reports-streamlit",
     short: "Reports / Streamlit review",
     group: "C",
-    what: "Dashboards, filters, and exports before any commercial outbound.",
-    why: "Operators need visible state, not only raw tables.",
-    tech: "Streamlit · Python · exports",
+    what: "Streamlit business-mart app: deep filters, exports, and exploration directly on SQLite.",
+    why: "Operators need ad-hoc analysis; Streamlit stays SQLite-primary.",
+    tech: "Streamlit · Docker optional · Python exports",
+  },
+  {
+    id: "ops-dashboard",
+    short: "React ops dashboard",
+    group: "C",
+    what: "Five-tab panel: KPIs + sync watermark, heuristic classification QA, confirmed OCs vs purchase signals, contacts/orgs, archive scope.",
+    why: "Recurring review UI with parallel fetch + smoke tests—complements Streamlit, does not replace it.",
+    tech: "React 19 · Vite · TypeScript · npm run smoke",
   },
   {
     id: "safety-gates",
@@ -151,15 +175,16 @@ const jsonLd = JSON.stringify(
       >
         B · Data / backend
       </p>
-      <div class="flex min-w-0 flex-col gap-2 lg:flex-row lg:flex-nowrap lg:items-stretch lg:justify-center lg:gap-1">
+      <div
+        class="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
+      >
         {
           flowNodes
             .filter((n) => n.group === "B")
-            .map((n, i, arr) => (
-              <>
+            .map((n) => (
                 <button
                   type="button"
-                  class="olab-node min-w-0 flex-1 text-left lg:max-w-[200px]"
+                  class="olab-node min-w-0 text-left"
                   data-id={n.id}
                   aria-pressed="false"
                   aria-label={n.short}
@@ -169,26 +194,21 @@ const jsonLd = JSON.stringify(
                       ? "Ingest"
                       : n.id === "sqlite-operational-store"
                         ? "Store"
-                        : "Views"}
+                        : n.id === "postgres-mirror"
+                          ? "Mirror"
+                          : n.id === "fastapi-read-api"
+                            ? "API"
+                            : "Views"}
                   </span>
                   <span class="mt-0.5 block text-sm font-semibold leading-snug text-ink">
                     {n.short}
                   </span>
                 </button>
-                {i < arr.length - 1 && (
-                  <div
-                    class="hidden shrink-0 self-center px-0.5 text-accent/45 lg:flex"
-                    aria-hidden="true"
-                  >
-                    <span class="font-mono text-base">→</span>
-                  </div>
-                )}
-              </>
             ))
         }
       </div>
       <p class="mt-2 text-center font-mono text-[11px] text-ink-faint lg:hidden">
-        Ingest → store → marts
+        Ingest → store → marts → mirror → API
       </p>
     </div>
 
@@ -285,12 +305,12 @@ const jsonLd = JSON.stringify(
       <ul class="mt-3 grid gap-2 text-sm leading-snug text-ink-muted sm:grid-cols-2">
         {
           [
-            "Local-first SQLite runtime",
-            "Rebuildable marts",
-            "Guarded outbound candidate exports",
-            "Human-in-the-loop drafting",
-            "Static public website",
-            "Documentation-heavy workflow",
+            "SQLite source of truth · Postgres read mirror",
+            "Alembic + sync_dashboard_postgres_mirror",
+            "GET-only FastAPI · /health/dependencies",
+            "Canonical vs archive API scope",
+            "Guarded outbound + human-reviewed drafts",
+            "React smoke + pytest on parsers/exports",
           ].map((line) => (
             <li class="flex gap-2">
               <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent/60" />

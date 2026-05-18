@@ -14,7 +14,7 @@ export const profile = {
     experience:
       "Experience & education: Rafael Rojas — OrigenLab data & automation, freelance FastAPI/WhatsApp/Stripe platform, English tutor (IELTS prep), Westminster First Class Honours, Brighton foundation year.",
     projects:
-      "Projects: OrigenLab monorepo, Tattoo Booking Bot (FastAPI, PostgreSQL, Stripe, WhatsApp), LedgerBank API (Phoenix), Political Misinformation Classifier (BERT).",
+      "Projects: OrigenLab (Astro catalog site + Python/SQLite ops), Tattoo Booking Bot (FastAPI, PostgreSQL, Stripe, WhatsApp), LedgerBank API (Phoenix), Political Misinformation Classifier (BERT).",
   },
   headline:
     "I enjoy turning messy real-world problems into structured, reliable systems—with solid databases, integrations, and backend logic behind them.",
@@ -120,9 +120,9 @@ export const experience: ExperienceItem[] = [
     location: "Chile / Remote",
     featured: true,
     bullets: [
-      "Built a Python/SQLite backend pipeline for OrigenLab to ingest emails, generate business reports, track leads, and support safe outbound workflows.",
-      "Implemented guarded outreach tooling with Sent-history checks, suppression logic, duplicate prevention, and human-reviewed LLM draft assistance.",
-      "Developed internal Streamlit dashboards, export scripts, operational reports, and monorepo documentation across a Python backend and Astro marketing site.",
+      "Evolved origenlab.cl (Astro 5 / Tailwind 4): product catalog, Ortoalresa/SERVA vitrine, category hubs, custom three-body logo system, and catalog validation in CI.",
+      "Built apps/email-pipeline (Gmail→SQLite marts→Alembic Postgres mirror, read-only FastAPI with /health/dependencies) and apps/dashboard (React KPIs, classification QA, confirmed OCs); Streamlit for deep review; safe outbound with human-reviewed LLM drafts.",
+      "Maintained monorepo docs and pytest on parsers, exports, and commercial-safety gates—no autonomous sending.",
     ],
   },
   {

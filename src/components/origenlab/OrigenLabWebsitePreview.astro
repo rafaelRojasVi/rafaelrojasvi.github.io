@@ -1,5 +1,7 @@
 ---
-/** Visual mock inspired by origenlab.cl — no private HTML embedded; public URL only */
+/** Visual mock inspired by origenlab.cl (May 2026 redesign) — no private HTML embedded */
+import OrigenLabHeaderLockup from "@/components/origenlab/logo/OrigenLabHeaderLockup.astro";
+
 const LIVE = "https://origenlab.cl";
 const plusTexture = `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`;
 ---
@@ -8,7 +10,6 @@ const plusTexture = `url("data:image/svg+xml,%3Csvg width='60' height='60' viewB
   class="olab-site-mock min-w-0 max-w-full overflow-hidden rounded-xl border border-line bg-surface-overlay/60 shadow-card"
   aria-label="Visual mock of the OrigenLab public website"
 >
-  <!-- Browser chrome -->
   <div
     class="flex items-center gap-2 border-b border-line/80 bg-[#1a2332] px-2.5 py-2 sm:px-3"
   >
@@ -29,151 +30,194 @@ const plusTexture = `url("data:image/svg+xml,%3Csvg width='60' height='60' viewB
   </div>
 
   <div
-    class="max-h-[min(70vh,720px)] overflow-y-auto overflow-x-hidden bg-slate-50 text-slate-900"
+    class="max-h-[min(75vh,780px)] overflow-y-auto overflow-x-hidden bg-slate-50 text-slate-900"
   >
     <div class="min-w-0 max-w-full">
-      <!-- Site header (matches real nav labels) -->
-      <header
-        class="border-b border-teal-950/30 bg-gradient-to-r from-[#05231f] via-[#042f2e] to-[#065f46]"
-      >
+      <!-- Sticky-style header -->
+      <header class="border-b border-teal-950/30 bg-[#042f2e]">
         <div
-          class="flex flex-wrap items-center justify-between gap-2 px-3 py-2.5 sm:px-4"
+          class="flex flex-wrap items-center justify-between gap-2 px-3 py-2 sm:px-4"
         >
-          <span class="text-sm font-bold tracking-tight text-white">OrigenLab</span>
+          <a
+            href={LIVE}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="shrink-0 rounded-md focus-visible:outline focus-visible:ring-2 focus-visible:ring-teal-200/80"
+            aria-label="OrigenLab"
+          >
+            <OrigenLabHeaderLockup decorative />
+          </a>
           <nav
-            class="flex flex-wrap justify-end gap-x-3 gap-y-1 text-[11px] font-semibold text-teal-100/95 sm:gap-x-4 sm:text-xs"
+            class="flex flex-wrap items-center justify-end gap-x-2.5 gap-y-1 text-[10px] font-semibold text-teal-100/95 sm:gap-x-3 sm:text-[11px]"
             aria-hidden="true"
           >
             <span>Nosotros</span>
             <span>Productos</span>
             <span>Marcas</span>
             <span>Contacto</span>
+            <span
+              class="rounded-md bg-teal-500/90 px-2 py-0.5 text-white shadow-sm"
+            >
+              Cotizar
+            </span>
           </nav>
         </div>
       </header>
 
-      <!-- Hero (structure aligned with production Hero.astro) -->
-      <section class="relative overflow-hidden text-center">
+      <!-- Split hero -->
+      <section
+        class="relative overflow-hidden bg-gradient-to-br from-[#042f2e] via-[#0f4c47] to-[#115e59] text-white"
+      >
         <div
-          class="relative bg-gradient-to-br from-[#134e4a] via-[#0f766e] to-[#115e59] px-4 pb-12 pt-8 text-white sm:px-6 sm:pb-14 sm:pt-10"
-        >
-          <div
-            class="pointer-events-none absolute inset-0 opacity-[0.09]"
-            style={`background-image: ${plusTexture};`}
-            aria-hidden="true"
-          />
-          <div class="relative mx-auto max-w-2xl">
+          class="pointer-events-none absolute inset-0 opacity-[0.06]"
+          style={`background-image: ${plusTexture};`}
+          aria-hidden="true"
+        />
+        <div class="relative grid gap-6 px-3 py-8 sm:px-5 md:grid-cols-2 md:items-center md:py-10">
+          <div>
             <p
-              class="mb-2 font-semibold uppercase tracking-[0.22em] text-teal-100/95"
+              class="text-[10px] font-semibold uppercase tracking-[0.2em] text-teal-200/95"
             >
               OrigenLab
             </p>
             <h2
-              class="text-xl font-bold leading-tight tracking-tight sm:text-2xl lg:text-[1.65rem]"
+              class="mt-2 text-lg font-bold leading-tight tracking-tight sm:text-xl"
             >
-              Equipos para laboratorio en todo Chile
+              Equipos para laboratorio, cotizados con criterio técnico
             </h2>
-            <p
-              class="mx-auto mt-3 max-w-xl text-xs leading-relaxed text-teal-50 sm:text-sm"
-            >
-              Alimentos, control de calidad y laboratorio clínico. Cotización por
-              correo o WhatsApp; asesoría y soporte cuando el equipo lo requiera.
+            <p class="mt-2 text-[11px] leading-relaxed text-teal-50/95 sm:text-xs">
+              Laboratorios de servicio, universidades, clínicas e industria en todo
+              Chile.
             </p>
-            <div
-              class="mt-6 flex flex-col items-center justify-center gap-2 sm:flex-row sm:flex-wrap sm:gap-3"
+            <ul
+              class="mt-3 flex flex-wrap gap-1.5"
+              aria-label="Confianza comercial"
             >
+              {
+                [
+                  "ValmotionLab · nacional",
+                  "Cotización mail/WhatsApp",
+                  "Asesoría previa",
+                ].map((chip) => (
+                  <li>
+                    <span class="rounded-full border border-white/20 bg-white/10 px-2 py-0.5 text-[9px] font-medium text-teal-50">
+                      {chip}
+                    </span>
+                  </li>
+                ))
+              }
+            </ul>
+            <div class="mt-4 flex flex-wrap gap-2">
               <span
-                class="inline-flex min-w-[10rem] justify-center rounded-lg bg-white px-5 py-2.5 text-xs font-bold text-[#0f766e] shadow-md"
+                class="rounded-lg bg-white px-3 py-1.5 text-[10px] font-bold text-[#0f766e]"
               >
                 Solicitar cotización
               </span>
               <span
-                class="inline-flex min-w-[10rem] justify-center rounded-lg border-2 border-white/85 bg-transparent px-5 py-2.5 text-xs font-semibold text-white"
+                class="rounded-lg border border-white/70 px-3 py-1.5 text-[10px] font-semibold"
               >
-                Ver equipos por categoría
+                Ver productos
               </span>
             </div>
           </div>
-          <!-- Wave -->
+          <!-- Featured product panel -->
           <div
-            class="absolute bottom-0 left-0 right-0 translate-y-px leading-none"
+            class="rounded-xl border border-slate-200/80 bg-white p-3 text-slate-900 shadow-md"
           >
-            <svg
-              class="block w-full text-slate-50"
-              viewBox="0 0 1440 48"
-              fill="currentColor"
-              preserveAspectRatio="none"
-              aria-hidden="true"
+            <p class="text-[9px] font-semibold uppercase tracking-wide text-[#0f766e]">
+              Ortoalresa
+            </p>
+            <p class="mt-0.5 text-xs font-bold text-slate-900">Digicen 22 R</p>
+            <div
+              class="mt-2 flex min-h-[5.5rem] items-center justify-center rounded-lg bg-gradient-to-b from-slate-50 to-slate-100 text-[10px] text-slate-400"
             >
-              <path
-                d="M0,24 C240,48 480,0 720,20 C960,40 1200,8 1440,28 L1440,48 L0,48 Z"
-              />
-            </svg>
+              Imagen de producto
+            </div>
+            <p class="mt-2 text-[9px] leading-snug text-slate-500">
+              Microcentrífuga refrigerada · ficha y PDF en sitio
+            </p>
+            <div class="mt-2 flex flex-wrap gap-1">
+              {
+                ["Alimentos", "QC", "Clínico"].map((c) => (
+                  <span class="rounded bg-teal-50 px-1.5 py-0.5 text-[8px] font-medium text-teal-800">
+                    {c}
+                  </span>
+                ))
+              }
+            </div>
           </div>
         </div>
+      </section>
 
-        <!-- Intro strip -->
-        <div class="border-b border-slate-200 bg-slate-50 px-3 py-6 sm:px-5">
-          <p class="mx-auto max-w-xl text-center text-[11px] leading-relaxed text-slate-600 sm:text-sm">
-            Atendemos laboratorios de servicios e investigación, universidades,
-            clínicas, hospitales e industria en todo Chile.
-          </p>
-        </div>
+      <!-- Commercial lines -->
+      <section class="border-b border-slate-200 bg-white px-3 py-6 sm:px-5">
+        <h3 class="text-sm font-bold text-[#042f2e]">
+          Líneas disponibles para cotización
+        </h3>
+        <ul class="mt-4 grid gap-3 sm:grid-cols-2">
+          <li class="rounded-xl border border-slate-200 bg-gradient-to-b from-white to-slate-50/80 p-3">
+            <p class="text-[9px] font-semibold uppercase tracking-wide text-[#0f766e]">
+              Ortoalresa
+            </p>
+            <p class="mt-1 text-xs font-bold">Centrífugas Ortoalresa</p>
+            <p class="mt-1 text-[10px] leading-snug text-slate-600">
+              Cinco modelos en catálogo · comparación en /productos/centrifugas
+            </p>
+          </li>
+          <li class="rounded-xl border border-slate-200 bg-gradient-to-b from-white to-slate-50/80 p-3">
+            <p class="text-[9px] font-semibold uppercase tracking-wide text-[#0f766e]">
+              SERVA
+            </p>
+            <p class="mt-1 text-xs font-bold">Reactivos e insumos SERVA</p>
+            <p class="mt-1 text-[10px] leading-snug text-slate-600">
+              BlueSlick™, TEMED, REPEL-SILANE en página de marca
+            </p>
+          </li>
+        </ul>
+      </section>
 
-        <!-- Value props (real titles from public site) -->
-        <div class="px-3 py-6 sm:px-5 sm:py-8">
-          <h3
-            class="text-left text-sm font-bold text-[#0f766e] sm:text-base"
-          >
-            Por qué contactarnos
-          </h3>
-          <ul class="mt-4 grid gap-3 sm:grid-cols-3 sm:gap-4">
-            {
-              [
-                {
-                  t: "Tres líneas claras",
-                  d: "Alimentos, control de calidad y laboratorio clínico: elige tu contexto y cotiza con información.",
-                },
-                {
-                  t: "Acompañamiento postventa",
-                  d: "Soporte y asesoría; garantía según fabricante; instalación o puesta en marcha cuando aplique.",
-                },
-                {
-                  t: "Cotización sin fricción",
-                  d: "Correo y WhatsApp; base en Valdivia, atención en todo Chile.",
-                },
-              ].map((c) => (
-                <li class="rounded-lg border border-slate-200 bg-white p-3 text-left shadow-sm sm:p-3.5">
-                  <div class="border-l-4 border-[#0f766e] pl-2.5">
-                    <p class="text-xs font-bold text-slate-900 sm:text-sm">
-                      {c.t}
-                    </p>
-                    <p class="mt-1.5 text-[10px] leading-snug text-slate-600 sm:text-xs">
-                      {c.d}
-                    </p>
-                  </div>
+      <!-- Categories -->
+      <section class="bg-slate-50 px-3 py-6 sm:px-5">
+        <h3 class="text-sm font-bold text-[#042f2e]">
+          Explore por necesidad del laboratorio
+        </h3>
+        <ul class="mt-3 grid gap-2 sm:grid-cols-3">
+          {
+            ["Alimentos", "Control de calidad", "Laboratorio clínico"].map(
+              (cat) => (
+                <li class="rounded-lg border border-slate-200 bg-white p-2.5 text-center">
+                  <span class="text-[10px] font-bold text-slate-800">{cat}</span>
                 </li>
-              ))
-            }
-          </ul>
-        </div>
+              ),
+            )
+          }
+        </ul>
+      </section>
 
-        <div
-          class="flex justify-end px-3 pb-4 pt-1"
-          aria-hidden="true"
-        >
-          <div
-            class="flex h-10 w-10 items-center justify-center rounded-full bg-[#25d366] shadow-md ring-2 ring-white"
-          >
-            <svg
-              class="h-5 w-5 text-white"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-            </svg>
-          </div>
-        </div>
+      <!-- Process -->
+      <section class="border-t border-slate-200 bg-white px-3 py-5 sm:px-5">
+        <h3 class="text-xs font-bold text-[#042f2e]">Cómo trabajamos</h3>
+        <ol class="mt-3 grid gap-2 sm:grid-cols-4">
+          {
+            [
+              "Cuéntenos su necesidad",
+              "Revisamos alternativas",
+              "Enviamos cotización",
+              "Coordinamos condiciones",
+            ].map((step, i) => (
+              <li class="text-center">
+                <span
+                  class="mx-auto flex h-6 w-6 items-center justify-center rounded-full bg-[#0f766e] text-[10px] font-bold text-white"
+                >
+                  {i + 1}
+                </span>
+                <p class="mt-1 text-[9px] font-semibold leading-tight text-slate-700">
+                  {step}
+                </p>
+              </li>
+            ))
+          }
+        </ol>
       </section>
     </div>
   </div>
@@ -190,7 +234,7 @@ const plusTexture = `url("data:image/svg+xml,%3Csvg width='60' height='60' viewB
       Sitio en producción · origenlab.cl →
     </a>
     <span class="font-mono text-[10px] uppercase tracking-wider text-ink-faint">
-      Astro + Tailwind · estático
+      Astro 5 + Tailwind 4 · catálogo tipado
     </span>
   </div>
 </div>

@@ -2,13 +2,23 @@
 import { getProjectBySlug } from "@/data/projects";
 import SectionHeading from "@/components/SectionHeading.astro";
 import TechPill from "@/components/TechPill.astro";
+import OrigenLabHeaderLockup from "@/components/origenlab/logo/OrigenLabHeaderLockup.astro";
+
 interface Props {
   slug: string;
   /** When set, render `<slot name="after-section" />` immediately after this section's id. */
   insertAfterSectionId?: string;
+  /** Optional client logo linking to their live site (case study header). */
+  clientBranding?: {
+    href: string;
+    name: string;
+    logoSrc?: string;
+    /** Live three-body canvas mark (OrigenLab). */
+    animatedMark?: "origenlab";
+  };
 }
 
-const { slug, insertAfterSectionId } = Astro.props;
+const { slug, insertAfterSectionId, clientBranding } = Astro.props;
 const project = getProjectBySlug(slug);
 
 if (!project) {
@@ -25,7 +35,41 @@ if (!project) {
     <span class="text-ink">{project.title}</span>
   </nav>
 
-  <header class="mt-10">
+  <header class="mt-8">
+    {
+      clientBranding?.animatedMark === "origenlab" && (
+        <a
+          href={clientBranding.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mb-5 inline-flex items-center rounded-lg bg-[#042f2e] px-3.5 py-2.5 shadow-[0_0_0_1px_rgba(45,212,191,0.14)] transition hover:bg-[#0a3d3a] hover:shadow-[0_0_0_1px_rgba(45,212,191,0.28)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-400/80"
+          title={`${clientBranding.name} — live site`}
+        >
+          <OrigenLabHeaderLockup size="prominent" />
+          <span class="sr-only"> — live site</span>
+        </a>
+      )
+    }
+    {
+      clientBranding?.logoSrc && !clientBranding.animatedMark && (
+        <a
+          href={clientBranding.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mb-5 inline-flex items-center rounded-lg border border-line/80 bg-surface-overlay/40 p-2 transition hover:border-accent/40 hover:bg-surface-overlay/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          title={`${clientBranding.name} — live site`}
+        >
+          <img
+            src={clientBranding.logoSrc}
+            alt={clientBranding.name}
+            width="176"
+            height="38"
+            class="h-8 w-auto sm:h-9"
+            loading="eager"
+          />
+        </a>
+      )
+    }
     <div>
       <p class="font-mono text-xs uppercase tracking-[0.28em] text-accent/90">
         Case study
