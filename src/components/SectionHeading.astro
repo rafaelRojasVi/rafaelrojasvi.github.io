@@ -26,9 +26,10 @@ const { id, eyebrow, title, description, align = "left" } = Astro.props;
   <h2
     id={id}
     class:list={[
-      "mt-3 text-balance text-2xl font-semibold tracking-tight text-ink sm:text-3xl",
+      "mt-3 text-2xl font-semibold tracking-tight text-ink hyphens-none sm:text-3xl",
       align === "center" && "mx-auto",
     ]}
+    style="text-wrap: pretty;"
   >
     {title}
   </h2>

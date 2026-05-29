@@ -23,7 +23,7 @@ export const projects: Project[] = [
     slug: "origenlab",
     title: "OrigenLab",
     subtitle:
-      "Employed build: Astro 5 public site, Gmail→SQLite pipeline, Postgres mirror, read-only FastAPI, React ops dashboard",
+      "Production full-stack operations platform: Astro public site, Python email intelligence pipeline, SQLite operational store, read-only FastAPI, optional Postgres mirror reporting, and React operator dashboard",
     stack: [
       "Astro 5",
       "Tailwind CSS 4",
@@ -39,19 +39,20 @@ export const projects: Project[] = [
       "pytest",
     ],
     shortDescription:
-      "Production monorepo: origenlab.cl marketing (catalog, brand system), plus apps/email-pipeline (Gmail→SQLite marts→Postgres mirror→FastAPI) and apps/dashboard (read-only React KPIs, classification QA, confirmed OCs)—with health checks and human-reviewed outreach gates.",
+      "Four-app monorepo: origenlab.cl (Astro), Python ingest/marts (SQLite truth), read-only operator API (:8001), and React operator dashboard—with optional Postgres mirror reporting and human-reviewed outreach gates.",
     engineeringFocus: [
       "Public site: product-forward homepage, Ortoalresa centrifuge vitrine + comparison, SERVA reagents, catalog validator",
       "Brand: three-body logo (canvas header), static lockups, SVG tooling, conservative commercial copy governance",
-      "Pipeline: SQLite authoritative store, Alembic Postgres mirror, sync runbook, canonical vs archive API scope",
-      "API & UI: GET-only FastAPI (/health/dependencies, KPIs, classification, commercial events); React 19 panel + smoke tests",
+      "Pipeline: SQLite authoritative store; optional Alembic Postgres mirror for reporting; email-pipeline owns all writes",
+      "API & UI: GET-only apps/api (operator routes + /mirror/* reporting); multi-section React operator dashboard + smoke tests",
+      "Lead intelligence: SQLite lead research imports, Postgres lead_intel mirror, GET /mirror/leads/*, read-only Prospectos page",
       "Safe outbound: sent-history, suppression, duplicates, human-reviewed LLM drafts—no auto-send",
     ],
     status: "Production (employed)",
     privacyNote:
       "Abstract diagrams and generic descriptions only—no customer or message content.",
     caseStudyIntro:
-      "OrigenLab distributes laboratory equipment across Chile (Ortoalresa centrifuges, SERVA reagents, category hubs for food/QC/clinical labs). I work across apps/web (origenlab.cl), apps/email-pipeline (ingest, SQLite marts, Postgres mirror, FastAPI), and apps/dashboard (read-only React). Previews and JSON shapes below are sanitized—no proprietary mail or customer content.",
+      "OrigenLab distributes laboratory equipment across Chile (Ortoalresa centrifuges, SERVA reagents, category hubs for food/QC/clinical labs). I built a production full-stack operations platform across four apps: public Astro site, Python email intelligence pipeline, SQLite operational store, read-only FastAPI operator API, optional Postgres mirror reporting, and a React operator dashboard. Previews and JSON shapes below are sanitized—no proprietary mail or customer content.",
     sections: [
       {
         id: "problem",
@@ -63,14 +64,16 @@ export const projects: Project[] = [
       },
       {
         id: "built",
-        title: "What I built",
+        title: "What\u00a0I built",
         bullets: [
           "Redesigned origenlab.cl: split hero with featured Ortoalresa product, trust chips, Ortoalresa/SERVA commercial lines, three category hubs, quote process, and FAQ—typed catalog data with a validate-catalog CI guard.",
           "Product vitrine: five Ortoalresa microcentrífugas (local AVIF, PDFs, spec tables) plus comparison on /productos/centrifugas; SERVA reagent SKUs on the brand page; unified WhatsApp/mailto CTAs.",
           "Custom brand system: velocity-Verlet three-body mark in the header, static footer lockup, mint favicon, SVG export tooling, and internal logo-lab for motion QA.",
-          "apps/email-pipeline: Gmail/PST ingest, SQLite archive + business marts, commercial OC promotion, Alembic Postgres DDL, sync_dashboard_postgres_mirror.",
-          "Read-only FastAPI (health, /dashboard/summary, classification, /commercial/purchase-events, outbound/readiness) consumed by apps/dashboard React panel.",
-          "Streamlit for deep SQLite review; React for recurring KPIs, sync freshness, and separated confirmed OCs vs heuristic purchase signals.",
+          "apps/email-pipeline: Gmail/PST ingest, SQLite archive + business marts, outbound safety, reports, Streamlit, mutation scripts—no FastAPI.",
+          "apps/api: read-only operator API on port 8001 (SQLite-first routes for health, warm cases, equipment opportunities, contacts; optional Postgres mirror reporting under /mirror/*).",
+          "apps/dashboard: multi-section React operator UI (Today, inbox triage, opportunities, deals, Prospectos, catálogo, suppliers, tenders, payments/logistics, contacts, system)—read-only, no send path.",
+          "Streamlit for deep SQLite review; React for day-to-day operator workflows and mirror-backed reporting when Postgres is synced.",
+          "Prospectos / lead intelligence: SQLite lead research imports, Postgres lead_intel mirror, mirror lead routes, filters by classification, sector, region, campaign bucket, score, and blocked status.",
           "Safe outbound: sent-history, suppression, duplicate prevention, human-reviewed LLM drafts (no auto-send); pytest + npm run smoke on API contracts.",
         ],
       },
@@ -78,9 +81,9 @@ export const projects: Project[] = [
         id: "architecture",
         title: "Architecture",
         body: [
-          "Three apps in one monorepo: apps/web (static Astro), apps/email-pipeline (Python ingest + SQLite + sync + FastAPI), apps/dashboard (React consumer). Marketing never calls the pipeline at runtime.",
-          "SQLite remains authoritative for ingest and mart rebuilds. PostgreSQL holds Alembic-managed mirror tables (mart, outbound, commercial, reporting) populated by sync scripts—the API is GET-only and never triggers ingest.",
-          "Canonical API scope filters to the operational Gmail mailbox; full PST archive totals are opt-in via scope=archive so KPIs stay honest for day-to-day work.",
+          "Four apps in one monorepo: apps/web (Astro marketing), apps/email-pipeline (Python ingest, SQLite truth, sync scripts, Streamlit), apps/api (read-only FastAPI :8001), apps/dashboard (React operator UI). Marketing never calls the pipeline at runtime.",
+          "SQLite is authoritative for operational data and outbound safety. apps/api is GET-only and does not ingest, send mail, or mutate records. PostgreSQL mirror is optional/parked/reporting-oriented—synced from SQLite, consumed under /mirror/* when configured.",
+          "Operator routes serve Today and triage from SQLite; mirror reporting routes expose KPIs, classification, commercial events, outbound readiness, and lead prospects when Postgres is available.",
         ],
       },
       {
@@ -90,9 +93,9 @@ export const projects: Project[] = [
           "Ingestion is incremental where possible; normalization steps are tested because email is never clean. Business views separate facts (what was received/sent) from proposed next actions and from heuristic classification labels.",
         ],
         bullets: [
-          "Operator runbook: ingest → build_business_mart → optional OC promote → sync_dashboard_postgres_mirror → uvicorn API → React panel.",
-          "/health and /health/dependencies verify Postgres before operators trust KPIs; reporting.dashboard_sync_run exposes mirror age.",
-          "Confirmed purchase events (commercial.*) vs classification QA (reporting.email_classification_canonical)—different trust levels, different UI tabs.",
+          "Operator runbook: ingest → build_business_mart → optional OC promote → (optional) sync_dashboard_postgres_mirror → uvicorn apps/api :8001 → React dashboard.",
+          "GET /health and GET /operator/status for SQLite operator plane; GET /mirror/meta/dashboard-sync and GET /mirror/health/dependencies when mirror reporting is enabled.",
+          "Confirmed purchase events (mirror commercial routes) vs heuristic classification QA—different trust levels, separated in the UI.",
           "pytest on parsers/exports; Vitest + npm run smoke on dashboard API wiring.",
         ],
       },
@@ -105,7 +108,7 @@ export const projects: Project[] = [
       },
       {
         id: "learned",
-        title: "What I learned",
+        title: "What\u00a0I learned",
         body: [
           "The highest leverage features are often auditability and guardrails, not more model calls.",
           "When data is sensitive, folder layout and runbooks are part of the product, not an afterthought.",

@@ -1,191 +1,85 @@
 ---
 import JsonSnippet from "@/components/origenlab/JsonSnippet.astro";
 
-const monorepoLayout = {
-  repo: "origenlab (monorepo)",
-  apps: {
-    web: {
-      path: "apps/web",
-      role: "Public marketing site (origenlab.cl)",
-      stack: ["Astro 5", "Tailwind 4", "typed product catalog"],
-      runtime: "static deploy — no pipeline dependency",
-    },
-    "email-pipeline": {
-      path: "apps/email-pipeline",
-      role: "Ingest, SQLite marts, commercial promotion, sync, FastAPI",
-      stack: ["Python 3.12", "uv", "SQLite", "Alembic", "FastAPI", "Streamlit"],
-      data_root: "~/data/origenlab-email/ (outside git)",
-    },
-    dashboard: {
-      path: "apps/dashboard",
-      role: "Read-only React operator panel",
-      stack: ["React 19", "Vite 6", "Tailwind 4", "TypeScript"],
-      consumes: "http://127.0.0.1:8000 (FastAPI)",
-    },
+const monorepoApps = [
+  {
+    app: "apps/web",
+    role: "Astro / Tailwind public marketing site (origenlab.cl)",
   },
-};
-
-const postgresSchemas = {
-  note: "Alembic-managed DDL; loaders copy from SQLite (eventually consistent mirror)",
-  schemas: {
-    archive: ["emails", "attachments", "attachment_extracts"],
-    ops: ["pipeline_run", "pipeline_kv"],
-    mart: [
-      "contact_master",
-      "organization_master",
-      "opportunity_signals",
-      "contact_master_canonical",
-      "organization_master_canonical",
-      "opportunity_signals_canonical",
-    ],
-    outbound: [
-      "contact_email_suppression",
-      "contact_domain_suppression",
-      "outreach_contact_state",
-    ],
-    commercial: ["purchase_event", "purchase_event_item"],
-    reporting: ["dashboard_sync_run", "email_classification_canonical"],
+  {
+    app: "apps/email-pipeline",
+    role: "Python / uv Gmail–PST ingest, SQLite marts, outbound safety, reports, Streamlit, mutation scripts (no FastAPI)",
   },
-  default_api_scope: "canonical",
-  canonical_scope:
-    "Operational Gmail mailbox (contacto@origenlab.cl) — KPIs exclude full PST archive unless ?scope=archive",
-};
+  {
+    app: "apps/api",
+    role: "GET-only FastAPI operator API on :8001 (SQLite-first; optional mirror reporting)",
+  },
+  {
+    app: "apps/dashboard",
+    role: "React / Vite read-only operator dashboard",
+  },
+];
 
-const healthOk = {
-  status: "ok",
-  service: "origenlab-api",
-  api_version: "v1",
-  read_only: true,
-};
-
-const healthDependencies = {
-  status: "ok",
-  dependencies: [
-    { name: "postgres", status: "ok", detail: "connected" },
-    {
-      name: "sqlite",
-      status: "ok",
-      detail: "read-only ping (authoritative ingest; not queried by API v1)",
-    },
-  ],
-  postgres_url_redacted: "postgresql+psycopg://user:***@127.0.0.1:5432/origenlab_mirror",
-  note: "API reads Postgres mirrors only. SQLite + Gmail ingest remain the operational source of truth.",
-};
-
-const dashboardSummary = {
+const mirrorDashboardSummary = {
   scope: "canonical",
-  data_source: "postgres_mirror",
-  eventually_consistent: true,
   contact_count: 412,
   organization_count: 198,
   opportunity_signal_count: 1203,
-  commercial_purchase_event_count: 3,
-  latest_confirmed_purchase_gross_clp: 1499400,
-  email_suppression_count: 45,
-  domain_suppression_count: 12,
-  outreach_state_count: 890,
-  archive_mirror_counts: {
-    contact_count: 27198,
-    organization_count: 10688,
-    opportunity_signal_count: 2705,
-  },
-  tables: {
-    "mart.contact_master_canonical": true,
-    "reporting.email_classification_canonical": true,
-  },
 };
 
-const syncMeta = {
-  table_available: true,
-  status: "success",
-  latest_sync_id: 42,
-  started_at: "2026-05-18T10:00:00Z",
-  finished_at: "2026-05-18T10:02:15Z",
-  elapsed_seconds: 135.2,
-  canonical_contact_count: 412,
-  archive_contact_count: 27198,
-  postgres_mirror_note:
-    "Mirror is read-only for the React panel; re-run sync after ingest + mart rebuild.",
-  error_message: null,
+const leadProspectItem = {
+  prospect_key: "lab-ejemplo-cl",
+  classification: "equipment_buyer",
+  region: "Los Ríos",
+  score: 72,
+  blocked: false,
 };
 
-const purchaseEventExample = {
-  id: 1,
-  purchase_status: "purchase_order_received",
-  purchase_status_label_es: "OC recibida",
-  buyer_org_name: "Universidad ejemplo (anon.)",
-  buyer_contact_email: "compras@lab-ejemplo.cl",
-  oc_number: "26xxx",
-  quote_number: "Q-2026-001",
-  net_amount_clp: 1260000,
-  iva_amount_clp: 239400,
-  gross_amount_clp: 1499400,
-  currency: "CLP",
-  line_items: [
-    {
-      line_number: 1,
-      product_name: "Reactivo ejemplo 250 ml",
-      brand: "SERVA",
-      net_amount_clp: 695000,
-      evidence_source: "oc_attachment",
-    },
-  ],
-  disclaimer:
-    "Shape from /commercial/purchase-events — promoted from Gmail/SQLite, not heuristic classification.",
-};
+const operatorRoutes = [
+  { method: "GET", path: "/health", purpose: "Liveness (SQLite operator plane)" },
+  { method: "GET", path: "/operator/status", purpose: "Operator verdict / staleness" },
+  { method: "GET", path: "/cases/warm", purpose: "Warm commercial case queue (sanitized previews)" },
+  { method: "GET", path: "/opportunities/equipment", purpose: "Equipment-first operator queue manifest" },
+  { method: "GET", path: "/contacts/{email}", purpose: "Read-only contact profile (Today side panel)" },
+];
 
-const classificationRecent = {
-  scope: "canonical",
-  items: [
-    {
-      email_id: 99123,
-      date_iso: "2026-05-10T14:22:00Z",
-      from_addr: "buyer@lab-ejemplo.cl",
-      subject: "Solicitud cotización centrífuga",
-      predicted_label: "quote_request",
-      confidence: "high",
-      recommended_action: "review_quote",
-      etiqueta_ui: "Cotización",
-      evidence: "subject + body keywords",
-    },
-  ],
-  disclaimer: "Heuristic QA labels — not CRM truth; separate from confirmed OCs.",
-};
-
-const outboundReadiness = {
-  verdict: "ready_with_warnings",
-  data_source: "postgres_mirror",
-  eventually_consistent: true,
-  counts: { canonical_contacts: 412 },
-  warnings: ["Mirror last synced > 24h ago"],
-  errors: [],
-};
-
-const apiRoutes = [
-  { method: "GET", path: "/health", purpose: "Liveness" },
-  { method: "GET", path: "/health/dependencies", purpose: "Postgres + SQLite ping" },
-  { method: "GET", path: "/meta/dashboard-sync", purpose: "Last mirror sync run" },
-  { method: "GET", path: "/dashboard/summary", purpose: "KPI counts (?scope=canonical|archive)" },
-  { method: "GET", path: "/classification/summary", purpose: "Label distribution" },
-  { method: "GET", path: "/classification/recent", purpose: "Recent classified threads" },
-  { method: "GET", path: "/commercial/purchase-events", purpose: "Confirmed purchase orders" },
-  { method: "GET", path: "/contacts", purpose: "Paginated contacts" },
-  { method: "GET", path: "/organizations", purpose: "Paginated organizations" },
-  { method: "GET", path: "/outbound/readiness", purpose: "Pre-flight for outbound work" },
+const mirrorRoutes = [
+  { method: "GET", path: "/mirror/dashboard/summary", purpose: "KPI counts (?scope=canonical|archive)" },
+  { method: "GET", path: "/mirror/meta/dashboard-sync", purpose: "Last mirror sync run" },
+  { method: "GET", path: "/mirror/classification/summary", purpose: "Label distribution (heuristic QA)" },
+  { method: "GET", path: "/mirror/commercial/purchase-events", purpose: "Confirmed purchase orders" },
+  { method: "GET", path: "/mirror/outbound/readiness", purpose: "Mirror pre-flight for outbound review" },
+  { method: "GET", path: "/mirror/leads/prospects", purpose: "Lead research prospects (filters, read-only)" },
+  { method: "GET", path: "/mirror/leads/summary", purpose: "Lead intel rollup" },
+  { method: "GET", path: "/mirror/health/dependencies", purpose: "Postgres + SQLite ping (when mirror enabled)" },
 ];
 
 const operatorRunbook = [
-  "Gmail / IMAP ingest → SQLite archive",
+  "Gmail / IMAP ingest → SQLite archive (apps/email-pipeline)",
   "build_business_mart.py --rebuild (contacts, orgs, signals)",
   "Optional: promote confirmed OCs → commercial_purchase_* (SQLite)",
-  "sync_dashboard_postgres_mirror.py → Postgres reporting + mart mirrors",
-  "uvicorn origenlab_api (FastAPI :8000)",
-  "npm run dev in apps/dashboard (React :5173) — npm run smoke hits /health + /dashboard/summary",
+  "Optional: sync_dashboard_postgres_mirror.py → Postgres reporting mirror",
+  "uvicorn origenlab_api.main:app --port 8001 (apps/api)",
+  "npm run dev in apps/dashboard (React :5173) — smoke hits /health + /operator/status",
+];
+
+const dashboardSections = [
+  "Today",
+  "Inbox triage",
+  "Opportunities",
+  "Deals",
+  "Prospectos",
+  "Catálogo",
+  "Suppliers",
+  "Tenders",
+  "Payments / logistics",
+  "Contacts",
+  "System",
 ];
 ---
 
 <section
-  class="scroll-mt-28 rounded-2xl border border-line/80 bg-surface-overlay/20 px-5 py-8 sm:px-8 sm:py-10"
+  class="case-study-section scroll-mt-28 rounded-2xl border border-line/80 bg-surface-overlay/20 px-5 py-8 sm:px-8 sm:py-10"
   aria-labelledby="origenlab-ops-heading"
 >
   <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-accent/90">
@@ -194,51 +88,67 @@ const operatorRunbook = [
   <h2
     id="origenlab-ops-heading"
     class="mt-2 text-xl font-semibold tracking-tight text-ink sm:text-2xl"
+    style="text-wrap: pretty;"
   >
-    Email pipeline, Postgres mirror, and read-only API
+    Email pipeline, operator API, mirror reporting, and dashboard
   </h2>
   <p class="mt-4 max-w-3xl text-pretty leading-relaxed text-ink-muted">
-    Two operator apps share one data story. <strong class="font-medium text-ink"
-      >SQLite stays authoritative</strong
-    > for ingest, mart rebuilds, outbound sidecars, and Streamlit exploration. A
-    <strong class="font-medium text-ink">PostgreSQL mirror</strong> (Alembic DDL +
-    sync scripts) feeds a <strong class="font-medium text-ink"
-      >read-only FastAPI</strong
-    > layer that the React dashboard consumes—no writes, no auto-send, no ingest from
-    the API.
+    <strong class="font-medium text-ink">SQLite stays authoritative</strong> for
+    ingest, mart rebuilds, outbound safety, and mutation scripts in{" "}
+    <span class="font-mono text-xs text-accent/90">apps/email-pipeline</span>.
+    <strong class="font-medium text-ink">apps/api</strong> exposes a{" "}
+    <strong class="font-medium text-ink">read-only</strong> operator API on port{" "}
+    <strong class="font-medium text-ink">8001</strong> — no ingest, no send, no record
+    mutation. An <strong class="font-medium text-ink">optional Postgres mirror</strong>{" "}
+    feeds mirror reporting routes (<span class="font-mono text-xs text-accent/90"
+      >/mirror/*</span
+    >) when synced; a Postgres URL is not required for the normal SQLite operator API.
   </p>
 
   <div class="mt-8 grid gap-6 lg:grid-cols-2">
     <div class="rounded-xl border border-line/70 bg-surface/50 p-4 sm:p-5">
       <h3 class="text-sm font-semibold text-ink">apps/email-pipeline</h3>
       <p class="mt-2 text-sm leading-relaxed text-ink-muted">
-        PST / Gmail → SQLite archive → rebuildable business marts → optional
-        commercial OC promotion → mirror sync. Streamlit remains the deep review
-        surface; FastAPI exposes stable JSON for the React panel.
+        PST / Gmail → SQLite archive → rebuildable business marts → outbound safety
+        sidecars → optional commercial OC promotion → optional mirror sync. Streamlit
+        remains the deep SQLite review surface; all writes stay here.
       </p>
-      <ul class="mt-3 space-y-1.5 font-mono text-[11px] text-accent/85">
+      <ol class="olab-runbook mt-3 list-none space-y-1.5 text-[11px] leading-snug text-accent/85">
         {
           operatorRunbook.map((step, i) => (
             <li class="flex gap-2">
-              <span class="text-ink-faint">{i + 1}.</span>
-              <span>{step}</span>
+              <span class="shrink-0 font-mono text-ink-faint">{i + 1}.</span>
+              <code class="min-w-0 font-mono">{step}</code>
             </li>
           ))
         }
-      </ul>
+      </ol>
     </div>
     <div class="rounded-xl border border-line/70 bg-surface/50 p-4 sm:p-5">
       <h3 class="text-sm font-semibold text-ink">apps/dashboard</h3>
       <p class="mt-2 text-sm leading-relaxed text-ink-muted">
-        React 19 panel with five tabs: summary KPIs + sync freshness, commercial
-        email classification (heuristic QA), confirmed purchases vs purchase
-        <em>signals</em>, contacts &amp; organizations, and archive scope for
-        historical PST totals.
+        Multi-section React operator dashboard—read-only, human-reviewed outreach.
+        Sections include Today, inbox triage, opportunities, deals, Prospectos (lead
+        intelligence), catálogo, suppliers, tenders, payments/logistics, contacts, and
+        system. Consumes <span class="font-mono text-xs text-accent/90">apps/api</span>;
+        does not send mail or replace SQLite truth.
       </p>
+      <ul class="mt-3 flex flex-wrap gap-1.5">
+        {
+          dashboardSections.map((label) => (
+            <li>
+              <span class="rounded-full border border-line/80 bg-surface-overlay/60 px-2 py-0.5 font-mono text-[10px] text-ink-muted">
+                {label}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
       <p class="mt-3 text-xs leading-relaxed text-ink-faint">
-        Validation: Pydantic on the API, TypeScript types on the client, Vitest for
-        URL/scope logic, <code class="text-accent/90">npm run smoke</code> for live
-        <code class="text-accent/90">/health</code> + summary when the API is up.
+        Prospectos: SQLite lead research imports → optional Postgres{" "}
+        <span class="font-mono text-accent/90">lead_intel</span> mirror →{" "}
+        <span class="font-mono text-accent/90">GET /mirror/leads/*</span> with filters
+        (classification, sector, region, campaign bucket, score, blocked).
       </p>
     </div>
   </div>
@@ -246,102 +156,89 @@ const operatorRunbook = [
   <div class="mt-10">
     <h3 class="text-sm font-semibold text-ink">Monorepo layout</h3>
     <p class="mt-2 max-w-3xl text-sm leading-relaxed text-ink-muted">
-      Three deployable surfaces; marketing never calls the pipeline at runtime.
+      Four deployable apps; marketing never calls the pipeline at runtime. Sensitive
+      mail and SQLite live under <span class="font-mono text-xs text-accent/90"
+        >~/data/origenlab-email/</span
+      >, not in git.
     </p>
-    <div class="mt-4">
-      <JsonSnippet
-        title="apps/* responsibilities"
-        data={monorepoLayout}
-        caption="Sensitive mail and SQLite live under ~/data/origenlab-email/, not in git."
-      />
+    <div class="case-study-table-wrap mt-4 overflow-x-auto rounded-xl border border-line/80">
+      <table class="w-full min-w-0 border-collapse text-left text-sm">
+        <thead>
+          <tr class="border-b border-line/80 bg-surface-overlay/50 font-mono text-[10px] uppercase tracking-wider text-ink-faint">
+            <th class="px-4 py-2.5 pr-4">App</th>
+            <th class="px-4 py-2.5">Role</th>
+          </tr>
+        </thead>
+        <tbody class="text-ink-muted">
+          {
+            monorepoApps.map((row) => (
+              <tr class="border-b border-line/40 last:border-0">
+                <td class="px-4 py-2.5 pr-4 align-top font-mono text-xs text-accent/90">
+                  {row.app}
+                </td>
+                <td class="px-4 py-2.5 text-xs leading-snug">{row.role}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
     </div>
   </div>
 
   <div class="mt-10">
-    <h3 class="text-sm font-semibold text-ink">PostgreSQL mirror (schemas)</h3>
-    <p class="mt-2 max-w-3xl text-sm leading-relaxed text-ink-muted">
-      Schema evolution is Alembic in Postgres only. SQLite uses additive Python
-      migrations. The API defaults to <code class="text-accent/90">canonical</code> scope
-      (operational Gmail); full PST archive is opt-in via <code class="text-accent/90"
-        >?scope=archive</code
-      >.
-    </p>
-    <div class="mt-4">
-      <JsonSnippet
-        title="postgres schemas (read mirror)"
-        data={postgresSchemas}
-      />
+    <h3 class="text-sm font-semibold text-ink">Optional Postgres mirror</h3>
+    <div
+      class="mt-4 rounded-xl border border-line/70 bg-surface/50 px-4 py-4 sm:px-5 sm:py-5"
+    >
+      <p class="text-sm leading-relaxed text-ink-muted">
+        <strong class="font-medium text-ink">Optional Postgres mirror:</strong> reporting-only
+        schemas for archive, mart, outbound, commercial, reporting, and{" "}
+        <span class="font-mono text-xs text-accent/90">lead_intel</span>. Alembic manages
+        DDL when the mirror is used; loaders copy from SQLite (eventually consistent).
+        Mirror routes are read-only under{" "}
+        <span class="font-mono text-xs text-accent/90">/mirror/*</span>; operator day-to-day
+        routes read SQLite directly.
+      </p>
     </div>
   </div>
 
   <div class="mt-10">
-    <h3 class="text-sm font-semibold text-ink">FastAPI — health &amp; readiness</h3>
+    <h3 class="text-sm font-semibold text-ink">apps/api — health &amp; operator plane</h3>
     <p class="mt-2 max-w-3xl text-sm leading-relaxed text-ink-muted">
-      The API boots only with a Postgres URL. <code class="text-accent/90"
-        >/health</code
-      > is always OK when the process is up; <code class="text-accent/90"
-        >/health/dependencies</code
-      > probes Postgres (required) and SQLite (informational). OpenAPI at <code
-        class="text-accent/90">/docs</code
-      >.
+      SQLite-first on port <span class="font-mono text-xs text-accent/90">8001</span>.
+      <span class="font-mono text-xs text-accent/90">GET /health</span> confirms liveness;{" "}
+      <span class="font-mono text-xs text-accent/90">GET /operator/status</span> surfaces
+      operator verdict. All routes are GET-only—no autonomous send, no ingest from HTTP.
     </p>
-    <div class="mt-4 grid gap-4 lg:grid-cols-2">
-      <JsonSnippet
-        title="GET /health"
-        data={healthOk}
-        caption="Liveness — read_only: true on every route."
-      />
-      <JsonSnippet
-        title="GET /health/dependencies"
-        data={healthDependencies}
-        caption="Overall status: ok | degraded | error depending on Postgres."
-      />
-    </div>
   </div>
 
   <div class="mt-10">
     <h3 class="text-sm font-semibold text-ink">Representative API payloads</h3>
     <p class="mt-2 max-w-3xl text-sm leading-relaxed text-ink-muted">
-      Illustrative shapes only—counts and addresses are sanitized. Confirmed OCs
-      (<code class="text-accent/90">/commercial/*</code>) are promoted records;
-      classification labels are heuristic QA.
+      Sanitized illustrative shapes only—full route lists stay in the tables below.
     </p>
-    <div class="mt-4 space-y-4">
+    <div class="mt-4 grid gap-4 lg:grid-cols-2">
       <JsonSnippet
-        title="GET /dashboard/summary"
-        data={dashboardSummary}
-        caption="archive_mirror_counts appear when archive tables are loaded; canonical is the default KPI set."
+        compact
+        title="GET /mirror/dashboard/summary"
+        data={mirrorDashboardSummary}
+        caption="Optional Postgres mirror reporting—not SQLite operational truth."
       />
       <JsonSnippet
-        title="GET /meta/dashboard-sync"
-        data={syncMeta}
-        caption="React panel shows staleness when finished_at is older than ~48h."
-      />
-      <div class="grid gap-4 lg:grid-cols-2">
-        <JsonSnippet
-          title="GET /commercial/purchase-events (item)"
-          data={purchaseEventExample}
-        />
-        <JsonSnippet
-          title="GET /classification/recent (item)"
-          data={classificationRecent}
-        />
-      </div>
-      <JsonSnippet
-        title="GET /outbound/readiness"
-        data={outboundReadiness}
-        caption="Verdict gates outbound work: ready | ready_with_warnings | not_ready."
+        compact
+        title="GET /mirror/leads/prospects (item)"
+        data={leadProspectItem}
+        caption="Read-only Prospectos; human review before outreach."
       />
     </div>
   </div>
 
-  <div class="mt-10 min-w-0 overflow-x-auto">
-    <h3 class="text-sm font-semibold text-ink">Read API surface</h3>
+  <div class="case-study-table-wrap mt-10 min-w-0 overflow-x-auto">
+    <h3 class="text-sm font-semibold text-ink">Operator API (SQLite-first)</h3>
     <p class="mt-2 max-w-3xl text-sm leading-relaxed text-ink-muted">
-      All routes are GET. No <code class="text-accent/90">/v1</code> prefix; Vite
-      proxies these paths in dev.
+      Core routes for Today, triage, and contact drilldown. All GET.
     </p>
-    <table class="mt-4 w-full min-w-[32rem] border-collapse text-left text-sm">
+    <table class="mt-4 w-full min-w-0 border-collapse text-left text-sm">
       <thead>
         <tr class="border-b border-line/80 font-mono text-[10px] uppercase tracking-wider text-ink-faint">
           <th class="py-2 pr-4">Method</th>
@@ -351,12 +248,41 @@ const operatorRunbook = [
       </thead>
       <tbody class="text-ink-muted">
         {
-          apiRoutes.map((r) => (
+          operatorRoutes.map((r) => (
             <tr class="border-b border-line/40">
-              <td class="py-2.5 pr-4 font-mono text-xs text-accent/90">
-                {r.method}
+              <td class="py-2.5 pr-4 font-mono text-xs text-accent/90">{r.method}</td>
+              <td class="break-all py-2.5 pr-4 font-mono text-xs text-teal-100/80">
+                {r.path}
               </td>
-              <td class="py-2.5 pr-4 font-mono text-xs text-teal-100/80">
+              <td class="py-2.5 text-xs leading-snug">{r.purpose}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="case-study-table-wrap mt-10 min-w-0 overflow-x-auto">
+    <h3 class="text-sm font-semibold text-ink">Mirror reporting API (optional Postgres)</h3>
+    <p class="mt-2 max-w-3xl text-sm leading-relaxed text-ink-muted">
+      When Postgres is synced, dashboard sections can consume mirror reporting (routes
+      under <span class="font-mono text-xs text-accent/90">/mirror/*</span>). Still
+      read-only—no writes, no send path.
+    </p>
+    <table class="mt-4 w-full min-w-0 border-collapse text-left text-sm">
+      <thead>
+        <tr class="border-b border-line/80 font-mono text-[10px] uppercase tracking-wider text-ink-faint">
+          <th class="py-2 pr-4">Method</th>
+          <th class="py-2 pr-4">Path</th>
+          <th class="py-2">Purpose</th>
+        </tr>
+      </thead>
+      <tbody class="text-ink-muted">
+        {
+          mirrorRoutes.map((r) => (
+            <tr class="border-b border-line/40">
+              <td class="py-2.5 pr-4 font-mono text-xs text-accent/90">{r.method}</td>
+              <td class="break-all py-2.5 pr-4 font-mono text-xs text-teal-100/80">
                 {r.path}
               </td>
               <td class="py-2.5 text-xs leading-snug">{r.purpose}</td>

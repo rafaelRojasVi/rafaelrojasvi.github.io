@@ -63,3 +63,50 @@
     transform: none;
   }
 }
+
+/* Case study + portfolio PDF/print export */
+@media print {
+  html,
+  body {
+    overflow: visible !important;
+  }
+
+  .json-snippet,
+  .json-snippet figure {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .json-snippet__pre {
+    max-height: none !important;
+    overflow: visible !important;
+    white-space: pre-wrap !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+  }
+
+  .json-snippet--compact .json-snippet__pre {
+    font-size: 9pt;
+    line-height: 1.45;
+  }
+
+  .case-study-table-wrap {
+    overflow: visible !important;
+  }
+
+  .case-study-table-wrap table {
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .case-study-section {
+    break-inside: avoid-page;
+    page-break-inside: avoid;
+  }
+
+  .olab-runbook code {
+    white-space: pre-wrap !important;
+    overflow-wrap: anywhere !important;
+    word-break: break-word !important;
+  }
+}

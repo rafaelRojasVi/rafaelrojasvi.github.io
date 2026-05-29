@@ -4,14 +4,21 @@ interface Props {
   caption?: string;
   /** Pre-formatted JSON string or serializable object */
   data: string | Record<string, unknown> | unknown[];
+  /** Tighter layout for print-friendly case study exports */
+  compact?: boolean;
 }
 
-const { title, caption, data } = Astro.props;
+const { title, caption, data, compact = false } = Astro.props;
 const body =
   typeof data === "string" ? data : JSON.stringify(data, null, 2);
 ---
 
-<figure class="min-w-0 overflow-hidden rounded-xl border border-line/80 bg-[#0a0e14]">
+<figure
+  class:list={[
+    "json-snippet min-w-0 overflow-hidden rounded-xl border border-line/80 bg-[#0a0e14]",
+    compact && "json-snippet--compact",
+  ]}
+>
   <figcaption
     class="flex items-center justify-between gap-2 border-b border-line/60 bg-surface-overlay/80 px-3 py-2 sm:px-4"
   >
@@ -21,8 +28,10 @@ const body =
     <span class="font-mono text-[9px] text-ink-faint">JSON</span>
   </figcaption>
   <pre
-    class="max-h-[min(420px,55vh)] overflow-auto p-3 text-[11px] leading-relaxed text-teal-100/90 sm:p-4 sm:text-xs"><code
-      class="font-mono">{body}</code></pre>
+    class:list={[
+      "json-snippet__pre overflow-x-auto p-3 font-mono text-[11px] leading-relaxed text-teal-100/90 sm:p-4 sm:text-xs",
+      compact ? "max-h-none" : "max-h-[min(280px,45vh)]",
+    ]}><code>{body}</code></pre>
   {
     caption && (
       <p class="border-t border-line/50 px-3 py-2 text-xs leading-relaxed text-ink-muted sm:px-4">

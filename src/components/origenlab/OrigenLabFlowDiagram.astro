@@ -50,11 +50,11 @@ const flowNodes = [
   },
   {
     id: "fastapi-read-api",
-    short: "FastAPI (read-only)",
+    short: "apps/api (read-only)",
     group: "B",
-    what: "Commercial Dashboard API: GET-only routes over Postgres—health, KPIs, classification, confirmed OCs, contacts.",
-    why: "Thin contract for the React panel; Pydantic response models; no ingest or send from HTTP.",
-    tech: "FastAPI · /health/dependencies · OpenAPI /docs",
+    what: "Operator API on :8001: SQLite-first GET routes (/health, /operator/status, /cases/warm, /contacts/{email}); optional /mirror/* Postgres reporting.",
+    why: "Thin read-only contract for the React dashboard; separated from email-pipeline writes; no ingest or send from HTTP.",
+    tech: "FastAPI · apps/api · GET-only · OpenAPI /docs",
   },
   {
     id: "reports-streamlit",
@@ -66,11 +66,11 @@ const flowNodes = [
   },
   {
     id: "ops-dashboard",
-    short: "React ops dashboard",
+    short: "React operator dashboard",
     group: "C",
-    what: "Five-tab panel: KPIs + sync watermark, heuristic classification QA, confirmed OCs vs purchase signals, contacts/orgs, archive scope.",
-    why: "Recurring review UI with parallel fetch + smoke tests—complements Streamlit, does not replace it.",
-    tech: "React 19 · Vite · TypeScript · npm run smoke",
+    what: "Multi-section read-only UI: Today, inbox triage, opportunities, deals, Prospectos (lead intel), catálogo, suppliers, tenders, payments/logistics, contacts, system.",
+    why: "Day-to-day operator workflows with smoke-tested API wiring—complements Streamlit; does not send mail or mutate SQLite.",
+    tech: "React 19 · Vite · apps/dashboard · read-only",
   },
   {
     id: "safety-gates",
@@ -305,10 +305,10 @@ const jsonLd = JSON.stringify(
       <ul class="mt-3 grid gap-2 text-sm leading-snug text-ink-muted sm:grid-cols-2">
         {
           [
-            "SQLite source of truth · Postgres read mirror",
-            "Alembic + sync_dashboard_postgres_mirror",
-            "GET-only FastAPI · /health/dependencies",
-            "Canonical vs archive API scope",
+            "SQLite operational truth · optional Postgres mirror",
+            "apps/api read-only on :8001 · email-pipeline writes",
+            "Operator routes + /mirror/* reporting",
+            "Prospectos via lead_intel mirror (human-reviewed)",
             "Guarded outbound + human-reviewed drafts",
             "React smoke + pytest on parsers/exports",
           ].map((line) => (

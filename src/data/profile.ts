@@ -14,7 +14,7 @@ export const profile = {
     experience:
       "Experience & education: Rafael Rojas — OrigenLab data & automation, freelance FastAPI/WhatsApp/Stripe platform, English tutor (IELTS prep), Westminster First Class Honours, Brighton foundation year.",
     projects:
-      "Projects: OrigenLab (Astro catalog site + Python/SQLite ops), Tattoo Booking Bot (FastAPI, PostgreSQL, Stripe, WhatsApp), LedgerBank API (Phoenix), Political Misinformation Classifier (BERT).",
+      "Projects: OrigenLab (Astro site, Python/SQLite pipeline, read-only API, React dashboard), Tattoo Booking Bot (FastAPI, PostgreSQL, Stripe, WhatsApp), LedgerBank API (Phoenix), Political Misinformation Classifier (BERT).",
   },
   headline:
     "I enjoy turning messy real-world problems into structured, reliable systems—with solid databases, integrations, and backend logic behind them.",
@@ -36,7 +36,7 @@ export const profile = {
 
 I’m a Computer Science graduate with First Class Honours, focused on backend development, automation, APIs, and data-driven tools. I like work where the hard parts are clear: relational models, webhook and REST integrations, validation, migrations, idempotency, and tests that protect the fragile paths.
 
-Recent work includes a Python and SQLite pipeline for email and lead intelligence (OrigenLab), and a FastAPI + PostgreSQL service behind WhatsApp with Stripe, Google Sheets, and Calendar—plus university projects in Phoenix/Oban and applied NLP. I care about operational reliability and documentation another engineer can run.
+Recent work includes a full-stack operations platform for a laboratory supplier (OrigenLab: public Astro site, Python email pipeline, SQLite marts, read-only operator API, React dashboard), and a FastAPI + PostgreSQL service behind WhatsApp with Stripe, Google Sheets, and Calendar—plus university projects in Phoenix/Oban and applied NLP. I care about operational reliability and documentation another engineer can run.
 
 Outside engineering I read, write, and pay attention to art and music—that mostly shows up as patience for ambiguity and a bias toward clear explanations in code and runbooks.`,
   skills: {
@@ -115,14 +115,18 @@ export type ExperienceItem = {
 
 export const experience: ExperienceItem[] = [
   {
-    title: "Software Engineer at OrigenLab — Data & Automation",
+    title: "Software Engineer — Data & Automation",
+    org: "OrigenLab",
     dates: "January 2026 — Present",
     location: "Chile / Remote",
     featured: true,
     bullets: [
-      "Evolved origenlab.cl (Astro 5 / Tailwind 4): product catalog, Ortoalresa/SERVA vitrine, category hubs, custom three-body logo system, and catalog validation in CI.",
-      "Built apps/email-pipeline (Gmail→SQLite marts→Alembic Postgres mirror, read-only FastAPI with /health/dependencies) and apps/dashboard (React KPIs, classification QA, confirmed OCs); Streamlit for deep review; safe outbound with human-reviewed LLM drafts.",
-      "Maintained monorepo docs and pytest on parsers, exports, and commercial-safety gates—no autonomous sending.",
+      "Built a production full-stack operations platform for a Chilean laboratory equipment supplier: an Astro/Tailwind public site, a Python email intelligence pipeline, SQLite operational marts, a read-only FastAPI operator API on :8001, optional Postgres mirror reporting, and a React dashboard for reviewing warm cases, opportunities, contacts, suppliers, tenders, logistics, and prospect research.",
+      "Developed Gmail/PST ingestion and SQLite business marts to turn historical email data into reviewable commercial signals.",
+      "Built a GET-only FastAPI operator API on :8001, keeping ingest, sending, and mutations inside controlled pipeline scripts.",
+      "Built a React/Vite operator dashboard for Today, inbox triage, equipment opportunities, contacts, and Prospectos lead intelligence.",
+      "Implemented outbound safety gates: sent-history checks, suppression lists, duplicate prevention, and human-reviewed drafting; no autonomous sending.",
+      "Maintained privacy boundaries: sanitized previews, no raw email bodies in public surfaces, and sensitive data outside Git.",
     ],
   },
   {

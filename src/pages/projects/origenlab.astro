@@ -25,7 +25,62 @@ const project = getProjectBySlug("origenlab")!;
   >
     <div slot="after-section" class="space-y-12">
       <section
-        class="scroll-mt-28 rounded-2xl border border-line/80 bg-surface-overlay/20 px-5 py-8 sm:px-8 sm:py-10"
+        class="case-study-section scroll-mt-28 rounded-2xl border border-line/80 bg-surface-overlay/20 px-5 py-8 sm:px-8 sm:py-10"
+        aria-labelledby="origenlab-scope-heading"
+      >
+        <h2
+          id="origenlab-scope-heading"
+          class="text-xl font-semibold tracking-tight text-ink sm:text-2xl"
+        >
+          Full-stack scope
+        </h2>
+        <p class="mt-4 max-w-3xl text-pretty leading-relaxed text-ink-muted">
+          Production full-stack operations platform for OrigenLab: Astro public
+          site, Python email intelligence pipeline, SQLite operational store,
+          read-only FastAPI operator API, optional Postgres mirror reporting, and a
+          React operator dashboard—four deployable apps in one monorepo, with sensitive
+          mail and SQLite living outside git.
+        </p>
+        <ul class="mt-5 max-w-3xl space-y-2 text-sm leading-relaxed text-ink-muted">
+          <li class="flex gap-2">
+            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent/70" aria-hidden="true" />
+            <span><strong class="font-medium text-ink">apps/web</strong> — Astro 5 marketing (origenlab.cl)</span>
+          </li>
+          <li class="flex gap-2">
+            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent/70" aria-hidden="true" />
+            <span><strong class="font-medium text-ink">apps/email-pipeline</strong> — ingest, SQLite truth, outbound safety, reports, Streamlit, mutation scripts</span>
+          </li>
+          <li class="flex gap-2">
+            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent/70" aria-hidden="true" />
+            <span><strong class="font-medium text-ink">apps/api</strong> — read-only FastAPI on port 8001 (SQLite operator routes; optional mirror reporting via <span class="font-mono text-xs text-accent/90">/mirror/*</span>)</span>
+          </li>
+          <li class="flex gap-2">
+            <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent/70" aria-hidden="true" />
+            <span><strong class="font-medium text-ink">apps/dashboard</strong> — multi-section React operator dashboard (read-only; human-reviewed outreach)</span>
+          </li>
+        </ul>
+      </section>
+
+      <section
+        class="case-study-section scroll-mt-28 rounded-2xl border border-line/80 bg-surface-overlay/20 px-5 py-8 sm:px-8 sm:py-10"
+        aria-labelledby="origenlab-why-heading"
+      >
+        <h2
+          id="origenlab-why-heading"
+          class="text-xl font-semibold tracking-tight text-ink sm:text-2xl"
+        >
+          Why this matters
+        </h2>
+        <p class="mt-4 max-w-3xl text-pretty leading-relaxed text-ink-muted">
+          The system turns scattered email history into reviewable commercial
+          workflows while keeping sensitive data private and preventing unsafe
+          outbound automation. Operators get sanitized previews, mirror reporting
+          when Postgres is synced, and explicit gates—no autonomous send path.
+        </p>
+      </section>
+
+      <section
+        class="case-study-section scroll-mt-28 rounded-2xl border border-line/80 bg-surface-overlay/20 px-5 py-8 sm:px-8 sm:py-10"
         aria-labelledby="origenlab-connected-heading"
       >
         <h2
@@ -35,18 +90,20 @@ const project = getProjectBySlug("origenlab")!;
           From public presence to commercial intelligence
         </h2>
         <p class="mt-4 max-w-3xl text-pretty leading-relaxed text-ink-muted">
-          OrigenLab is a connected business stack: a product-forward public site,
-          reusable commercial HTML, and a local-first ops layer—SQLite marts,
-          Postgres mirror, read-only FastAPI, Streamlit deep review, and a React
-          KPI panel with health checks and sync metadata.
+          A product-forward public site and reusable commercial HTML connect to a
+          local-first ops layer: SQLite as operational truth, optional Postgres
+          mirror for reporting, read-only FastAPI for the dashboard, Streamlit
+          for deep SQLite review, and a React operator dashboard for day-to-day
+          triage—always with sanitized previews in this case study.
         </p>
 
         <div class="mt-10 border-t border-line/60 pt-10">
           <h3 class="text-lg font-semibold text-ink">System surfaces</h3>
           <p class="mt-3 max-w-3xl text-pretty leading-relaxed text-ink-muted">
-            The project had three visible surfaces: a public website, reusable
-            commercial HTML, and an internal review layer. The backend pipeline
-            connects them through data, safety rules, and operator workflows.
+            Four deployable apps plus shared commercial HTML assets: public
+            marketing, email intelligence pipeline, operator API, and dashboard.
+            The pipeline connects them through data, safety rules, and
+            human-reviewed workflows—not through autonomous sends or API writes.
           </p>
           <p class="mt-3 font-mono text-xs text-ink-faint">
             Live marketing site:{" "}

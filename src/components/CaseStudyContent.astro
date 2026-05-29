@@ -108,7 +108,10 @@ if (!project) {
       project.sections.map((section) => (
         <>
           <section
-            class="scroll-mt-28 rounded-2xl border border-line/80 bg-surface-overlay/25 px-6 py-7 sm:p-8"
+            class:list={[
+              "scroll-mt-28 rounded-2xl border border-line/80 bg-surface-overlay/25 px-6 py-7 sm:p-8",
+              slug === "origenlab" && "case-study-section",
+            ]}
             id={section.id}
             aria-labelledby={`${section.id}-heading`}
           >
