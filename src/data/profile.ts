@@ -17,7 +17,9 @@ export const profile = {
       "Projects: OrigenLab (Astro site, Python/SQLite pipeline, read-only API, React dashboard), Tattoo Booking Bot (FastAPI, PostgreSQL, Stripe, WhatsApp), LedgerBank API (Phoenix), Political Misinformation Classifier (BERT).",
   },
   headline:
-    "I enjoy turning messy real-world problems into structured, reliable systems—with solid databases, integrations, and backend logic behind them.",
+    "Brilliant and flawed, combining rare engineering talents with ridiculous public displays of ostentation, Musk is our era’s Thomas Edison – the man who, you may recall, electrocuted an elephant in order to discredit a rival.",
+  headlineAttribution: "Yanis Varoufakis",
+  headlineSource: "Technofeudalism: What Killed Capitalism",
   /**
    * First “At a glance” line (homepage). `homeEducationLocation` is styled as a highlight in index.
    */
