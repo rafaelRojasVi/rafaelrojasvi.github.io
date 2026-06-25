@@ -1,0 +1,184 @@
+---
+import JsonSnippet from "@/components/origenlab/JsonSnippet.astro";
+import { profile } from "@/data/profile";
+
+const safeDemoEndpoints = [
+  {
+    path: "GET /health",
+    purpose: "Service liveness and read-only mode",
+    demoNote: "Open first; no private business data.",
+  },
+  {
+    path: "GET /mirror/meta/dashboard-sync",
+    purpose: "Postgres mirror freshness and aggregate counts",
+    demoNote: "Shows reporting sync status without raw records.",
+  },
+  {
+    path: "GET /cases/warm?limit=2",
+    purpose: "Warm operator-review cases",
+    demoNote: "Use a small limit; sanitized previews only.",
+  },
+  {
+    path: "GET /opportunities/equipment?limit=2",
+    purpose: "Ranked equipment opportunity queue",
+    demoNote: "Best endpoint for business value.",
+  },
+];
+
+const docsLinks = [
+  {
+    label: "API README",
+    href: "https://github.com/rafaelRojasVi/origenlab/tree/main/apps/api",
+    description: "Setup, runtime truth, route groups, testing, Render notes.",
+  },
+  {
+    label: "Portfolio demo guide",
+    href: "https://github.com/rafaelRojasVi/origenlab/blob/main/apps/api/docs/PORTFOLIO_DEMO_GUIDE.md",
+    description: "What to show, what to avoid, and how to frame the API.",
+  },
+  {
+    label: "API response contract",
+    href: "https://github.com/rafaelRojasVi/origenlab/blob/main/apps/api/docs/API_RESPONSE_CONTRACT.md",
+    description: "Expected JSON envelopes, redaction rules, and audit checks.",
+  },
+];
+
+const accessSteps = [
+  "Request a walkthrough or temporary demo access.",
+  "Use local Swagger or a protected deployment; production docs stay disabled.",
+  "Demo only the safe endpoints above unless data is mocked or redacted.",
+];
+
+const healthPayload = {
+  ok: true,
+  service: "origenlab-api",
+  mode: "operator-sqlite-readonly",
+  backend: "sqlite",
+  postgres_configured: true,
+};
+
+const mirrorSyncPayload = {
+  status: "success",
+  elapsed_seconds: 95.34,
+  canonical_contact_count: 2490,
+  canonical_organization_count: 1064,
+  canonical_opportunity_signal_count: 1014,
+};
+
+const requestHref = `mailto:${profile.contact.email}?subject=${encodeURIComponent(
+  "OrigenLab API demo access request",
+)}&body=${encodeURIComponent(
+  "Hi Rafael, I saw the OrigenLab case study and would like to request a short API walkthrough or demo access.\n\nContext:\nAvailability:\nQuestions:",
+)}`;
+---
+
+<section
+  class="case-study-section scroll-mt-28 rounded-2xl border border-accent/30 bg-accent/5 px-5 py-8 sm:px-8 sm:py-10"
+  aria-labelledby="origenlab-api-demo-heading"
+>
+  <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-accent/90">
+    API demo &amp; access
+  </p>
+  <div class="mt-2 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+    <div class="max-w-3xl">
+      <h2
+        id="origenlab-api-demo-heading"
+        class="text-xl font-semibold tracking-tight text-ink sm:text-2xl"
+        style="text-wrap: pretty;"
+      >
+        Read-only FastAPI demo surface with requestable access
+      </h2>
+      <p class="mt-4 text-pretty leading-relaxed text-ink-muted">
+        The live operator API is protected because it sits near commercial and email-derived
+        data. For portfolio review, I document the safe routes, response contracts, and demo
+        order; access can be requested for a guided walkthrough or a redacted/mock deployment.
+      </p>
+    </div>
+    <a
+      href={requestHref}
+      class="inline-flex shrink-0 items-center justify-center rounded-full border border-accent/50 bg-accent/15 px-4 py-2 text-sm font-medium text-ink transition hover:border-accent hover:bg-accent/25"
+    >
+      Request API walkthrough
+    </a>
+  </div>
+
+  <div class="mt-8 grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
+    <div class="rounded-xl border border-line/70 bg-surface/50 p-4 sm:p-5">
+      <h3 class="text-sm font-semibold text-ink">Safe demo route order</h3>
+      <p class="mt-2 text-sm leading-relaxed text-ink-muted">
+        These are the routes I would show first in Swagger or curl. They are typed,
+        read-only, and avoid raw message bodies.
+      </p>
+      <ol class="mt-4 space-y-3">
+        {
+          safeDemoEndpoints.map((endpoint, index) => (
+            <li class="rounded-lg border border-line/60 bg-surface-overlay/40 p-3">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="rounded-full border border-accent/30 px-2 py-0.5 font-mono text-[10px] text-accent/90">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <code class="font-mono text-xs text-teal-100/90">{endpoint.path}</code>
+              </div>
+              <p class="mt-2 text-xs leading-relaxed text-ink-muted">{endpoint.purpose}</p>
+              <p class="mt-1 text-[11px] leading-relaxed text-ink-faint">{endpoint.demoNote}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <div class="space-y-4">
+      <JsonSnippet
+        compact
+        title="GET /health"
+        data={healthPayload}
+        caption="Small, typed readiness check for the read-only operator API."
+      />
+      <JsonSnippet
+        compact
+        title="GET /mirror/meta/dashboard-sync"
+        data={mirrorSyncPayload}
+        caption="Freshness and aggregate mirror counts; no raw customer records."
+      />
+    </div>
+  </div>
+
+  <div class="mt-8 grid gap-5 lg:grid-cols-2">
+    <div class="rounded-xl border border-line/70 bg-surface/50 p-4 sm:p-5">
+      <h3 class="text-sm font-semibold text-ink">Documentation links</h3>
+      <div class="mt-4 space-y-3">
+        {
+          docsLinks.map((doc) => (
+            <a
+              href={doc.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block rounded-lg border border-line/60 bg-surface-overlay/40 p-3 transition hover:border-accent/50"
+            >
+              <span class="font-mono text-xs text-accent/90">{doc.label}</span>
+              <span class="mt-1 block text-xs leading-relaxed text-ink-muted">{doc.description}</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="rounded-xl border border-line/70 bg-surface/50 p-4 sm:p-5">
+      <h3 class="text-sm font-semibold text-ink">How access works</h3>
+      <ol class="mt-4 space-y-2 text-sm leading-relaxed text-ink-muted">
+        {
+          accessSteps.map((step, index) => (
+            <li class="flex gap-2">
+              <span class="mt-0.5 shrink-0 font-mono text-xs text-accent/90">{index + 1}.</span>
+              <span>{step}</span>
+            </li>
+          ))
+        }
+      </ol>
+      <p class="mt-4 text-xs leading-relaxed text-ink-faint">
+        Production is not a public playground. The portfolio-safe path is a short guided demo,
+        local Swagger, or a redacted/mock environment using the same response contracts.
+      </p>
+    </div>
+  </div>
+</section>
