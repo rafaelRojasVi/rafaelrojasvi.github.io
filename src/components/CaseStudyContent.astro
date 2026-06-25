@@ -24,6 +24,31 @@ const project = getProjectBySlug(slug);
 if (!project) {
   throw new Error(`Unknown project slug: ${slug}`);
 }
+
+const normalizeOrigenLabCopy = (value: string) =>
+  value
+    .replaceAll("Astro 5", "Astro 6")
+    .replaceAll("reports, Streamlit, mutation scripts", "reports, operator CLIs, mutation scripts")
+    .replaceAll("sync scripts, Streamlit", "sync scripts, operator CLIs")
+    .replaceAll(
+      "Streamlit for deep SQLite review; React",
+      "Operator CLIs and report outputs for deep SQLite review; React",
+    );
+
+const displayProject =
+  slug === "origenlab"
+    ? {
+        ...project,
+        stack: project.stack
+          .map((item) => (item === "Astro 5" ? "Astro 6" : item))
+          .filter((item) => item !== "Streamlit"),
+        sections: project.sections.map((section) => ({
+          ...section,
+          body: section.body?.map(normalizeOrigenLabCopy),
+          bullets: section.bullets?.map(normalizeOrigenLabCopy),
+        })),
+      }
+    : project;
 ---
 
 <div class="mx-auto max-w-6xl px-4 pb-24 pt-12 sm:px-6 sm:pt-16">
@@ -32,7 +57,7 @@ if (!project) {
       >Projects</a
     >
     <span class="mx-2 text-ink-faint">/</span>
-    <span class="text-ink">{project.title}</span>
+    <span class="text-ink">{displayProject.title}</span>
   </nav>
 
   <header class="mt-8">
@@ -77,26 +102,26 @@ if (!project) {
       <h1
         class="mt-3 text-balance text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
       >
-        {project.title}
+        {displayProject.title}
       </h1>
-      <p class="mt-3 text-lg text-ink-muted">{project.subtitle}</p>
+      <p class="mt-3 text-lg text-ink-muted">{displayProject.subtitle}</p>
       <p class="mt-5 max-w-2xl text-pretty text-base leading-[1.7] text-ink-muted">
-        {project.caseStudyIntro}
+        {displayProject.caseStudyIntro}
       </p>
       <div class="mt-6 flex flex-wrap items-center gap-3">
         <span
           class="rounded-full border border-line bg-surface-overlay/80 px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-accent"
         >
-          {project.status}
+          {displayProject.status}
         </span>
-        {project.privacyNote && (
+        {displayProject.privacyNote && (
           <span class="max-w-xl text-xs leading-relaxed text-ink-faint">
-            {project.privacyNote}
+            {displayProject.privacyNote}
           </span>
         )}
       </div>
       <div class="mt-6 flex flex-wrap gap-1.5">
-        {project.stack.map((s) => (
+        {displayProject.stack.map((s) => (
           <TechPill label={s} />
         ))}
       </div>
@@ -105,7 +130,7 @@ if (!project) {
 
   <div class="mt-16 space-y-10 sm:space-y-12">
     {
-      project.sections.map((section) => (
+      displayProject.sections.map((section) => (
         <>
           <section
             class:list={[
@@ -149,7 +174,7 @@ if (!project) {
     class="mt-20 flex flex-col gap-4 border-t border-line/80 pt-10 sm:flex-row sm:items-center sm:justify-between"
   >
     <p class="font-mono text-sm text-ink-muted">
-      <span class="text-ink">{project.title}</span>
+      <span class="text-ink">{displayProject.title}</span>
       <span class="text-ink-faint"> · case study</span>
     </p>
     <a
