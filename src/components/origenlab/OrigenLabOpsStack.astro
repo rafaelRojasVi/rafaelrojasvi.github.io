@@ -8,7 +8,7 @@ const monorepoApps = [
   },
   {
     app: "apps/email-pipeline",
-    role: "Python / uv Gmail–PST ingest, SQLite marts, outbound safety, reports, Streamlit, mutation scripts (no FastAPI)",
+    role: "Python / uv Gmail–PST ingest, SQLite marts, outbound safety, reports, operator CLIs, mutation scripts (no FastAPI)",
   },
   {
     app: "apps/api",
@@ -110,8 +110,8 @@ const dashboardSections = [
       <h3 class="text-sm font-semibold text-ink">apps/email-pipeline</h3>
       <p class="mt-2 text-sm leading-relaxed text-ink-muted">
         PST / Gmail → SQLite archive → rebuildable business marts → outbound safety
-        sidecars → optional commercial OC promotion → optional mirror sync. Streamlit
-        remains the deep SQLite review surface; all writes stay here.
+        sidecars → optional commercial OC promotion → optional mirror sync. Operator
+        CLIs and report outputs remain the deep SQLite review surface; all writes stay here.
       </p>
       <ol class="olab-runbook mt-3 list-none space-y-1.5 text-[11px] leading-snug text-accent/85">
         {
