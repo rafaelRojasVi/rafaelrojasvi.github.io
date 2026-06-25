@@ -5,6 +5,7 @@ import OrigenLabWebsitePreview from "@/components/origenlab/OrigenLabWebsitePrev
 import OrigenLabEmailPreview from "@/components/origenlab/OrigenLabEmailPreview.astro";
 import OrigenLabFlowDiagram from "@/components/origenlab/OrigenLabFlowDiagram.astro";
 import OrigenLabOpsStack from "@/components/origenlab/OrigenLabOpsStack.astro";
+import OrigenLabApiDemoAccess from "@/components/origenlab/OrigenLabApiDemoAccess.astro";
 import { getProjectBySlug } from "@/data/projects";
 
 const project = getProjectBySlug("origenlab")!;
@@ -52,7 +53,7 @@ const project = getProjectBySlug("origenlab")!;
           </li>
           <li class="flex gap-2">
             <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent/70" aria-hidden="true" />
-            <span><strong class="font-medium text-ink">apps/api</strong> — read-only FastAPI on port 8001 (SQLite operator routes; optional mirror reporting via <span class="font-mono text-xs text-accent/90">/mirror/*</span>)</span>
+            <span><strong class="font-medium text-ink">apps/api</strong> — read-only FastAPI on port 8001 (SQLite operator routes; optional mirror reporting via <span class="font-mono text-xs text-accent/90">/mirror/*</span>; typed demo-safe response contracts)</span>
           </li>
           <li class="flex gap-2">
             <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent/70" aria-hidden="true" />
@@ -75,7 +76,7 @@ const project = getProjectBySlug("origenlab")!;
           The system turns scattered email history into reviewable commercial
           workflows while keeping sensitive data private and preventing unsafe
           outbound automation. Operators get sanitized previews, mirror reporting
-          when Postgres is synced, and explicit gates—no autonomous send path.
+          when Postgres is synced, explicit gates, and documented demo-safe API surfaces—no autonomous send path.
         </p>
       </section>
 
@@ -164,6 +165,15 @@ const project = getProjectBySlug("origenlab")!;
               04 · Pipeline, Postgres mirror &amp; API
             </p>
             <OrigenLabOpsStack />
+          </div>
+
+          <div class="mt-12 min-w-0 border-t border-line/60 pt-12">
+            <p
+              class="mb-2 font-mono text-[10px] uppercase tracking-wider text-ink-faint"
+            >
+              05 · API demo, docs &amp; access request
+            </p>
+            <OrigenLabApiDemoAccess />
           </div>
         </div>
       </section>
