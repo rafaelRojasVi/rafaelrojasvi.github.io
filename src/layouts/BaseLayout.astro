@@ -8,13 +8,21 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string;
+  /**
+   * `legacy` — existing Navbar/Footer (default).
+   * `inet` — Internet 2002 shell pages; hide legacy chrome.
+   */
+  shell?: "legacy" | "inet";
 }
 
 const {
   title,
   description = profile.metaDescription,
   ogImage,
+  shell = "legacy",
 } = Astro.props;
+
+const isInet = shell === "inet";
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const fullTitle =
@@ -49,15 +57,24 @@ const fullTitle =
       rel="stylesheet"
     />
   </head>
-  <body class="relative flex min-h-screen flex-col">
-    <div
-      class="pointer-events-none fixed inset-0 -z-10 bg-[length:48px_48px] bg-grid-faint opacity-[0.35]"
-      aria-hidden="true"
-    />
-    <Navbar />
+  <body
+    class:list={[
+      "relative flex min-h-screen flex-col",
+      isInet && "inet-body",
+    ]}
+  >
+    {
+      !isInet && (
+        <div
+          class="pointer-events-none fixed inset-0 -z-10 bg-[length:48px_48px] bg-grid-faint opacity-[0.35]"
+          aria-hidden="true"
+        />
+      )
+    }
+    {!isInet && <Navbar />}
     <main id="main-content" class="flex-1">
       <slot />
     </main>
-    <Footer />
+    {!isInet && <Footer />}
   </body>
 </html>

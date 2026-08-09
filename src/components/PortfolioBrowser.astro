@@ -1,0 +1,200 @@
+---
+import "@/styles/inet-shell.css";
+import { profile } from "@/data/profile";
+
+interface Props {
+  /** Display URL in the address chrome (not editable). */
+  address: string;
+  /** Window title bar text. */
+  windowTitle?: string;
+  /** Status bar object count label. */
+  objectsLabel?: string;
+  /** Decorative system identity (not analytics). */
+  nodeLabel?: string;
+  buildLabel?: string;
+  lastUpdated?: string;
+}
+
+const {
+  address,
+  windowTitle = "rafaelrojasvi.github.io - Internet Explorer",
+  objectsLabel = "Ready",
+  nodeLabel = "node 0027",
+  buildLabel = "2026.08",
+  lastUpdated = "09 Aug 2026",
+} = Astro.props;
+
+const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+const nav = [
+  { href: "/", label: "HOME", match: "/" },
+  { href: "/projects", label: "PROJECTS", match: "/projects" },
+  { href: "/experience", label: "EXPERIENCE", match: "/experience" },
+  { href: "/about", label: "ABOUT", match: "/about" },
+  {
+    href: `mailto:${profile.contact.email}`,
+    label: "CONTACT",
+    match: null as string | null,
+  },
+];
+
+function isHere(match: string | null): boolean {
+  if (match === null) return false;
+  if (match === "/") return pathname === "/";
+  return pathname === match || pathname.startsWith(`${match}/`);
+}
+
+const locationCode = `${profile.location
+  .split(",")[0]
+  .trim()
+  .toUpperCase()
+  .replace(/\s+/g, "_")}_CL`;
+---
+
+<div class="inet-site">
+  <div class="inet-stage">
+    <div class="inet-browser">
+      <div class="inet-titlebar">
+        <span class="inet-titlebar__icon" aria-hidden="true"></span>
+        <span class="inet-titlebar__text">{windowTitle}</span>
+        <div class="inet-titlebar__ctl" aria-hidden="true">
+          <span>_</span><span>□</span><span>×</span>
+        </div>
+      </div>
+
+      <div class="inet-menubar" aria-hidden="true">
+        <span><u>F</u>ile</span>
+        <span><u>E</u>dit</span>
+        <span><u>V</u>iew</span>
+        <span>F<u>a</u>vorites</span>
+        <span><u>H</u>elp</span>
+      </div>
+
+      <!-- Decorative IE-era command toolbar (noninteractive chrome) -->
+      <div class="inet-cmdbar" aria-hidden="true">
+        <span class="inet-cmd">
+          <span class="inet-cmd__ico inet-cmd__ico--back"></span>
+          <span class="inet-cmd__label">Back</span>
+        </span>
+        <span class="inet-cmd inet-cmd--icon">
+          <span class="inet-cmd__ico inet-cmd__ico--fwd"></span>
+        </span>
+        <span class="inet-cmd">
+          <span class="inet-cmd__ico inet-cmd__ico--stop"></span>
+          <span class="inet-cmd__label">Stop</span>
+        </span>
+        <span class="inet-cmd">
+          <span class="inet-cmd__ico inet-cmd__ico--refresh"></span>
+          <span class="inet-cmd__label">Refresh</span>
+        </span>
+        <span class="inet-cmd">
+          <span class="inet-cmd__ico inet-cmd__ico--home"></span>
+          <span class="inet-cmd__label">Home</span>
+        </span>
+        <span class="inet-cmdbar__grow"></span>
+        <span class="inet-throbber" title=""></span>
+      </div>
+
+      <div class="inet-toolbar">
+        <span class="inet-toolbar__label">Address</span>
+        <div class="inet-address" aria-label={`Address: ${address}`}>
+          <span class="inet-address__ico" aria-hidden="true"></span>
+          <span class="inet-address__url">{address}</span>
+        </div>
+        <a class="inet-go" href={pathname === "/" ? "/" : pathname}>Go</a>
+      </div>
+
+      <div class="inet-page">
+        <div class="inet-layout">
+          <aside class="inet-side">
+            <p class="inet-side__head">Navigation</p>
+            <nav class="inet-nav" aria-label="Site">
+              {
+                nav.map((item) => (
+                  <a
+                    class:list={[
+                      "inet-nav__a",
+                      isHere(item.match) && "inet-nav__a--here",
+                    ]}
+                    href={item.href}
+                    aria-current={isHere(item.match) ? "page" : undefined}
+                  >
+                    {item.label}
+                  </a>
+                ))
+              }
+            </nav>
+
+            <hr class="inet-hr" />
+
+            <p class="inet-side__head">System</p>
+            <dl class="inet-sys">
+              <div>
+                <dt>status</dt>
+                <dd><span class="inet-led" aria-hidden="true"></span> ONLINE</dd>
+              </div>
+              <div>
+                <dt>location</dt>
+                <dd>{locationCode}</dd>
+              </div>
+              <div>
+                <dt>build</dt>
+                <dd>{buildLabel}</dd>
+              </div>
+              <div>
+                <dt>id</dt>
+                <dd>{nodeLabel}</dd>
+              </div>
+            </dl>
+
+            <div class="inet-deco" aria-hidden="true">
+              <div class="inet-px-wrap">
+                <img
+                  class="inet-px"
+                  src="/design-lab/px-crt.svg"
+                  width="32"
+                  height="32"
+                  alt=""
+                />
+                <span class="inet-px-cap">sys_crt.gif</span>
+              </div>
+
+              <div class="inet-meter">
+                <span class="inet-meter__cap">sig</span>
+                <span class="inet-meter__track"
+                  ><span class="inet-meter__fill"></span></span
+                >
+              </div>
+
+              <div class="inet-badge">
+                <span class="inet-badge__dot"></span>
+                <span class="inet-badge__text">RAFA<br />ONLINE</span>
+              </div>
+            </div>
+
+            <p class="inet-tiny">
+              last updated<br />
+              {lastUpdated}
+            </p>
+          </aside>
+
+          <div class="inet-main">
+            <slot />
+          </div>
+        </div>
+      </div>
+
+      <div class="inet-statusbar" role="status">
+        <span class="inet-statusbar__pane">Done</span>
+        <span class="inet-statusbar__sep" aria-hidden="true"></span>
+        <span class="inet-statusbar__pane">{objectsLabel}</span>
+        <span class="inet-statusbar__sep" aria-hidden="true"></span>
+        <span class="inet-statusbar__pane">Internet zone</span>
+        <span class="inet-statusbar__grow"></span>
+        <span class="inet-statusbar__pane"
+          ><span class="inet-led inet-led--sm" aria-hidden="true"></span> ONLINE</span
+        >
+      </div>
+    </div>
+  </div>
+</div>
