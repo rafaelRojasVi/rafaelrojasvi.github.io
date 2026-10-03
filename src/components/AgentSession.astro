@@ -1,0 +1,190 @@
+---
+/**
+ * A short Claude Code exchange, typed out line by line.
+ * The transcript is static markup; the script only reveals it in sequence.
+ * Runs while on screen, pauses on hover, rests between loops, and renders
+ * fully static without JavaScript or under prefers-reduced-motion.
+ */
+type Line =
+  | { kind: "prompt"; text: string }
+  | { kind: "tool"; label: string; text: string }
+  | { kind: "add"; text: string }
+  | { kind: "result"; text: string };
+
+const lines: Line[] = [
+  { kind: "prompt", text: "add a row-level-security policy so operators can read suppliers" },
+  { kind: "tool", label: "Read", text: "supabase/migrations/0022_suppliers.sql" },
+  { kind: "tool", label: "Edit", text: "supabase/migrations/0023_suppliers_rls.sql" },
+  { kind: "add", text: "create policy suppliers_read on crm.suppliers" },
+  { kind: "add", text: "  for select to operator using (true);" },
+  { kind: "tool", label: "Bash", text: "supabase db reset && pg_prove tests/" },
+  { kind: "result", text: "408 pgTAP assertions passed" },
+  { kind: "result", text: "migration 0023 applied" },
+];
+
+const summary =
+  "A Claude Code session: a request to add a row-level-security policy, the agent reading and editing a Supabase migration, running the pgTAP tests, and reporting 408 passing assertions.";
+---
+
+<figure class="agent-session min-w-0 overflow-hidden border border-line bg-surface-raised" data-agent-session>
+  <figcaption class="sr-only">{summary}</figcaption>
+  <div
+    class="flex items-center justify-between border-b border-line px-4 py-2 font-mono text-[11px] uppercase tracking-meta text-ink-faint sm:px-5"
+    aria-hidden="true"
+  >
+    <span>claude code</span>
+    <span>origenlab</span>
+  </div>
+  <ol class="m-0 list-none px-4 py-4 font-mono text-[13px] leading-[1.8] sm:px-5" aria-hidden="true">
+    {
+      lines.map((line) => (
+        <li class="agent-line" data-kind={line.kind}>
+          {line.kind === "prompt" && <span class="agent-glyph text-accent">›</span>}
+          {line.kind === "tool" && <span class="agent-label text-ink">{line.label}</span>}
+          {line.kind === "add" && <span class="agent-glyph text-accent">+</span>}
+          {line.kind === "result" && <span class="agent-glyph text-accent">✓</span>}
+          {line.kind === "prompt" ? (
+            <span class="agent-text agent-type text-ink" data-text={line.text}>{line.text}</span>
+          ) : (
+            <span class:list={["agent-text", line.kind === "tool" ? "text-ink-muted" : "text-ink"]}>{line.text}</span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</figure>
+
+<style>
+  .agent-line {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6ch;
+  }
+  .agent-glyph {
+    flex: none;
+    width: 1ch;
+  }
+  .agent-label {
+    flex: none;
+    width: 4.2ch;
+  }
+  /* Long paths and the typed prompt wrap instead of widening the page. */
+  .agent-text {
+    min-width: 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+  /* Without JS every line is visible; with JS lines start hidden and are revealed in order. */
+  :global(html.js) .agent-line {
+    opacity: 0;
+    transform: translateY(4px);
+    transition:
+      opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  :global(html.js) .agent-line.is-shown {
+    opacity: 1;
+    transform: none;
+  }
+  /* Block caret that follows the typed text while the prompt is being entered. */
+  .agent-session.is-typing .agent-type::after {
+    content: "";
+    display: inline-block;
+    width: 0.55em;
+    height: 1.05em;
+    margin-left: 2px;
+    vertical-align: -0.18em;
+    background: rgb(var(--c-accent));
+    animation: caret-blink 1s steps(1) infinite;
+  }
+  @keyframes caret-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(html.js) .agent-line {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .agent-session.is-typing .agent-type::after {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  function setup(root: HTMLElement) {
+    if (root.dataset.ready) return;
+    root.dataset.ready = "1";
+
+    const lines = Array.from(root.querySelectorAll<HTMLElement>(".agent-line"));
+    const typeEl = root.querySelector<HTMLElement>(".agent-type");
+    const full = typeEl?.dataset.text ?? "";
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const showAll = () => {
+      lines.forEach((l) => l.classList.add("is-shown"));
+      if (typeEl) typeEl.textContent = full;
+    };
+
+    if (reduce || !typeEl || !("IntersectionObserver" in window)) {
+      showAll();
+      return;
+    }
+
+    let paused = false;
+    let visible = false;
+    let running = false;
+
+    const sleep = (ms: number) => new Promise<void>((r) => window.setTimeout(r, ms));
+    const canRun = () => !paused && visible && !document.hidden;
+    const waitUntilRunnable = async () => {
+      while (!canRun()) await sleep(200);
+    };
+
+    async function loop() {
+      if (running) return;
+      running = true;
+      while (root.isConnected) {
+        lines.forEach((l) => l.classList.remove("is-shown"));
+        typeEl!.textContent = "";
+        root.classList.add("is-typing");
+        await sleep(500);
+        lines[0].classList.add("is-shown");
+        for (const ch of full) {
+          await waitUntilRunnable();
+          typeEl!.textContent += ch;
+          await sleep(ch === " " ? 60 : 26 + Math.random() * 34);
+        }
+        await sleep(450);
+        root.classList.remove("is-typing");
+        for (let i = 1; i < lines.length; i++) {
+          await waitUntilRunnable();
+          lines[i].classList.add("is-shown");
+          await sleep(lines[i].dataset.kind === "tool" ? 700 : 380);
+        }
+        await sleep(8000);
+        await waitUntilRunnable();
+      }
+    }
+
+    root.addEventListener("pointerenter", () => (paused = true));
+    root.addEventListener("pointerleave", () => (paused = false));
+    const io = new IntersectionObserver(
+      (entries) => {
+        visible = entries.some((e) => e.isIntersecting);
+        if (visible) loop();
+      },
+      { threshold: 0.35 },
+    );
+    io.observe(root);
+  }
+
+  function init() {
+    document.querySelectorAll<HTMLElement>("[data-agent-session]").forEach(setup);
+  }
+  init();
+  document.addEventListener("astro:page-load", init);
+</script>

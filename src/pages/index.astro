@@ -90,7 +90,7 @@ function stackLine(stack: string[], n = 4): string {
       </p>
     </div>
 
-    <ol class="mt-10 sm:mt-14">
+    <ol class="mt-10 sm:mt-14" data-reveal-stagger>
       {
         projects.map((project) => (
           <li class="border-t border-line" data-reveal>
@@ -127,7 +127,7 @@ function stackLine(stack: string[], n = 4): string {
     <h2 id="practice-heading" class="pt-5 text-3xl font-medium tracking-tight sm:text-4xl" data-reveal>
       What I optimise for
     </h2>
-    <ol class="mt-10 sm:mt-14">
+    <ol class="mt-10 sm:mt-14" data-reveal-stagger>
       {
         profile.pillars.map((pillar, i) => (
           <li class="grid-12 border-t border-line py-7 sm:py-9" data-reveal>

@@ -8,3 +8,6 @@ dist
 
 # Local visual-review captures (not production assets)
 design-lab-shots/
+
+# playwright-cli session snapshots
+.playwright-cli/
