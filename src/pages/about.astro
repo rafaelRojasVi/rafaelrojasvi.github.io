@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import { profile } from "@/data/profile";
+import AgentSession from "@/components/AgentSession.astro";
 
 const title = "About";
 const description = profile.seo.about;
@@ -72,7 +73,7 @@ const paragraphs = profile.aboutExtended.split("\n\n");
     <h2 id="skills-heading" class="pt-5 text-3xl font-medium tracking-tight sm:text-4xl" data-reveal>
       Stack
     </h2>
-    <dl class="mt-10 grid gap-x-8 gap-y-8 sm:mt-14 sm:grid-cols-2 lg:grid-cols-5">
+    <dl class="mt-10 grid gap-x-8 gap-y-10 sm:mt-14 sm:grid-cols-2 lg:grid-cols-3" data-reveal-stagger>
       {
         (
           [
@@ -81,6 +82,7 @@ const paragraphs = profile.aboutExtended.split("\n\n");
             ["Databases", profile.skills.databases],
             ["Tools", profile.skills.tools],
             ["Practices", profile.skills.concepts],
+            ["Agents", profile.skills.agents],
           ] as const
         ).map(([group, items]) => (
           <div class="border-t border-line pt-4" data-reveal>
@@ -92,5 +94,40 @@ const paragraphs = profile.aboutExtended.split("\n\n");
         ))
       }
     </dl>
+  </section>
+
+  <section class="page mt-28 sm:mt-36" aria-labelledby="agents-heading">
+    <div class="rule" data-reveal="rule"></div>
+    <h2 id="agents-heading" class="pt-5 text-3xl font-medium tracking-tight sm:text-4xl" data-reveal>
+      Working with agents
+    </h2>
+    <div class="grid-12 mt-10 sm:mt-14">
+      <div class="col-span-4 sm:col-span-8 lg:col-span-6" data-reveal>
+        <p class="text-pretty text-xl font-normal leading-[1.35] tracking-tight text-ink sm:text-2xl">
+          {profile.agentsWork.lead}
+        </p>
+        <div class="prose-ed mt-8">
+          {profile.agentsWork.paragraphs.map((p) => <p>{p}</p>)}
+        </div>
+        <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+          {
+            profile.agentsWork.links.map((l) => (
+              <li>
+                <a class="link" href={l.href}>
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div
+        class="col-span-4 mt-10 sm:col-span-8 lg:col-span-5 lg:col-start-8 lg:mt-0"
+        data-reveal
+        style="--d: 120ms"
+      >
+        <AgentSession />
+      </div>
+    </div>
   </section>
 </BaseLayout>

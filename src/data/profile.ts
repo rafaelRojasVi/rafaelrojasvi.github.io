@@ -79,6 +79,28 @@ Outside engineering I read, write, and pay attention to art and music. That most
       "Idempotency",
       "Operational reliability",
     ],
+    agents: [
+      "Claude Code",
+      "Claude API",
+      "MCP server authoring",
+      "Agent skills and slash commands",
+      "Context engineering",
+      "Agent permission design",
+      "Human-in-the-loop review",
+    ],
+  },
+  /** About page, "Working with agents" section. */
+  agentsWork: {
+    lead: "I build with agents every day, and I build the things agents need: servers with legible permissions, documents they can trust, and a human on anything that moves money or messages.",
+    paragraphs: [
+      "Claude Code is my daily driver. Each repository carries its project instructions, custom skills and slash commands, so a session starts with the architecture decisions, the status document and the test commands already in context. The agent reads the same canonical documents a new engineer would.",
+      "When an agent needs to touch a real system I write the MCP server myself and split it by capability. For BENKER that means Drive read-only, Gmail read-only and Gmail send as three separate servers, so what an agent may do is visible in which server it was given, not buried in a config flag.",
+      "Company knowledge gets the discipline of code: one owner per truth, provenance on every claim, recorded unknowns, and a validator that fails the build when the documents drift. The language model is not the memory. Git is. Outbound email, payments and migrations keep a person in the loop and tests on the fragile paths.",
+    ],
+    links: [
+      { label: "BENKER Ops MCP Servers", href: "/projects/platt-commercial-ops" },
+      { label: "NewDev company knowledge base", href: "/projects/newdev-company-knowledge" },
+    ],
   },
   humanLanguages: [
     { name: "English", level: "C1" },
