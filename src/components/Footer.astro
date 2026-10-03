@@ -1,46 +1,33 @@
 ---
 import { profile } from "@/data/profile";
+const year = new Date().getFullYear();
 ---
 
-<footer class="mt-24 border-t border-line/80 bg-surface-raised/40">
-  <div
-    class="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-end sm:justify-between sm:px-6"
-  >
-    <div>
-      <p class="font-mono text-xs uppercase tracking-[0.2em] text-ink-faint">
-        Colophon
-      </p>
-      <p class="mt-2 max-w-md text-sm leading-relaxed text-ink-muted">
-        Static Astro site — no trackers, no backend. Built to load fast and read
-        cleanly on mobile.
+<footer class="mt-32 border-t border-ink">
+  <div class="page grid-12 py-10">
+    <div class="col-span-4 sm:col-span-4 lg:col-span-5">
+      <p class="text-sm text-ink">{profile.name}</p>
+      <p class="mt-1 text-sm text-ink-muted">
+        Backend software engineer. {profile.location}.
       </p>
     </div>
-    <div class="flex flex-wrap gap-4 font-mono text-sm">
-      <a
-        class="text-ink-muted transition hover:text-accent"
-        href={`mailto:${profile.contact.email}`}
-      >
-        Email
-      </a>
-      <a
-        class="text-ink-muted transition hover:text-accent"
-        href={profile.contact.github}
-        rel="noopener noreferrer"
-      >
-        GitHub
-      </a>
-      <a
-        class="text-ink-muted transition hover:text-accent"
-        href={profile.contact.linkedIn}
-        rel="noopener noreferrer"
-      >
-        LinkedIn
-      </a>
-    </div>
+    <ul
+      class="col-span-4 mt-6 flex flex-wrap gap-x-8 gap-y-2 text-sm sm:col-span-4 sm:mt-0 lg:col-span-4"
+    >
+      <li>
+        <a class="link no-underline hover:underline" href={`mailto:${profile.contact.email}`}>Email</a>
+      </li>
+      <li>
+        <a class="link no-underline hover:underline" href={profile.contact.github} rel="noopener noreferrer">GitHub</a>
+      </li>
+      <li>
+        <a class="link no-underline hover:underline" href={profile.contact.linkedIn} rel="noopener noreferrer">LinkedIn</a>
+      </li>
+    </ul>
+    <p
+      class="col-span-4 mt-6 font-mono text-[11px] text-ink-faint sm:col-span-8 sm:mt-0 lg:col-span-3 lg:text-right"
+    >
+      Static site, no trackers. {year}
+    </p>
   </div>
-  <p
-    class="border-t border-line/60 py-4 text-center font-mono text-[11px] text-ink-faint"
-  >
-    © {new Date().getFullYear()} {profile.name} · {profile.location}
-  </p>
 </footer>

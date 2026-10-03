@@ -17,6 +17,57 @@ import BevelButton from "@/components/ui/BevelButton.astro";
       <a class="dl-back" href="/">← portfolio home</a>
     </header>
 
+    <!-- ═══════ NAME FONT STUDY · PHASE 2A.3 (temporary) ═══════ -->
+    <section class="dl-section" id="name-fonts" aria-labelledby="name-fonts-label">
+      <p class="dl-section-num">NAME FONT STUDY · PHASE 2A.3</p>
+      <h2 id="name-fonts-label" class="dl-section-title">RAFAEL / ROJAS letterform specimens</h2>
+      <p class="d-lede">
+        Temporary name-only study. System fonts only. Cream / gold match production identity. Do not treat as
+        production until one specimen is selected.
+      </p>
+
+      <div class="nf-grid">
+        <article class="nf-spec" aria-labelledby="nf-a-label">
+          <header class="nf-spec__meta">
+            <h3 id="nf-a-label">A — Impact / Haettenschweiler</h3>
+            <p class="dl-mono">Impact, Haettenschweiler, Arial Narrow, sans-serif</p>
+          </header>
+          <div class="nf-field">
+            <p class="nf-name nf-name--a">
+              <span class="nf-name__a">RAFAEL</span>
+              <span class="nf-name__b">ROJAS</span>
+            </p>
+          </div>
+        </article>
+
+        <article class="nf-spec" aria-labelledby="nf-b-label">
+          <header class="nf-spec__meta">
+            <h3 id="nf-b-label">B — Trebuchet MS heavy</h3>
+            <p class="dl-mono">Trebuchet MS, Geneva, Arial, sans-serif · 900</p>
+          </header>
+          <div class="nf-field">
+            <p class="nf-name nf-name--b">
+              <span class="nf-name__a">RAFAEL</span>
+              <span class="nf-name__b">ROJAS</span>
+            </p>
+          </div>
+        </article>
+
+        <article class="nf-spec" aria-labelledby="nf-c-label">
+          <header class="nf-spec__meta">
+            <h3 id="nf-c-label">C — Arial Black + hard shadow</h3>
+            <p class="dl-mono">Arial Black, Arial Bold, Impact, Arial · hard offset shadow</p>
+          </header>
+          <div class="nf-field">
+            <p class="nf-name nf-name--c">
+              <span class="nf-name__a">RAFAEL</span>
+              <span class="nf-name__b">ROJAS</span>
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <!-- ═══════ E — INTERNET 2002 / HYBRID (PRIMARY · 1G interactions) ═══════ -->
     <section class="dl-section" id="variant-e" aria-labelledby="variant-e-label">
       <p class="dl-section-num">E / PRIMARY · PHASE 1G</p>
@@ -712,6 +763,95 @@ import BevelButton from "@/components/ui/BevelButton.astro";
 </DesignLabLayout>
 
 <style>
+  /* —— Name font study (Phase 2A.3) —— */
+  .nf-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 900px) {
+    .nf-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  .nf-spec__meta h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1rem;
+  }
+
+  .nf-spec__meta .dl-mono {
+    margin: 0 0 0.75rem;
+    font-size: 12px;
+    color: #404040;
+  }
+
+  .nf-field {
+    padding: 1.25rem 1.1rem 1.35rem;
+    background: linear-gradient(180deg, #002b7f 0%, #001a66 100%);
+    border: 1px solid #000;
+    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .nf-name {
+    margin: 0;
+    line-height: 0.88;
+  }
+
+  .nf-name__a,
+  .nf-name__b {
+    display: block;
+    font-size: clamp(48px, 7vw, 72px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+
+  .nf-name__a {
+    color: #e8e5d8;
+  }
+
+  .nf-name__b {
+    margin-left: 1.1em;
+    color: #d6b13f;
+  }
+
+  .nf-name--a .nf-name__a,
+  .nf-name--a .nf-name__b {
+    font-family: Impact, Haettenschweiler, "Arial Narrow", sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+
+  .nf-name--a .nf-name__b {
+    text-shadow: 2px 2px 0 #001040;
+  }
+
+  .nf-name--b .nf-name__a,
+  .nf-name--b .nf-name__b {
+    font-family: "Trebuchet MS", Geneva, Arial, sans-serif;
+    font-weight: 900;
+  }
+
+  .nf-name--b .nf-name__b {
+    text-shadow: 2px 2px 0 #001040;
+  }
+
+  .nf-name--c .nf-name__a,
+  .nf-name--c .nf-name__b {
+    font-family: "Arial Black", "Arial Bold", Impact, Arial, sans-serif;
+    font-weight: 900;
+  }
+
+  .nf-name--c .nf-name__a {
+    text-shadow: 3px 3px 0 #001040;
+  }
+
+  .nf-name--c .nf-name__b {
+    text-shadow: 3px 3px 0 #001040;
+  }
+
   /* —— 01 Raw materials —— */
   .raw-grid {
     display: grid;

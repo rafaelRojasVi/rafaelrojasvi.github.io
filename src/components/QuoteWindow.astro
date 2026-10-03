@@ -1,0 +1,289 @@
+---
+interface Props {
+  quote: string;
+  attribution: string;
+  source: string;
+  /** Window title bar caption */
+  title?: string;
+}
+
+const {
+  quote,
+  attribution,
+  source,
+  title = "quote.txt - Notepad",
+} = Astro.props;
+
+const attributionLine = `― ${attribution},\n${source}`;
+---
+
+<figure
+  class="qw"
+  data-qw
+  data-qw-quote={quote}
+  data-qw-attr={attributionLine}
+>
+  <div class="qw__title" aria-hidden="true">
+    <span class="qw__title-text">{title}</span>
+    <span class="qw__ctl">
+      <span class="qw__ctl-btn">_</span>
+      <span class="qw__ctl-btn">□</span>
+      <span class="qw__ctl-btn qw__ctl-btn--close">×</span>
+    </span>
+  </div>
+
+  <div class="qw__paper">
+    <!-- Complete quote for AT + no-JS / reduced-motion fallback -->
+    <blockquote class="qw__full">
+      <p class="qw__q">“{quote}”</p>
+      <footer class="qw__f">
+        ― {attribution},{" "}
+        <cite class="qw__cite">{source}</cite>
+      </footer>
+    </blockquote>
+
+    <!-- Visual typewriter (hidden until JS opts in) -->
+    <div class="qw__anim" aria-hidden="true" hidden>
+      <p class="qw__typed">
+        <span class="qw__out"></span><span class="qw__cur">█</span>
+      </p>
+      <p class="qw__attr-out"></p>
+    </div>
+  </div>
+</figure>
+
+<style>
+  .qw {
+    flex: 0 1 38%;
+    max-width: 38%;
+    min-width: 0;
+    margin: 0;
+    align-self: flex-start;
+    background: #c0c0c0;
+    border: 1px solid #000;
+    box-shadow:
+      inset 1px 1px 0 #fff,
+      inset -1px -1px 0 #404040,
+      inset 2px 2px 0 #dfdfdf,
+      inset -2px -2px 0 #808080;
+  }
+
+  @media (min-width: 1025px) {
+    .qw {
+      flex: 0 0 345px;
+      max-width: 345px;
+      width: 345px;
+      margin-left: auto;
+      align-self: center;
+    }
+  }
+
+  @media (min-width: 701px) and (max-width: 1024px) {
+    .qw {
+      margin-left: auto;
+      align-self: center;
+    }
+  }
+
+  .qw__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px;
+    padding: 2px 3px 2px 4px;
+    background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+    color: #fff;
+    font-family: Tahoma, Verdana, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1.2;
+    user-select: none;
+  }
+
+  .qw__title-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+  }
+
+  .qw__ctl {
+    display: flex;
+    gap: 2px;
+    flex: 0 0 auto;
+  }
+
+  .qw__ctl-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 12px;
+    font-size: 9px;
+    line-height: 1;
+    color: #000;
+    background: #c0c0c0;
+    border: 1px solid #000;
+    box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #808080;
+  }
+
+  .qw__ctl-btn--close {
+    font-weight: 700;
+  }
+
+  .qw__paper {
+    position: relative;
+    margin: 2px;
+    padding: 5px 6px 6px;
+    background: #e8e5d8;
+    border: 1px solid #808080;
+    box-shadow: inset 1px 1px 0 #404040, inset -1px -1px 0 #fff;
+    /* Reserve space so typing does not grow the hero */
+    min-height: 7.6em;
+  }
+
+  .qw__full {
+    margin: 0;
+  }
+
+  .qw__q {
+    margin: 0;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 11px;
+    line-height: 1.35;
+    color: #0a1516;
+  }
+
+  .qw__f {
+    margin: 0.55em 0 0;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 10px;
+    line-height: 1.35;
+    color: #404040;
+  }
+
+  .qw__cite {
+    font-style: italic;
+  }
+
+  /* Visually hide full quote while keeping it for assistive tech */
+  .qw--typing .qw__full {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .qw__anim {
+    margin: 0;
+  }
+
+  .qw__typed,
+  .qw__attr-out {
+    margin: 0;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 11px;
+    line-height: 1.35;
+    color: #0a1516;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .qw__attr-out {
+    margin-top: 0.55em;
+    font-size: 10px;
+    color: #404040;
+  }
+
+  .qw__cur {
+    display: inline-block;
+    width: 0.55em;
+    color: #000080;
+    animation: qw-blink 1s steps(1, end) infinite;
+  }
+
+  .qw__cur--done {
+    animation: none;
+    opacity: 0.35;
+  }
+
+  @keyframes qw-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .qw {
+      flex: 1 1 auto;
+      max-width: 100%;
+      width: 100%;
+      margin-top: 2px;
+    }
+
+    .qw__paper {
+      min-height: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .qw__cur {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  function typeText(
+    el: HTMLElement,
+    text: string,
+    ms: number,
+    onDone: () => void,
+  ) {
+    let i = 0;
+    const tick = () => {
+      i += 1;
+      el.textContent = text.slice(0, i);
+      if (i < text.length) {
+        window.setTimeout(tick, ms);
+      } else {
+        onDone();
+      }
+    };
+    tick();
+  }
+
+  function boot(root: HTMLElement) {
+    const quote = root.dataset.qwQuote ?? "";
+    const attr = root.dataset.qwAttr ?? "";
+    if (!quote) return;
+
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+
+    const anim = root.querySelector<HTMLElement>(".qw__anim");
+    const out = root.querySelector<HTMLElement>(".qw__out");
+    const attrOut = root.querySelector<HTMLElement>(".qw__attr-out");
+    const cur = root.querySelector<HTMLElement>(".qw__cur");
+    if (!anim || !out || !attrOut || !cur) return;
+
+    root.classList.add("qw--typing");
+    anim.hidden = false;
+
+    const ms = 20;
+    const visualQuote = `“${quote}”`;
+
+    typeText(out, visualQuote, ms, () => {
+      typeText(attrOut, attr, ms, () => {
+        cur.classList.add("qw__cur--done");
+      });
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>("[data-qw]").forEach(boot);
+</script>

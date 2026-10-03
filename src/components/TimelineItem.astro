@@ -1,7 +1,12 @@
 ---
+import OrgLogo from "@/components/OrgLogo.astro";
+import type { OrgLogo as OrgLogoType } from "@/data/profile";
+
 interface Props {
   title: string;
   org?: string;
+  orgUrl?: string;
+  logo?: OrgLogoType;
   dates: string;
   location: string;
   bullets?: string[];
@@ -12,58 +17,56 @@ interface Props {
 const {
   title,
   org,
+  orgUrl,
+  logo,
   dates,
   location,
   bullets = [],
-  featured = false,
   compact = false,
 } = Astro.props;
 
 const orgLine = org?.trim();
 ---
 
-<li class="relative pl-8 sm:pl-10">
-  <span
-    class="absolute left-[7px] top-2 h-full w-px bg-gradient-to-b from-accent/50 via-line to-transparent sm:left-[9px]"
-    aria-hidden="true"
-  />
-  <span
-    class="absolute left-0 top-2 flex h-[18px] w-[18px] items-center justify-center rounded-full border border-accent/40 bg-surface shadow-[0_0_0_4px_rgba(12,16,24,0.9)] sm:h-5 sm:w-5"
-    aria-hidden="true"
-  >
-    <span class="h-2 w-2 rounded-full bg-accent/80" />
-  </span>
-
-  <div
-    class:list={[
-      "rounded-xl border border-line bg-surface-overlay/40",
-      compact ? "px-4 py-3.5 sm:px-5 sm:py-4" : "p-5 sm:p-6",
-      featured && "ring-1 ring-accent/10",
-    ]}
-  >
-    <div class="flex flex-wrap items-baseline justify-between gap-2">
-      <div>
-        <h3 class="text-base font-semibold text-ink">{title}</h3>
-        {
-          orgLine && (
-            <p class="text-sm text-accent/90">{orgLine}</p>
-          )
-        }
-      </div>
-      <p class="font-mono text-[11px] uppercase tracking-wider text-ink-faint">
-        {dates}
-      </p>
-    </div>
-    <p class="mt-2 font-mono text-xs text-ink-muted">{location}</p>
+<li class="grid-12 border-t border-line py-7 sm:py-9" data-reveal>
+  <div class="col-span-4 sm:col-span-8 lg:col-span-3">
+    <p class="font-mono text-xs tabular-nums text-ink">{dates}</p>
+    <p class="mt-1 font-mono text-xs text-ink-faint">{location}</p>
+    {
+      logo && (
+        <div class="mt-5 hidden lg:block">
+          <OrgLogo logo={logo} name={orgLine ?? title} href={orgUrl} size={30} />
+        </div>
+      )
+    }
+  </div>
+  <div class="col-span-4 mt-3 sm:col-span-8 lg:col-span-9 lg:mt-0">
+    <h3
+      class:list={[
+        "font-medium tracking-tight text-ink",
+        compact ? "text-lg" : "text-xl sm:text-2xl",
+      ]}
+    >
+      {title}
+    </h3>
+    {
+      orgLine && (
+        <p class="mt-1 flex flex-wrap items-center gap-x-3 gap-y-2 text-base text-ink-muted">
+          {logo && (
+            <span class="lg:hidden">
+              <OrgLogo logo={logo} name={orgLine} href={orgUrl} size={22} />
+            </span>
+          )}
+          <span>{orgLine}</span>
+        </p>
+      )
+    }
     {
       bullets.length > 0 && (
-        <ul class="mt-5 space-y-2.5 text-sm leading-snug text-ink-muted">
+        <ul class="mt-5 max-w-prose space-y-3 text-[0.9375rem] leading-[1.6] text-ink-muted">
           {bullets.map((b) => (
-            <li class="flex gap-2">
-              <span
-                class="mt-2 h-px w-3 shrink-0 bg-accent/40"
-                aria-hidden="true"
-              />
+            <li class="flex gap-3">
+              <span class="mt-[0.7em] h-px w-4 shrink-0 bg-ink" aria-hidden="true" />
               <span>{b}</span>
             </li>
           ))}

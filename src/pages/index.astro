@@ -1,188 +1,218 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import PortfolioBrowser from "@/components/PortfolioBrowser.astro";
-import { profile } from "@/data/profile";
-import { projects } from "@/data/projects";
+import { profile, experience } from "@/data/profile";
+import OrgLogo from "@/components/OrgLogo.astro";
+import { getCaseStudies, getAllProjects } from "@/lib/projects";
+
+const projects = getCaseStudies().slice(0, 4);
+const total = getAllProjects().length;
 
 const pageTitle = "Rafael Rojas";
 const description = profile.seo.home;
 
-const [firstName, ...restName] = profile.name.split(" ");
-const lastName = restName.join(" ") || firstName;
+const [firstName, ...rest] = profile.name.split(" ");
+const lastName = rest.join(" ");
 
-/** Homepage selected work: production builds first (canonical project order). */
-const selected = projects.filter((p) =>
-  p.status.toLowerCase().includes("production"),
-).slice(0, 2);
+const current = experience.filter((e) => e.featured).slice(0, 5);
 
-/** Concise skill scan from canonical profile.skills */
-const skillLines = [
-  ...profile.skills.languages.slice(0, 2),
-  ...profile.skills.backend.slice(0, 2),
-  ...profile.skills.databases.slice(0, 2),
-  profile.skills.concepts.find((c) => c === "Automation") ?? "Automation",
-  profile.skills.concepts.find((c) => c === "API integrations") ??
-    "API integrations",
-];
-
-const roleToken = profile.role
-  .toUpperCase()
-  .replace(/[^A-Z0-9]+/g, "_")
-  .replace(/^_|_$/g, "");
-
-const intro = `${profile.homeEducation} ${profile.homeEducationLocation}. ${profile.atAGlance[0]}`;
-
-function stackLine(stack: string[]): string {
-  return stack.slice(0, 5).join(" / ");
-}
-
-function statusLabel(status: string): string {
-  if (status.toLowerCase().includes("employed")) return "MODE: EMPLOYED";
-  if (status.toLowerCase().includes("freelance")) return "MODE: FREELANCE";
-  const mode = status.split("/")[0].trim().toUpperCase().slice(0, 12);
-  return `MODE: ${mode}`;
-}
-
-/** Homepage listing blurb: shortest existing summary field (no new schema). */
-function listingBlurb(project: (typeof projects)[number]): string {
-  const candidates = [
-    project.subtitle,
-    project.shortDescription,
-    project.engineeringFocus[0],
-  ].filter((s): s is string => Boolean(s?.trim()));
-  return candidates.reduce((a, b) => (a.length <= b.length ? a : b));
+function stackLine(stack: string[], n = 4): string {
+  return stack.slice(0, n).join(", ");
 }
 ---
 
-<BaseLayout title={pageTitle} description={description} shell="inet">
-  <PortfolioBrowser
-    address="http://rafaelrojasvi.github.io/index.html"
-    objectsLabel={`${selected.length} objects`}
-    nodeLabel="node 0027"
-    buildLabel="2026.08"
-    lastUpdated="09 Aug 2026"
-  >
-    <header class="inet-id">
-      <p class="inet-path">C:\USERS\RAFA\WWW\INDEX.HTM</p>
-      <div class="inet-id__row">
-        <h1 class="inet-name">
-          <span class="inet-name__a">{firstName}</span>
-          <span class="inet-name__b">{lastName}</span>
-        </h1>
-      </div>
-      <p class="inet-role">[ {roleToken} ]</p>
-      <p class="inet-pronouns">{profile.pronouns} · {profile.location}</p>
-      <div class="inet-check" aria-hidden="true"></div>
-    </header>
+<BaseLayout title={pageTitle} description={description}>
+  <!-- Masthead: wide grotesk, staggered second line, red block on the grid -->
+  <section class="page pt-8 sm:pt-12 lg:pt-14" aria-labelledby="masthead">
+    <div class="grid-12 items-end">
+      <h1
+        id="masthead"
+        class="display wdth-wide col-span-4 text-[clamp(3rem,11.5vw,9.75rem)] font-semibold sm:col-span-8 lg:col-span-9"
+      >
+        <span class="load-rise block" style="--d: 0ms">{firstName}</span>
+        <span class="load-rise block lg:ml-[11.11%]" style="--d: 120ms">{lastName}<span class="text-accent">.</span></span>
+      </h1>
+      <div
+        class="load-block col-span-2 col-start-3 mt-6 aspect-square w-20 justify-self-end bg-accent sm:col-span-2 sm:col-start-7 sm:mt-0 sm:w-full lg:col-span-3 lg:col-start-10"
+        style="--d: 350ms"
+        aria-hidden="true"
+      ></div>
+    </div>
 
-    <section class="inet-mod" aria-labelledby="profile-heading">
-      <header class="inet-mod__bar inet-mod__bar--cobalt">
-        <h2 id="profile-heading">PROFILE / INTRO</h2>
-        <span class="inet-mod__meta">about.txt</span>
-      </header>
-      <div class="inet-mod__body">
-        <p>{intro}</p>
-        <p class="inet-more-row">{profile.atAGlance[1]}</p>
-      </div>
-    </section>
+    <div class="rule load-rule mt-8 sm:mt-10" style="--d: 450ms"></div>
 
-    <section class="inet-mod" aria-labelledby="skills-heading">
-      <header class="inet-mod__bar inet-mod__bar--metal">
-        <h2 id="skills-heading">SKILLS.TXT</h2>
-        <span class="inet-mod__meta">{skillLines.length} entries</span>
-      </header>
-      <div class="inet-mod__body inet-skills-body">
-        <ul class="inet-skills">
-          {skillLines.map((s) => <li>&gt; {s}</li>)}
+    <div class="grid-12 pt-6 sm:pt-8">
+      <p class="load-rise col-span-4 font-mono text-xs leading-[1.9] text-ink-muted sm:col-span-8 lg:col-span-4" style="--d: 600ms">
+        CTO, OrigenLab and BENKER<br />
+        {profile.location}<br />
+        {profile.pronouns}<br />
+        Open to remote and hybrid roles
+      </p>
+
+      <div class="load-rise col-span-4 mt-8 sm:col-span-8 lg:col-span-7 lg:col-start-6 lg:mt-0" style="--d: 700ms">
+        <p class="text-pretty text-2xl font-normal leading-[1.2] tracking-tight text-ink sm:text-3xl lg:text-[2.5rem]">
+          Backend engineer in Valdivia, Chile. APIs, data pipelines, and
+          operator tools in Python and TypeScript, tested where money or
+          messages move.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a class="btn-solid" href="/projects">View projects</a>
+          <a class="btn" href={`mailto:${profile.contact.email}`}>Email me</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pull quote -->
+  <section class="page mt-24 sm:mt-32" aria-label="Quotation">
+    <figure class="grid-12" data-reveal>
+      <blockquote class="col-span-4 border-l-2 border-accent pl-6 text-pretty text-2xl italic leading-[1.3] tracking-tight text-ink sm:col-span-8 sm:pl-8 sm:text-3xl lg:col-span-9 lg:text-[2.25rem]">
+        {profile.headline}
+      </blockquote>
+      <figcaption class="col-span-4 mt-5 pl-6 text-sm text-ink-muted sm:col-span-8 sm:pl-8 lg:col-span-3 lg:mt-0 lg:self-end lg:pl-0">
+        {profile.headlineAttribution}<br />
+        <cite class="not-italic">{profile.headlineSource}</cite>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- Selected work: editorial index -->
+  <section class="page mt-28 sm:mt-36" aria-labelledby="work-heading">
+    <div class="rule" data-reveal="rule"></div>
+    <div class="grid-12 pt-5" data-reveal>
+      <h2
+        id="work-heading"
+        class="col-span-4 text-3xl font-medium tracking-tight sm:col-span-8 sm:text-4xl lg:col-span-5"
+      >
+        Selected work
+      </h2>
+      <p class="col-span-4 mt-2 font-mono text-xs text-ink-faint sm:col-span-8 lg:col-span-7 lg:mt-3 lg:text-right">
+        {total} projects, {projects.length} featured
+      </p>
+    </div>
+
+    <ol class="mt-10 sm:mt-14">
+      {
+        projects.map((project) => (
+          <li class="border-t border-line" data-reveal>
+            <a
+              href={`/projects/${project.slug}`}
+              class="group row-link grid-12 py-6 no-underline transition-colors sm:py-8"
+            >
+              <span class="folio col-span-4 sm:col-span-1">{project.folio}</span>
+              <div class="col-span-4 sm:col-span-7 lg:col-span-6">
+                <h3 class="row-title text-2xl font-medium leading-tight tracking-tight text-ink group-hover:text-accent sm:text-3xl">
+                  {project.title}
+                </h3>
+                <p class="mt-2 max-w-prose text-pretty text-base leading-[1.5] text-ink-muted">
+                  {project.subtitle}
+                </p>
+              </div>
+              <p class="col-span-3 mt-3 font-mono text-xs leading-relaxed text-ink-muted sm:col-span-5 sm:col-start-2 lg:col-span-3 lg:col-start-auto lg:mt-0">
+                {stackLine(project.stack)}
+              </p>
+              <p class="col-span-1 mt-3 text-right font-mono text-xs tabular-nums text-ink-faint sm:col-span-3 lg:col-span-2 lg:mt-0">
+                {project.years}
+              </p>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+    <div class="rule-soft"></div>
+  </section>
+
+  <!-- Practice: staggered manifesto, alternating column starts -->
+  <section class="page mt-28 sm:mt-36" aria-labelledby="practice-heading">
+    <div class="rule" data-reveal="rule"></div>
+    <h2 id="practice-heading" class="pt-5 text-3xl font-medium tracking-tight sm:text-4xl" data-reveal>
+      What I optimise for
+    </h2>
+    <ol class="mt-10 sm:mt-14">
+      {
+        profile.pillars.map((pillar, i) => (
+          <li class="grid-12 border-t border-line py-7 sm:py-9" data-reveal>
+            <span class="folio col-span-4 sm:col-span-1">{String(i + 1).padStart(2, "0")}</span>
+            <div
+              class:list={[
+                "col-span-4 mt-3 sm:col-span-7 sm:mt-0 lg:col-span-6",
+                i % 2 === 1 && "lg:col-start-7",
+              ]}
+            >
+              <h3 class="text-2xl font-medium leading-tight tracking-tight text-ink sm:text-3xl">
+                {pillar.title}
+              </h3>
+              <p class="mt-3 max-w-prose text-pretty text-base leading-[1.6] text-ink-muted sm:text-lg">
+                {pillar.body}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+    <div class="rule-soft"></div>
+  </section>
+
+  <!-- Now: four current engagements, 2 x 2 -->
+  <section class="page mt-28 sm:mt-36" aria-labelledby="now-heading">
+    <div class="rule" data-reveal="rule"></div>
+    <div class="grid-12 pt-5" data-reveal>
+      <h2 id="now-heading" class="col-span-4 text-3xl font-medium tracking-tight sm:col-span-8 sm:text-4xl lg:col-span-5">
+        Currently
+      </h2>
+      <p class="col-span-4 mt-2 text-sm text-ink-muted sm:col-span-8 lg:col-span-7 lg:mt-3 lg:text-right">
+        <a class="link" href="/experience">Full experience and education</a>
+      </p>
+    </div>
+    <ul class="mt-10 grid gap-x-8 gap-y-10 sm:mt-14 sm:grid-cols-2 lg:grid-cols-6">
+      {
+        current.map((role, i) => (
+          <li
+            class:list={[
+              "border-t border-line pt-5",
+              i < 2 ? "lg:col-span-3" : "lg:col-span-2",
+            ]}
+            data-reveal
+            style={`--d: ${(i % 3) * 80}ms`}
+          >
+            <div class="flex items-start justify-between gap-4">
+              <p class="font-mono text-xs tabular-nums text-ink-faint">{role.dates}</p>
+              {role.logo && (
+                <OrgLogo logo={role.logo} name={role.orgShort ?? role.org ?? role.title} href={role.orgUrl} size={24} />
+              )}
+            </div>
+            <h3 class="mt-4 text-xl font-medium tracking-tight text-ink sm:text-2xl">{role.orgShort ?? role.org}</h3>
+            <p class="mt-1 text-base text-ink-muted">{role.title}</p>
+            <p class="mt-4 max-w-prose text-pretty text-[0.9375rem] leading-[1.55] text-ink-muted">
+              {role.bullets[0]}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- Contact: typographic block -->
+  <section class="page mt-28 sm:mt-36" aria-labelledby="contact-heading">
+    <div class="rule" data-reveal="rule"></div>
+    <div class="grid-12 pt-5" data-reveal>
+      <h2
+        id="contact-heading"
+        class="col-span-4 text-3xl font-medium tracking-tight sm:col-span-8 sm:text-4xl lg:col-span-4"
+      >
+        Hiring or collaborating?
+      </h2>
+      <div class="col-span-4 mt-6 sm:col-span-8 lg:col-span-8 lg:mt-0" data-reveal style="--d: 120ms">
+        <a
+          href={`mailto:${profile.contact.email}`}
+          class="break-all text-2xl font-medium leading-tight tracking-tight text-ink underline decoration-ink/30 decoration-2 underline-offset-8 transition-colors hover:text-accent hover:decoration-accent sm:text-4xl lg:text-5xl"
+        >
+          {profile.contact.email}
+        </a>
+        <ul class="mt-8 flex flex-wrap gap-x-8 gap-y-2 text-sm">
+          <li><a class="link" href={profile.contact.github} rel="noopener noreferrer">GitHub</a></li>
+          <li><a class="link" href={profile.contact.linkedIn} rel="noopener noreferrer">LinkedIn</a></li>
         </ul>
       </div>
-    </section>
-
-    <section class="inet-mod" aria-labelledby="work-heading">
-      <header class="inet-mod__bar inet-mod__bar--work">
-        <h2 id="work-heading">SELECTED_WORK</h2>
-        <span class="inet-mod__meta">dir / projects</span>
-      </header>
-      <div class="inet-mod__body inet-work-body">
-        {
-          selected.map((project, i) => (
-            <article
-              class:list={["inet-proj", i === 0 ? "inet-proj--a" : "inet-proj--b"]}
-            >
-              <div class="inet-proj__head">
-                <span class="inet-proj__id">
-                  [{String(i + 1).padStart(2, "0")}] {project.title.toUpperCase()}
-                </span>
-                <span class="inet-proj__status" title={project.status}>
-                  {statusLabel(project.status)}
-                </span>
-              </div>
-              {i === 0 && project.slug === "origenlab" ? (
-                <div class="inet-proj__inner">
-                  <img
-                    class="inet-px"
-                    src="/design-lab/px-lab.svg"
-                    width="32"
-                    height="32"
-                    alt=""
-                    aria-hidden="true"
-                  />
-                  <div class="inet-proj__copy">
-                    <p class="inet-proj__stack">{stackLine(project.stack)}</p>
-                    <p class="inet-proj__blurb">{listingBlurb(project)}</p>
-                    <p>
-                      <a class="inet-link" href={`/projects/${project.slug}`}>
-                        view_project →
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              ) : (
-                <>
-                  <p class="inet-proj__stack">{stackLine(project.stack)}</p>
-                  <p class="inet-proj__blurb">{listingBlurb(project)}</p>
-                  <p>
-                    <a
-                      class:list={[
-                        "inet-link",
-                        i > 0 && "inet-link--visited",
-                      ]}
-                      href={`/projects/${project.slug}`}
-                    >
-                      view_project →
-                    </a>
-                  </p>
-                </>
-              )}
-            </article>
-          ))
-        }
-        <p class="inet-more-row">
-          <a class="inet-link" href="/projects">all_projects.html →</a>
-        </p>
-      </div>
-    </section>
-
-    <section class="inet-mod" aria-labelledby="links-heading">
-      <header class="inet-mod__bar inet-mod__bar--links">
-        <h2 id="links-heading">CONTACT / LINKS</h2>
-        <span class="inet-mod__meta">also</span>
-      </header>
-      <div class="inet-mod__body">
-        <p class="inet-also">
-          <a class="inet-link" href={profile.contact.github}>github.exe</a>
-          ·
-          <a class="inet-link" href={profile.contact.linkedIn}>linkedin.url</a>
-          ·
-          <a class="inet-link" href={`mailto:${profile.contact.email}`}
-            >email.exe</a
-          >
-          ·
-          <a class="inet-link" href="/experience">resume.txt</a>
-          ·
-          <a class="inet-link" href="/about">about.txt</a>
-        </p>
-      </div>
-    </section>
-  </PortfolioBrowser>
+    </div>
+  </section>
 </BaseLayout>

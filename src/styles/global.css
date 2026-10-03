@@ -2,29 +2,268 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ------------------------------------------------------------------ */
+/* Fonts (self-hosted, latin subsets)                                  */
+/* ------------------------------------------------------------------ */
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url("/fonts/archivo-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Archivo";
+  font-style: italic;
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url("/fonts/archivo-italic-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/jetbrains-mono-latin.woff2") format("woff2");
+}
+
+/* ------------------------------------------------------------------ */
+/* Tokens: Swiss paper + ink + one red. Dark mode follows the system.  */
+/* ------------------------------------------------------------------ */
+:root {
+  color-scheme: light dark;
+  --c-surface: 244 244 242;
+  --c-surface-raised: 236 236 234;
+  --c-surface-overlay: 228 228 225;
+  --c-ink: 17 17 17;
+  --c-ink-muted: 74 74 72;
+  --c-ink-faint: 122 122 118;
+  --c-accent: 207 42 33;
+  --c-accent-dim: 168 33 26;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-surface: 18 18 18;
+    --c-surface-raised: 26 26 26;
+    --c-surface-overlay: 34 34 34;
+    --c-ink: 236 236 233;
+    --c-ink-muted: 166 166 161;
+    --c-ink-faint: 118 118 113;
+    --c-accent: 255 86 72;
+    --c-accent-dim: 224 66 54;
+  }
+}
+
 @layer base {
   html {
-    @apply scroll-smooth antialiased;
+    @apply antialiased;
     overflow-x: clip;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 
   body {
-    @apply min-h-screen max-w-[100vw] bg-surface font-sans text-ink;
-    background-image:
-      radial-gradient(
-        ellipse 120% 80% at 50% -40%,
-        rgba(129, 140, 248, 0.1),
-        transparent 55%
-      ),
-      linear-gradient(180deg, #0a0d14 0%, #0c1018 40%, #0c1018 100%);
+    @apply min-h-screen bg-surface font-sans text-ink;
+    font-feature-settings: "ss01", "cv05";
   }
 
   ::selection {
-    @apply bg-accent/25 text-ink;
+    @apply bg-accent text-surface;
   }
 
   :focus-visible {
     @apply outline outline-2 outline-offset-2 outline-accent;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  /* Page container: 12-column Swiss grid, 1320px max, 16px gutter on phones */
+  .page {
+    @apply mx-auto w-full max-w-page px-4 sm:px-6 lg:px-8;
+  }
+
+  .grid-12 {
+    @apply grid grid-cols-4 gap-x-4 sm:grid-cols-8 sm:gap-x-6 lg:grid-cols-12 lg:gap-x-8;
+  }
+
+  /* Structural hairlines */
+  .rule {
+    @apply border-t border-ink;
+  }
+  .rule-soft {
+    @apply border-t border-line;
+  }
+
+  /* Small metadata label (mono, tracked). Rationed: one per few sections. */
+  .meta {
+    @apply font-mono text-[11px] uppercase tracking-meta text-ink-muted;
+  }
+
+  /* Display type */
+  .display {
+    @apply font-medium leading-[0.92] tracking-display text-ink;
+  }
+
+  /* Body prose */
+  .prose-ed {
+    @apply max-w-prose text-[1.0625rem] leading-[1.6] text-ink-muted;
+  }
+  .prose-ed p + p {
+    @apply mt-5;
+  }
+  .prose-ed strong {
+    @apply font-medium text-ink;
+  }
+
+  /* Links inside prose: underline, ink; red on hover */
+  .link {
+    @apply text-ink underline decoration-ink/40 underline-offset-[3px] transition-colors hover:text-accent hover:decoration-accent;
+  }
+
+  /* Buttons: one shape system (square corners). */
+  .btn {
+    @apply inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap border border-ink px-5 font-medium text-ink transition-colors hover:bg-ink hover:text-surface active:translate-y-px;
+  }
+  .btn-solid {
+    @apply inline-flex h-11 items-center justify-center gap-2 whitespace-nowrap border border-ink bg-ink px-5 font-medium text-surface transition-colors hover:border-accent hover:bg-accent active:translate-y-px;
+  }
+
+  /* Large numeral used as editorial folio / index marker */
+  .folio {
+    @apply font-mono text-[11px] tabular-nums text-ink-faint;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Motion: load-in for the masthead, scroll reveals, drawn rules.      */
+/* Everything collapses to static under prefers-reduced-motion.        */
+/* ------------------------------------------------------------------ */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes draw-x {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes block-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Masthead: each line rises on load, in sequence */
+  .load-rise {
+    opacity: 0;
+    animation: rise-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--d, 0ms);
+  }
+  .load-block {
+    opacity: 0;
+    transform-origin: top right;
+    animation: block-in 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--d, 300ms);
+  }
+  .load-rule {
+    transform-origin: left center;
+    transform: scaleX(0);
+    animation: draw-x 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--d, 400ms);
+  }
+
+  /* Scroll reveals: toggled by the IntersectionObserver in BaseLayout.
+     Gated on the js class so content renders normally without JavaScript. */
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--d, 0ms);
+  }
+  html.js [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+  html.js [data-reveal="rule"] {
+    opacity: 1;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  html.js [data-reveal="rule"].is-visible {
+    transform: scaleX(1);
+  }
+
+  /* Index rows: number and title step right on hover */
+  .row-link .row-title {
+    transition:
+      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      color 0.3s ease;
+  }
+  .row-link:hover .row-title {
+    transform: translateX(0.35rem);
+  }
+  .row-link .folio {
+    transition: color 0.3s ease;
+  }
+  .row-link:hover .folio {
+    color: rgb(var(--c-accent));
+  }
+
+  /* Links: underline grows from the left */
+  .link-grow {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    transition: background-size 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .link-grow:hover {
+    background-size: 100% 1px;
+  }
+
+  /* Page transitions (Astro view transitions) */
+  ::view-transition-old(root) {
+    animation: 0.22s ease-in both fade-out;
+  }
+  ::view-transition-new(root) {
+    animation: 0.4s cubic-bezier(0.16, 1, 0.3, 1) both rise-in;
+  }
+}
+@keyframes fade-out {
+  to {
+    opacity: 0;
   }
 }
 
@@ -32,9 +271,18 @@
   .text-balance {
     text-wrap: balance;
   }
+  .text-pretty {
+    text-wrap: pretty;
+  }
+  .wdth-narrow {
+    font-stretch: 88%;
+  }
+  .wdth-wide {
+    font-stretch: 112%;
+  }
 }
 
-/* OrigenLab case study: subtle connector pulse (used by OrigenLabFlowDiagram) */
+/* OrigenLab case study: connector pulse (OrigenLabFlowDiagram) */
 @keyframes olab-conn-pulse {
   0%,
   100% {
@@ -44,24 +292,19 @@
     opacity: 1;
   }
 }
-
 .olab-connector-pulse {
   animation: olab-conn-pulse 2.8s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .olab-connector-pulse {
+    animation: none;
+  }
 }
 
 /* OrigenLab flow diagram: selected node */
 .olab-flow-node--active {
-  border-color: rgba(129, 140, 248, 0.55) !important;
-  background-color: rgba(129, 140, 248, 0.12) !important;
-  box-shadow:
-    0 0 0 1px rgba(129, 140, 248, 0.35),
-    0 12px 36px -12px rgba(129, 140, 248, 0.28);
-  transform: scale(1.02);
-}
-@media (prefers-reduced-motion: reduce) {
-  .olab-flow-node--active {
-    transform: none;
-  }
+  border-color: rgb(var(--c-accent) / 0.7) !important;
+  background-color: rgb(var(--c-accent) / 0.08) !important;
 }
 
 /* Case study + portfolio PDF/print export */
@@ -70,13 +313,11 @@
   body {
     overflow: visible !important;
   }
-
   .json-snippet,
   .json-snippet figure {
     break-inside: avoid;
     page-break-inside: avoid;
   }
-
   .json-snippet__pre {
     max-height: none !important;
     overflow: visible !important;
@@ -84,26 +325,17 @@
     overflow-wrap: anywhere !important;
     word-break: break-word !important;
   }
-
-  .json-snippet--compact .json-snippet__pre {
-    font-size: 9pt;
-    line-height: 1.45;
-  }
-
   .case-study-table-wrap {
     overflow: visible !important;
   }
-
   .case-study-table-wrap table {
     min-width: 0 !important;
     width: 100% !important;
   }
-
   .case-study-section {
     break-inside: avoid-page;
     page-break-inside: avoid;
   }
-
   .olab-runbook code {
     white-space: pre-wrap !important;
     overflow-wrap: anywhere !important;

@@ -1,5 +1,6 @@
 ---
 import "@/styles/global.css";
+import { ViewTransitions } from "astro:transitions";
 import Navbar from "@/components/Navbar.astro";
 import Footer from "@/components/Footer.astro";
 import { profile } from "@/data/profile";
@@ -9,8 +10,8 @@ interface Props {
   description?: string;
   ogImage?: string;
   /**
-   * `legacy` — existing Navbar/Footer (default).
-   * `inet` — Internet 2002 shell pages; hide legacy chrome.
+   * `legacy` - standard Navbar/Footer (default).
+   * `inet` - experimental design-lab shell pages; hide standard chrome.
    */
   shell?: "legacy" | "inet";
 }
@@ -30,7 +31,7 @@ const fullTitle =
 ---
 
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -46,35 +47,70 @@ const fullTitle =
     <meta property="og:url" content={canonicalURL} />
     {ogImage && <meta property="og:image" content={ogImage} />}
 
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500;600&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="/fonts/archivo-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
+    <ViewTransitions />
+    <script is:inline>
+      // Marks that JavaScript runs, so reveal styles only apply when the
+      // IntersectionObserver below can undo them.
+      document.documentElement.classList.add("js");
+    </script>
   </head>
   <body
-    class:list={[
-      "relative flex min-h-screen flex-col",
-      isInet && "inet-body",
-    ]}
+    class:list={["relative flex min-h-screen flex-col", isInet && "inet-body"]}
   >
-    {
-      !isInet && (
-        <div
-          class="pointer-events-none fixed inset-0 -z-10 bg-[length:48px_48px] bg-grid-faint opacity-[0.35]"
-          aria-hidden="true"
-        />
-      )
-    }
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-ink focus:px-3 focus:py-2 focus:text-surface"
+    >
+      Skip to content
+    </a>
     {!isInet && <Navbar />}
     <main id="main-content" class="flex-1">
       <slot />
     </main>
     {!isInet && <Footer />}
+    <script>
+      // Scroll reveals. Elements marked data-reveal get .is-visible once they
+      // enter the viewport. Re-runs after every Astro page transition.
+      function initReveal() {
+        const items = document.querySelectorAll<HTMLElement>("[data-reveal]:not(.is-visible)");
+        if (items.length === 0) return;
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduce || !("IntersectionObserver" in window)) {
+          items.forEach((el) => el.classList.add("is-visible"));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                io.unobserve(entry.target);
+              }
+            }
+          },
+          { rootMargin: "0px 0px -10% 0px", threshold: 0.1 },
+        );
+        items.forEach((el) => io.observe(el));
+      }
+      initReveal();
+      document.addEventListener("astro:page-load", initReveal);
+      // Safety net: anything still hidden after a few seconds is shown.
+      window.setTimeout(() => {
+        document
+          .querySelectorAll("[data-reveal]:not(.is-visible)")
+          .forEach((el) => el.classList.add("is-visible"));
+      }, 4000);
+    </script>
   </body>
 </html>

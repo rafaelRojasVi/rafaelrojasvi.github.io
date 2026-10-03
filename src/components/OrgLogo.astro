@@ -1,0 +1,66 @@
+---
+/**
+ * Company logo with light/dark variants, constrained to a fixed cap height so
+ * marks of different proportions sit on the same baseline. Falls back to the
+ * typeset organisation name when no asset exists.
+ */
+import type { OrgLogo as OrgLogoType } from "@/data/profile";
+
+interface Props {
+  logo?: OrgLogoType;
+  name: string;
+  href?: string;
+  /** Rendered height in px. */
+  size?: number;
+  class?: string;
+}
+
+const { logo, name, href, size = 28, class: className } = Astro.props;
+const Tag = href ? "a" : "span";
+const linkAttrs = href ? { href, rel: "noopener noreferrer", target: "_blank" } : {};
+---
+
+<Tag
+  class:list={["inline-flex items-center", href && "transition-opacity hover:opacity-70", className]}
+  {...linkAttrs}
+  aria-label={href ? `${name}, website` : undefined}
+>
+  {
+    logo ? (
+      <>
+        <img
+          src={logo.src}
+          alt={logo.alt}
+          width={logo.width}
+          height={logo.height}
+          loading="lazy"
+          decoding="async"
+          class:list={["w-auto", logo.srcDark && "dark:hidden"]}
+          style={`height:${size}px`}
+        />
+        {logo.srcDark && (
+          <img
+            src={logo.srcDark}
+            alt={logo.alt}
+            width={logo.width}
+            height={logo.height}
+            loading="lazy"
+            decoding="async"
+            class="hidden w-auto dark:block"
+            style={`height:${size}px`}
+          />
+        )}
+        {logo.word && (
+          <span
+            class="ml-2 font-bold leading-none tracking-tight text-ink"
+            style={`font-size:${Math.round(size * 0.64)}px`}
+          >
+            {logo.word}
+          </span>
+        )}
+      </>
+    ) : (
+      <span class="wdth-wide text-base font-semibold uppercase tracking-tight text-ink">{name}</span>
+    )
+  }
+</Tag>
