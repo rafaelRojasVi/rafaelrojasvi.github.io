@@ -1,0 +1,47 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import CaseStudyContent from "@/components/CaseStudyContent.astro";
+import OrigenLabCaseExtras from "@/components/projects/OrigenLabCaseExtras.astro";
+import { getAllProjects, type ProjectView } from "@/lib/projects";
+import { experience } from "@/data/profile";
+
+export function getStaticPaths() {
+  return getAllProjects().map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: ProjectView;
+}
+
+const { project } = Astro.props;
+const isOrigenLab = project.slug === "origenlab";
+
+/** Map project slugs to the organisation whose logo should head the page. */
+const brandBySlug: Record<string, string> = {
+  origenlab: "OrigenLab",
+  "platt-commercial-platform": "BENKER",
+  "platt-commercial-ops": "BENKER",
+  "campo-digital-platform": "Campo Digital",
+  "newdev-company-knowledge": "NewDev Cooperativa",
+};
+const brandRole = experience.find((e) => e.orgShort === brandBySlug[project.slug]);
+const clientBranding = brandRole?.logo
+  ? { href: brandRole.orgUrl, name: brandRole.orgShort ?? brandRole.org ?? "", logo: brandRole.logo }
+  : undefined;
+---
+
+<BaseLayout
+  title={`${project.title}, case study`}
+  description={project.shortDescription}
+>
+  <CaseStudyContent
+    project={project}
+    insertAfterSectionId={isOrigenLab ? "today" : undefined}
+    clientBranding={clientBranding}
+  >
+    {isOrigenLab && <OrigenLabCaseExtras slot="after-section" />}
+  </CaseStudyContent>
+</BaseLayout>

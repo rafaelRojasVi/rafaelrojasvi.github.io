@@ -1,187 +1,219 @@
 ---
-import { getProjectBySlug } from "@/data/projects";
-import SectionHeading from "@/components/SectionHeading.astro";
 import TechPill from "@/components/TechPill.astro";
-import OrigenLabHeaderLockup from "@/components/origenlab/logo/OrigenLabHeaderLockup.astro";
+import OrgLogo from "@/components/OrgLogo.astro";
+import type { OrgLogo as OrgLogoType } from "@/data/profile";
+import { getAllProjects, formatDate, type ProjectView } from "@/lib/projects";
 
 interface Props {
-  slug: string;
+  project: ProjectView;
   /** When set, render `<slot name="after-section" />` immediately after this section's id. */
   insertAfterSectionId?: string;
   /** Optional client logo linking to their live site (case study header). */
   clientBranding?: {
-    href: string;
+    href?: string;
     name: string;
-    logoSrc?: string;
-    /** Live three-body canvas mark (OrigenLab). */
-    animatedMark?: "origenlab";
+    /** Light/dark brand asset. */
+    logo?: OrgLogoType;
   };
 }
 
-const { slug, insertAfterSectionId, clientBranding } = Astro.props;
-const project = getProjectBySlug(slug);
+const { project, insertAfterSectionId, clientBranding } = Astro.props;
+const slug = project.slug;
 
-if (!project) {
-  throw new Error(`Unknown project slug: ${slug}`);
-}
+const all = getAllProjects();
+const next = all[(project.index + 1) % all.length];
 
-const normalizeOrigenLabCopy = (value: string) =>
-  value
-    .replaceAll("Astro 5", "Astro 6")
-    .replaceAll("reports, Streamlit, mutation scripts", "reports, operator CLIs, mutation scripts")
-    .replaceAll("sync scripts, Streamlit", "sync scripts, operator CLIs")
-    .replaceAll(
-      "Streamlit for deep SQLite review; React",
-      "Operator CLIs and report outputs for deep SQLite review; React",
-    );
+const displayProject = project;
 
-const displayProject =
-  slug === "origenlab"
-    ? {
-        ...project,
-        stack: project.stack
-          .map((item) => (item === "Astro 5" ? "Astro 6" : item))
-          .filter((item) => item !== "Streamlit"),
-        sections: project.sections.map((section) => ({
-          ...section,
-          body: section.body?.map(normalizeOrigenLabCopy),
-          bullets: section.bullets?.map(normalizeOrigenLabCopy),
-        })),
-      }
-    : project;
+const gh = displayProject.github;
+const gallery = displayProject.gallery ?? [];
+const kindLabel = displayProject.kind === "case-study" ? "Case study" : "Repository";
 ---
 
-<div class="mx-auto max-w-6xl px-4 pb-24 pt-12 sm:px-6 sm:pt-16">
-  <nav aria-label="Breadcrumb" class="font-mono text-xs text-ink-faint">
-    <a href="/projects" class="text-ink-muted transition hover:text-accent"
-      >Projects</a
-    >
-    <span class="mx-2 text-ink-faint">/</span>
-    <span class="text-ink">{displayProject.title}</span>
-  </nav>
+<article class="page pt-10 sm:pt-14 lg:pt-16">
+  <header>
+    <nav aria-label="Breadcrumb" class="font-mono text-xs text-ink-faint">
+      <a href="/projects" class="text-ink-muted transition-colors hover:text-accent">Projects</a>
+      <span class="mx-2">/</span>
+      <span class="text-ink">{displayProject.folio}</span>
+      <span class="mx-2">/</span>
+      <span>{kindLabel}</span>
+    </nav>
 
-  <header class="mt-8">
-    {
-      clientBranding?.animatedMark === "origenlab" && (
-        <a
-          href={clientBranding.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="mb-5 inline-flex items-center rounded-lg bg-[#042f2e] px-3.5 py-2.5 shadow-[0_0_0_1px_rgba(45,212,191,0.14)] transition hover:bg-[#0a3d3a] hover:shadow-[0_0_0_1px_rgba(45,212,191,0.28)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-400/80"
-          title={`${clientBranding.name} — live site`}
-        >
-          <OrigenLabHeaderLockup size="prominent" />
-          <span class="sr-only"> — live site</span>
-        </a>
-      )
-    }
-    {
-      clientBranding?.logoSrc && !clientBranding.animatedMark && (
-        <a
-          href={clientBranding.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="mb-5 inline-flex items-center rounded-lg border border-line/80 bg-surface-overlay/40 p-2 transition hover:border-accent/40 hover:bg-surface-overlay/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-          title={`${clientBranding.name} — live site`}
-        >
-          <img
-            src={clientBranding.logoSrc}
-            alt={clientBranding.name}
-            width="176"
-            height="38"
-            class="h-8 w-auto sm:h-9"
-            loading="eager"
-          />
-        </a>
-      )
-    }
-    <div>
-      <p class="font-mono text-xs uppercase tracking-[0.28em] text-accent/90">
-        Case study
-      </p>
-      <h1
-        class="mt-3 text-balance text-3xl font-semibold tracking-tight text-ink sm:text-4xl"
-      >
-        {displayProject.title}
-      </h1>
-      <p class="mt-3 text-lg text-ink-muted">{displayProject.subtitle}</p>
-      <p class="mt-5 max-w-2xl text-pretty text-base leading-[1.7] text-ink-muted">
-        {displayProject.caseStudyIntro}
-      </p>
-      <div class="mt-6 flex flex-wrap items-center gap-3">
-        <span
-          class="rounded-full border border-line bg-surface-overlay/80 px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-accent"
-        >
-          {displayProject.status}
-        </span>
-        {displayProject.privacyNote && (
-          <span class="max-w-xl text-xs leading-relaxed text-ink-faint">
-            {displayProject.privacyNote}
-          </span>
-        )}
+    <div class="grid-12 mt-8 items-end">
+      <div class="col-span-4 sm:col-span-8 lg:col-span-8">
+        {
+          clientBranding?.logo && (
+            <div class="mb-6">
+              <OrgLogo
+                logo={clientBranding.logo}
+                name={clientBranding.name}
+                href={clientBranding.href}
+                size={40}
+              />
+            </div>
+          )
+        }
+        <h1 class="display text-[clamp(2.75rem,7.5vw,6rem)]">
+          {displayProject.title}
+        </h1>
       </div>
-      <div class="mt-6 flex flex-wrap gap-1.5">
-        {displayProject.stack.map((s) => (
-          <TechPill label={s} />
-        ))}
-      </div>
+      <p class="col-span-4 mt-6 max-w-prose text-pretty text-lg leading-[1.4] text-ink sm:col-span-8 lg:col-span-4 lg:mt-0 lg:pb-2">
+        {displayProject.subtitle}
+      </p>
     </div>
+
+    <div class="rule mt-8 sm:mt-12"></div>
+
+    <dl class="grid-12 gap-y-6 pt-6">
+      <div class="col-span-2 sm:col-span-2 lg:col-span-2">
+        <dt class="meta">Status</dt>
+        <dd class="mt-1 text-sm text-ink">{displayProject.status}</dd>
+      </div>
+      <div class="col-span-2 sm:col-span-2 lg:col-span-2">
+        <dt class="meta">Years</dt>
+        <dd class="mt-1 font-mono text-sm tabular-nums text-ink">{displayProject.years}</dd>
+      </div>
+      {
+        gh && (
+          <div class="col-span-4 sm:col-span-4 lg:col-span-2">
+            <dt class="meta">Repository</dt>
+            <dd class="mt-1 font-mono text-sm tabular-nums text-ink">
+              {gh.commits} commits
+              <span class="block text-ink-faint">last push {formatDate(gh.pushedAt)}</span>
+            </dd>
+          </div>
+        )
+      }
+      <div class:list={["col-span-4 sm:col-span-8", gh ? "lg:col-span-3" : "lg:col-span-5"]}>
+        <dt class="meta">Stack</dt>
+        <dd class="mt-2 flex flex-wrap gap-1.5">
+          {displayProject.stack.map((s) => <TechPill label={s} />)}
+        </dd>
+      </div>
+      <div class="col-span-4 sm:col-span-8 lg:col-span-3">
+        <dt class="meta">Links</dt>
+        <dd class="mt-1 flex flex-wrap gap-x-5 gap-y-1 text-sm lg:flex-col">
+          {displayProject.live && (
+            <a class="link" href={displayProject.live} rel="noopener noreferrer">Live site</a>
+          )}
+          {displayProject.repoUrl && (
+            <a class="link" href={displayProject.repoUrl} rel="noopener noreferrer">Source on GitHub</a>
+          )}
+          {!displayProject.live && !displayProject.repoUrl && (
+            <span class="text-ink-faint">
+              {displayProject.visibility === "private" ? "Private repository" : "No public link"}
+            </span>
+          )}
+        </dd>
+      </div>
+    </dl>
+
+    <p class="mt-12 max-w-prose text-pretty text-xl leading-[1.45] tracking-tight text-ink sm:text-2xl">
+      {displayProject.caseStudyIntro}
+    </p>
+    {
+      displayProject.privacyNote && (
+        <p class="mt-4 max-w-prose text-sm text-ink-faint">{displayProject.privacyNote}</p>
+      )
+    }
   </header>
 
-  <div class="mt-16 space-y-10 sm:space-y-12">
-    {
-      displayProject.sections.map((section) => (
-        <>
-          <section
-            class:list={[
-              "scroll-mt-28 rounded-2xl border border-line/80 bg-surface-overlay/25 px-6 py-7 sm:p-8",
-              slug === "origenlab" && "case-study-section",
-            ]}
-            id={section.id}
-            aria-labelledby={`${section.id}-heading`}
-          >
-            <SectionHeading id={`${section.id}-heading`} title={section.title} />
-            <div class="mt-5 max-w-3xl space-y-4 text-sm leading-[1.7] text-ink-muted sm:text-base">
-              {section.body?.map((p) => (
-                <p>{p}</p>
-              ))}
-              {section.bullets && section.bullets.length > 0 && (
-                <ul class="mt-2 space-y-2">
-                  {section.bullets.map((b) => (
-                    <li class="flex gap-2">
-                      <span
-                        class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent/70"
-                        aria-hidden="true"
-                      />
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </section>
-          {insertAfterSectionId === section.id && (
-            <div class="not-prose">
-              <slot name="after-section" />
-            </div>
-          )}
-        </>
-      ))
-    }
+  {
+    gallery.length > 0 && (
+      <section class="mt-16 sm:mt-20" aria-label="Screenshots">
+        <div class="grid gap-x-8 gap-y-10 sm:grid-cols-2">
+          {gallery.map((img, i) => (
+            <figure class:list={[i === 0 && gallery.length % 2 === 1 && "sm:col-span-2"]} data-reveal>
+              <img
+                src={img.src}
+                alt={img.alt}
+                width={img.width}
+                height={img.height}
+                loading={i === 0 ? "eager" : "lazy"}
+                decoding="async"
+                class="w-full border border-line bg-surface-raised"
+              />
+              <figcaption class="mt-3 text-sm leading-relaxed text-ink-muted">{img.caption}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <div class="grid-12 mt-16 sm:mt-24">
+    <nav aria-label="Sections" class="col-span-4 sm:col-span-8 lg:col-span-3">
+      <ol class="flex flex-wrap gap-x-5 gap-y-2 border-t border-ink pt-4 lg:sticky lg:top-24 lg:block lg:space-y-2">
+        {
+          displayProject.sections.map((section, i) => (
+            <li>
+              <a
+                href={`#${section.id}`}
+                class="font-mono text-xs text-ink-muted transition-colors hover:text-accent"
+              >
+                <span class="tabular-nums text-ink-faint">{String(i + 1).padStart(2, "0")}</span>
+                <span class="ml-2">{section.title}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </nav>
+
+    <div class="col-span-4 mt-10 sm:col-span-8 lg:col-span-8 lg:col-start-5 lg:mt-0">
+      {
+        displayProject.sections.map((section, i) => (
+          <>
+            <section
+              class="case-study-section scroll-mt-24 border-t border-ink pt-5 [&+*]:mt-14"
+              data-reveal
+              id={section.id}
+              aria-labelledby={`${section.id}-heading`}
+            >
+              <div class="flex items-baseline gap-4">
+                <span class="folio">{String(i + 1).padStart(2, "0")}</span>
+                <h2
+                  id={`${section.id}-heading`}
+                  class="text-2xl font-medium tracking-tight text-ink sm:text-3xl"
+                >
+                  {section.title}
+                </h2>
+              </div>
+              <div class="prose-ed mt-6">
+                {section.body?.map((p) => <p>{p}</p>)}
+                {section.bullets && section.bullets.length > 0 && (
+                  <ul class="mt-5 space-y-3">
+                    {section.bullets.map((b) => (
+                      <li class="flex gap-3">
+                        <span class="mt-[0.75em] h-px w-4 shrink-0 bg-ink" aria-hidden="true" />
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </section>
+            {insertAfterSectionId === section.id && (
+              <div class="mt-14 [&+*]:mt-14">
+                <slot name="after-section" />
+              </div>
+            )}
+          </>
+        ))
+      }
+    </div>
   </div>
 
-  <footer
-    class="mt-20 flex flex-col gap-4 border-t border-line/80 pt-10 sm:flex-row sm:items-center sm:justify-between"
-  >
-    <p class="font-mono text-sm text-ink-muted">
-      <span class="text-ink">{displayProject.title}</span>
-      <span class="text-ink-faint"> · case study</span>
-    </p>
-    <a
-      href="/projects"
-      class="inline-flex items-center gap-2 font-mono text-sm font-medium text-accent transition hover:text-ink"
-    >
-      ← Project index
+  <footer class="rule grid-12 mt-24 pt-6 sm:mt-32">
+    <a href="/projects" class="link col-span-2 self-start text-sm sm:col-span-4 lg:col-span-6">
+      All projects
+    </a>
+    <a href={`/projects/${next.slug}`} class="group col-span-2 text-right sm:col-span-4 lg:col-span-6">
+      <span class="meta block">Next</span>
+      <span class="mt-1 block text-xl font-medium tracking-tight text-ink transition-colors group-hover:text-accent sm:text-2xl">
+        {next.title}
+      </span>
     </a>
   </footer>
-</div>
+</article>
