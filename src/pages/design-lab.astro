@@ -1,0 +1,2803 @@
+---
+import DesignLabLayout from "@/layouts/DesignLabLayout.astro";
+import WinWindow from "@/components/ui/WinWindow.astro";
+import BevelButton from "@/components/ui/BevelButton.astro";
+---
+
+<DesignLabLayout title="Design Lab — Phase 1G">
+  <div class="dl-page">
+    <header class="dl-lab-header">
+      <div>
+        <h1>Design Lab</h1>
+        <p>
+          Phase 1G — interaction states + classic cursors on locked E. Resting = 1F era; hover reveals hotter
+          accents. Production untouched.
+        </p>
+      </div>
+      <a class="dl-back" href="/">← portfolio home</a>
+    </header>
+
+    <!-- ═══════ NAME FONT STUDY · PHASE 2A.3 (temporary) ═══════ -->
+    <section class="dl-section" id="name-fonts" aria-labelledby="name-fonts-label">
+      <p class="dl-section-num">NAME FONT STUDY · PHASE 2A.3</p>
+      <h2 id="name-fonts-label" class="dl-section-title">RAFAEL / ROJAS letterform specimens</h2>
+      <p class="d-lede">
+        Temporary name-only study. System fonts only. Cream / gold match production identity. Do not treat as
+        production until one specimen is selected.
+      </p>
+
+      <div class="nf-grid">
+        <article class="nf-spec" aria-labelledby="nf-a-label">
+          <header class="nf-spec__meta">
+            <h3 id="nf-a-label">A — Impact / Haettenschweiler</h3>
+            <p class="dl-mono">Impact, Haettenschweiler, Arial Narrow, sans-serif</p>
+          </header>
+          <div class="nf-field">
+            <p class="nf-name nf-name--a">
+              <span class="nf-name__a">RAFAEL</span>
+              <span class="nf-name__b">ROJAS</span>
+            </p>
+          </div>
+        </article>
+
+        <article class="nf-spec" aria-labelledby="nf-b-label">
+          <header class="nf-spec__meta">
+            <h3 id="nf-b-label">B — Trebuchet MS heavy</h3>
+            <p class="dl-mono">Trebuchet MS, Geneva, Arial, sans-serif · 900</p>
+          </header>
+          <div class="nf-field">
+            <p class="nf-name nf-name--b">
+              <span class="nf-name__a">RAFAEL</span>
+              <span class="nf-name__b">ROJAS</span>
+            </p>
+          </div>
+        </article>
+
+        <article class="nf-spec" aria-labelledby="nf-c-label">
+          <header class="nf-spec__meta">
+            <h3 id="nf-c-label">C — Arial Black + hard shadow</h3>
+            <p class="dl-mono">Arial Black, Arial Bold, Impact, Arial · hard offset shadow</p>
+          </header>
+          <div class="nf-field">
+            <p class="nf-name nf-name--c">
+              <span class="nf-name__a">RAFAEL</span>
+              <span class="nf-name__b">ROJAS</span>
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══════ E — INTERNET 2002 / HYBRID (PRIMARY · 1G interactions) ═══════ -->
+    <section class="dl-section" id="variant-e" aria-labelledby="variant-e-label">
+      <p class="dl-section-num">E / PRIMARY · PHASE 1G</p>
+      <h2 id="variant-e-label" class="dl-section-title">Internet 2002 / Hybrid</h2>
+      <p class="d-lede">
+        Structure + era palette locked. This pass: classic cursors (fine pointer only), link/nav/project/GO
+        interaction states, and hot accents that appear mainly on hover/focus/active.
+      </p>
+
+      <div class="inet-stage dl-crt" aria-label="Internet 2002 hybrid homepage study">
+        <div class="inet-desktop" aria-hidden="true"></div>
+
+        <div class="inet-browser hyb-browser">
+          <div class="inet-titlebar">
+            <span class="inet-titlebar__icon" aria-hidden="true"></span>
+            <span class="inet-titlebar__text"
+              >rafaelrojasvi.github.io - Microsoft Internet Explorer</span
+            >
+            <div class="inet-titlebar__ctl" aria-hidden="true">
+              <span>_</span><span>□</span><span class="inet-titlebar__x">×</span>
+            </div>
+          </div>
+
+          <div class="inet-menubar" aria-label="Menu">
+            <span><u>F</u>ile</span>
+            <span><u>E</u>dit</span>
+            <span><u>V</u>iew</span>
+            <span>F<u>a</u>vorites</span>
+            <span><u>H</u>elp</span>
+          </div>
+
+          <div class="inet-toolbar">
+            <span class="inet-toolbar__label">Address</span>
+            <div class="inet-address dl-bevel-in">
+              <span class="inet-address__ico" aria-hidden="true"></span>
+              <span class="inet-address__url"
+                >http://rafaelrojasvi.github.io/index.html</span
+              >
+            </div>
+            <BevelButton class="inet-go">Go</BevelButton>
+          </div>
+
+          <div class="inet-page hyb-page">
+            <div class="inet-layout hyb-layout">
+              <aside class="inet-side hyb-side">
+                <p class="inet-side__head">Navigation</p>
+                <nav class="inet-nav" aria-label="Site">
+                  <a class="inet-nav__a inet-nav__a--here" href="/">HOME</a>
+                  <a class="inet-nav__a" href="/projects">PROJECTS</a>
+                  <a class="inet-nav__a" href="/experience">EXPERIENCE</a>
+                  <a class="inet-nav__a" href="/about">ABOUT</a>
+                  <a class="inet-nav__a" href="mailto:rafarojasv6@gmail.com">CONTACT</a>
+                </nav>
+
+                <hr class="inet-hr" />
+
+                <p class="inet-side__head">System</p>
+                <dl class="inet-sys">
+                  <div>
+                    <dt>status</dt>
+                    <dd><span class="inet-led" aria-hidden="true"></span> ONLINE</dd>
+                  </div>
+                  <div>
+                    <dt>location</dt>
+                    <dd>VALDIVIA_CL</dd>
+                  </div>
+                  <div>
+                    <dt>build</dt>
+                    <dd>2026.08</dd>
+                  </div>
+                  <div>
+                    <dt>visitor</dt>
+                    <dd class="inet-counter">0027</dd>
+                  </div>
+                </dl>
+
+                <div class="hyb-px-wrap" aria-hidden="true">
+                  <img
+                    class="hyb-px"
+                    src="/design-lab/px-crt.svg"
+                    width="32"
+                    height="32"
+                    alt=""
+                  />
+                  <span class="hyb-px-cap">sys_crt.gif</span>
+                </div>
+
+                <div class="hyb-meter" aria-hidden="true">
+                  <span class="hyb-meter__cap">sig</span>
+                  <span class="hyb-meter__track"
+                    ><span class="hyb-meter__fill"></span></span
+                  >
+                </div>
+
+                <div class="inet-badge hyb-badge" aria-hidden="true">
+                  <span class="hyb-badge__dot"></span>
+                  <span class="hyb-badge__text">RAFA<br />ONLINE</span>
+                </div>
+
+                <p class="inet-tiny">
+                  last updated<br />
+                  09 Aug 2026
+                </p>
+              </aside>
+
+              <main class="inet-main hyb-main">
+                <div class="hyb-id">
+                  <p class="hyb-path">C:\USERS\RAFA\WWW\INDEX.HTM</p>
+                  <div class="hyb-id__row">
+                    <h3 class="hyb-name">
+                      <span class="hyb-name__a">RAFAEL</span>
+                      <span class="hyb-name__b">ROJAS</span>
+                    </h3>
+                    <span class="hyb-new" aria-hidden="true">NEW!</span>
+                  </div>
+                  <p class="hyb-role">[ SOFTWARE_ENGINEER ]</p>
+                  <div class="hyb-check" aria-hidden="true"></div>
+                </div>
+
+                <section class="hyb-mod hyb-mod--profile">
+                  <header class="hyb-mod__bar hyb-mod__bar--cobalt">
+                    <span>PROFILE / INTRO</span>
+                    <span class="hyb-mod__meta">about.txt</span>
+                  </header>
+                  <div class="hyb-mod__body">
+                    <p>
+                      Backend engineer in Valdivia, Chile. First Class Honours CS. I build APIs,
+                      automation, and data tools — the kind another engineer can extend without a
+                      séance.
+                    </p>
+                  </div>
+                </section>
+
+                <section class="hyb-mod hyb-mod--skills">
+                  <header class="hyb-mod__bar hyb-mod__bar--metal">
+                    <span>SKILLS.TXT</span>
+                    <span class="hyb-mod__meta">5 entries</span>
+                  </header>
+                  <div class="hyb-mod__body hyb-skills-body">
+                    <ul class="hyb-skills">
+                      <li>&gt; Python</li>
+                      <li>&gt; Elixir</li>
+                      <li>&gt; APIs</li>
+                      <li>&gt; automation</li>
+                      <li>&gt; backend systems</li>
+                    </ul>
+                  </div>
+                </section>
+
+                <section class="hyb-mod hyb-mod--work">
+                  <header class="hyb-mod__bar hyb-mod__bar--work">
+                    <span>SELECTED_WORK</span>
+                    <span class="hyb-mod__meta">dir / projects</span>
+                  </header>
+                  <div class="hyb-mod__body hyb-work-body">
+                    <article class="hyb-proj hyb-proj--a">
+                      <div class="hyb-proj__head">
+                        <span class="hyb-proj__id">[01] ORIGENLAB</span>
+                        <span class="hyb-proj__status"
+                          ><span class="inet-led inet-led--sm" aria-hidden="true"></span> LIVE</span
+                        >
+                      </div>
+                      <div class="hyb-proj__inner">
+                        <img
+                          class="hyb-px hyb-px--lab"
+                          src="/design-lab/px-lab.svg"
+                          width="32"
+                          height="32"
+                          alt=""
+                          aria-hidden="true"
+                        />
+                        <div class="hyb-proj__copy">
+                          <p class="hyb-proj__stack">Python / FastAPI / SQLite / automation</p>
+                          <p class="hyb-proj__blurb">
+                            Lab automation API — ingest, validate, emit. Durable SQLite state.
+                          </p>
+                          <p>
+                            <a class="inet-link" href="/projects/origenlab">view_project →</a>
+                          </p>
+                        </div>
+                      </div>
+                    </article>
+
+                    <article class="hyb-proj hyb-proj--b">
+                      <div class="hyb-proj__head">
+                        <span class="hyb-proj__id">[02] LEDGERBANK API</span>
+                        <span class="hyb-proj__status hyb-proj__status--warn">STABLE</span>
+                      </div>
+                      <p class="hyb-proj__stack">Elixir / Phoenix / PostgreSQL</p>
+                      <p class="hyb-proj__blurb">
+                        Banking-adjacent ledger endpoints with explicit money-edge tests.
+                      </p>
+                      <p>
+                        <a class="inet-link inet-link--visited" href="/projects/ledger-bank-api"
+                          >view_project →</a
+                        >
+                      </p>
+                    </article>
+                  </div>
+                </section>
+
+                <section class="hyb-mod hyb-mod--links">
+                  <header class="hyb-mod__bar hyb-mod__bar--links">
+                    <span>CONTACT / LINKS</span>
+                    <span class="hyb-mod__meta">also</span>
+                  </header>
+                  <div class="hyb-mod__body">
+                    <p class="hyb-also">
+                      <a class="inet-link" href="/projects/tattoo-booking-bot"
+                        >tattoo-booking-bot.html</a
+                      >
+                      ·
+                      <a class="inet-link" href="/projects/misinformation-classifier"
+                        >misinfo-classifier.html</a
+                      >
+                      ·
+                      <a class="inet-link" href="/experience">resume.txt</a>
+                      ·
+                      <a class="inet-link" href="mailto:rafarojasv6@gmail.com">email.exe</a>
+                    </p>
+                  </div>
+                </section>
+              </main>
+            </div>
+          </div>
+
+          <div class="inet-statusbar" role="status">
+            <span class="inet-statusbar__done">Done</span>
+            <span class="inet-statusbar__sep" aria-hidden="true"></span>
+            <span>4 objects</span>
+            <span class="inet-statusbar__sep" aria-hidden="true"></span>
+            <span class="inet-statusbar__zone">Internet zone</span>
+            <span class="inet-statusbar__grow"></span>
+            <span class="inet-statusbar__online"
+              ><span class="inet-led inet-led--sm" aria-hidden="true"></span> ONLINE</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <p class="d-test d-test--era dl-mono">
+        1G tests: resting still 1F? · hover reveals hotter identity? · cursors fine-pointer only · keyboard focus
+        obvious?
+      </p>
+    </section>
+
+    <!-- ═══════ D — INTERNET 2001 (BASELINE) ═══════ -->
+    <section class="dl-section" id="variant-d" aria-labelledby="variant-d-label">
+      <p class="dl-section-num">D / AUTHENTICITY BASELINE</p>
+      <h2 id="variant-d-label" class="dl-section-title">Internet 2001</h2>
+      <p class="d-lede">
+        Kept for side-by-side comparison. Structural grammar E inherits — intentionally plainer page interior.
+      </p>
+
+      <div class="inet-stage dl-crt" aria-label="Internet 2001 homepage study">
+        <div class="inet-desktop" aria-hidden="true"></div>
+
+        <div class="inet-browser">
+          <!-- Title bar -->
+          <div class="inet-titlebar">
+            <span class="inet-titlebar__icon" aria-hidden="true"></span>
+            <span class="inet-titlebar__text"
+              >rafaelrojasvi.github.io - Microsoft Internet Explorer</span
+            >
+            <div class="inet-titlebar__ctl" aria-hidden="true">
+              <span>_</span><span>□</span><span class="inet-titlebar__x">×</span>
+            </div>
+          </div>
+
+          <!-- Menu -->
+          <div class="inet-menubar" aria-label="Menu">
+            <span><u>F</u>ile</span>
+            <span><u>E</u>dit</span>
+            <span><u>V</u>iew</span>
+            <span>F<u>a</u>vorites</span>
+            <span><u>H</u>elp</span>
+          </div>
+
+          <!-- Address -->
+          <div class="inet-toolbar">
+            <span class="inet-toolbar__label">Address</span>
+            <div class="inet-address dl-bevel-in">
+              <span class="inet-address__ico" aria-hidden="true"></span>
+              <span class="inet-address__url"
+                >http://rafaelrojasvi.github.io/index.html</span
+              >
+            </div>
+            <BevelButton class="inet-go">Go</BevelButton>
+          </div>
+
+          <!-- Page -->
+          <div class="inet-page">
+            <div class="inet-layout">
+              <aside class="inet-side">
+                <p class="inet-side__head">Navigation</p>
+                <nav class="inet-nav" aria-label="Site">
+                  <a class="inet-nav__a inet-nav__a--here" href="/">HOME</a>
+                  <a class="inet-nav__a" href="/projects">PROJECTS</a>
+                  <a class="inet-nav__a" href="/experience">EXPERIENCE</a>
+                  <a class="inet-nav__a" href="/about">ABOUT</a>
+                  <a class="inet-nav__a" href="mailto:rafarojasv6@gmail.com">CONTACT</a>
+                </nav>
+
+                <hr class="inet-hr" />
+
+                <p class="inet-side__head">System</p>
+                <dl class="inet-sys">
+                  <div>
+                    <dt>status</dt>
+                    <dd><span class="inet-led" aria-hidden="true"></span> ONLINE</dd>
+                  </div>
+                  <div>
+                    <dt>location</dt>
+                    <dd>VALDIVIA_CL</dd>
+                  </div>
+                  <div>
+                    <dt>build</dt>
+                    <dd>2026.08</dd>
+                  </div>
+                  <div>
+                    <dt>visitor</dt>
+                    <dd class="inet-counter">0027</dd>
+                  </div>
+                </dl>
+
+                <div class="inet-badge" aria-hidden="true">
+                  <span class="inet-badge__px"></span>
+                  <span class="inet-badge__cap">88×31</span>
+                </div>
+
+                <p class="inet-tiny">
+                  last updated<br />
+                  09 Aug 2026
+                </p>
+              </aside>
+
+              <main class="inet-main">
+                <h3 class="inet-name">RAFAEL ROJAS</h3>
+                <p class="inet-role">software engineer</p>
+
+                <p class="inet-intro">
+                  Backend engineer in Valdivia, Chile. First Class Honours CS. I build APIs,
+                  automation, and data tools — the kind another engineer can extend without a
+                  séance.
+                </p>
+
+                <div class="inet-inset dl-bevel-in">
+                  <p class="inet-inset__label">~/skills.txt</p>
+                  <ul class="inet-skills">
+                    <li>&gt; Python</li>
+                    <li>&gt; Elixir</li>
+                    <li>&gt; APIs</li>
+                    <li>&gt; automation</li>
+                    <li>&gt; backend systems</li>
+                  </ul>
+                </div>
+
+                <h4 class="inet-h">SELECTED PROJECTS</h4>
+                <p class="inet-dots" aria-hidden="true">. . . . . . . . . . . . . . . . . . . .</p>
+
+                <ol class="inet-projects">
+                  <li>
+                    <p class="inet-proj__id">[01] ORIGENLAB</p>
+                    <p class="inet-proj__stack">Python / FastAPI / SQLite / automation</p>
+                    <p>
+                      <a class="inet-link" href="/projects/origenlab">view project →</a>
+                    </p>
+                  </li>
+                  <li>
+                    <p class="inet-proj__id">[02] LEDGERBANK API</p>
+                    <p class="inet-proj__stack">Elixir / Phoenix / PostgreSQL</p>
+                    <p>
+                      <a class="inet-link inet-link--visited" href="/projects/ledger-bank-api"
+                        >view project →</a
+                      >
+                    </p>
+                  </li>
+                </ol>
+
+                <p class="inet-more">
+                  Also:
+                  <a class="inet-link" href="/projects/tattoo-booking-bot">tattoo-booking-bot.html</a>
+                  ·
+                  <a class="inet-link" href="/projects/misinformation-classifier"
+                    >misinfo-classifier.html</a
+                  >
+                  ·
+                  <a class="inet-link" href="/experience">resume.txt</a>
+                </p>
+              </main>
+            </div>
+          </div>
+
+          <!-- Status bar -->
+          <div class="inet-statusbar" role="status">
+            <span class="inet-statusbar__done">Done</span>
+            <span class="inet-statusbar__sep" aria-hidden="true"></span>
+            <span>2 objects</span>
+            <span class="inet-statusbar__sep" aria-hidden="true"></span>
+            <span class="inet-statusbar__zone">Internet zone</span>
+            <span class="inet-statusbar__grow"></span>
+            <span class="inet-statusbar__online"
+              ><span class="inet-led inet-led--sm" aria-hidden="true"></span> ONLINE</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <p class="d-test dl-mono">
+        Design test: if accents were removed, would this still read as early-internet computation?
+        Structure should carry identity — color only interrupts.
+      </p>
+    </section>
+
+    <!-- Previous experiments collapsed -->
+    <details class="prev-exp">
+      <summary class="prev-exp__sum">
+        Previous experiments (Phase 1A–1B) — A / B / C reference · not primary direction
+      </summary>
+      <div class="prev-exp__body">
+        <section class="dl-section" aria-labelledby="raw-heading">
+          <p class="dl-section-num">01 / RAW MATERIALS</p>
+          <h2 id="raw-heading" class="dl-section-title">Palette · Type · Link</h2>
+
+      <div class="raw-grid">
+        <div class="raw-swatches" aria-label="Primary colors">
+          <div class="swatch swatch--cobalt"><span>COBALT</span></div>
+          <div class="swatch swatch--acid"><span>ACID</span></div>
+          <div class="swatch swatch--magenta"><span>MAGENTA</span></div>
+          <div class="swatch swatch--yellow"><span>YELLOW</span></div>
+          <div class="swatch swatch--purple"><span>PURPLE</span></div>
+          <div class="swatch swatch--grey"><span>UI GREY</span></div>
+        </div>
+
+        <div class="raw-pairings" aria-label="Deliberate pairings">
+          <div class="pair pair--a">
+            <span class="dl-pixel-label">PAIR A</span>
+            <p class="pair__text">cobalt field · acid interrupt</p>
+          </div>
+          <div class="pair pair--b">
+            <span class="dl-pixel-label">PAIR B</span>
+            <p class="pair__text">magenta block · yellow type</p>
+          </div>
+          <div class="pair pair--c">
+            <span class="dl-pixel-label">PAIR C</span>
+            <p class="pair__text">paper · purple rule · black ink</p>
+          </div>
+        </div>
+
+        <div class="raw-type">
+          <p class="dl-pixel-label" style="color: var(--dl-yellow); margin: 0 0 0.75rem;">
+            DISPLAY / MONO
+          </p>
+          <p class="dl-display type-blast" style="color: var(--dl-offwhite); margin: 0;">
+            RAFA<br />ROJAS
+          </p>
+          <p class="type-mono-row dl-mono">
+            C:\PORTFOLIO\&gt; SELECTED_WORK.EXE
+          </p>
+          <p class="type-symbols" aria-hidden="true">※ ▒▓░ ■ ◆ → ←</p>
+          <p class="type-num" aria-hidden="true">98</p>
+          <p style="margin: 1rem 0 0;">
+            <a class="dl-link dl-link--invert" href="#mini-home">underlined hyperlink treatment →</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════ 02 WINDOW STUDIES ═══════ -->
+    <section class="dl-section" aria-labelledby="win-heading">
+      <p class="dl-section-num">02 / WINDOW STUDIES</p>
+      <h2 id="win-heading" class="dl-section-title">Authentic ↔ Distorted</h2>
+
+      <div class="win-studies">
+        <WinWindow title="readme.txt — Notepad" active>
+          <p class="dl-pixel-label" style="margin: 0 0 0.5rem; color: #404040;">
+            CLASSIC GREY
+          </p>
+          <div class="dl-bevel-in inset-field">
+            <p class="dl-mono" style="margin: 0; font-size: 13px; color: #000;">
+              Backend systems with explicit validation, durable state, and tests on the edges that move money or messages.
+            </p>
+          </div>
+          <p style="margin: 0.75rem 0; font-size: 13px;">
+            See also: <a class="dl-link" href="#mini-home">about.txt</a>
+          </p>
+          <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+            <BevelButton href="#mini-home">OK</BevelButton>
+            <BevelButton pressed>Cancel</BevelButton>
+          </div>
+        </WinWindow>
+
+        <WinWindow title="SIGNAL / EDITORIAL" variant="editorial" active>
+          <p class="dl-pixel-label" style="margin: 0 0 0.5rem; color: var(--dl-acid);">
+            RECOLORED
+          </p>
+          <div class="inset-editorial">
+            <p class="dl-mono" style="margin: 0; font-size: 13px; color: var(--dl-offwhite);">
+              The OS chrome is raw material — not the product. Type and color do the talking.
+            </p>
+          </div>
+          <p style="margin: 0.85rem 0;">
+            <a class="dl-link dl-link--invert" href="#crt">open crt study</a>
+          </p>
+          <BevelButton href="#mini-home" variant="editorial">RUN STUDY</BevelButton>
+        </WinWindow>
+
+        <WinWindow title="inactive — Properties" active={false} class="win-inactive-study">
+          <p class="dl-mono" style="margin: 0; font-size: 12px; color: #404040;">
+            Idle title bar for comparison. Decorative controls are not focusable.
+          </p>
+        </WinWindow>
+      </div>
+    </section>
+
+    <!-- ═══════ 03 TEXTURE / CRT ═══════ -->
+    <section class="dl-section" id="crt" aria-labelledby="crt-heading">
+      <p class="dl-section-num">03 / TEXTURE · CRT</p>
+      <h2 id="crt-heading" class="dl-section-title">Raw vs Signal</h2>
+
+      <div class="crt-compare">
+        <article class="crt-panel crt-panel--raw">
+          <h3 class="dl-pixel-label" style="margin: 0 0 0.75rem; color: var(--dl-black);">
+            RAW SIGNAL
+          </h3>
+          <p class="crt-copy">
+            Messy inputs become structured outputs: ingest, validate, emit. No scanlines. Flat field. Baseline readability check.
+          </p>
+          <p class="dl-mono" style="margin: 0.75rem 0 0; font-size: 12px;">
+            status: clean · gain: 0db
+          </p>
+        </article>
+
+        <article class="crt-panel crt-panel--crt dl-crt dl-moire">
+          <h3 class="dl-pixel-label" style="margin: 0 0 0.75rem; color: var(--dl-acid);">
+            CRT SIGNAL
+          </h3>
+          <p class="crt-copy crt-copy--on-dark">
+            Messy inputs become structured outputs: ingest, validate, emit. Scanlines + soft vignette + light moiré — personality without burying the copy.
+          </p>
+          <p class="dl-mono" style="margin: 0.75rem 0 0; font-size: 12px; color: var(--dl-acid);">
+            status: degraded · gain: +3db
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══════ 04 MINI HOMEPAGE — PHASE 1B VARIANTS ═══════ -->
+    <section class="dl-section" id="mini-home" aria-labelledby="home-heading">
+      <p class="dl-section-num">04 / MINI HOMEPAGE · PHASE 1B</p>
+      <h2 id="home-heading" class="dl-section-title">Composition Variants</h2>
+      <p class="variant-intro dl-mono">
+        Same information · three compositions. Pick a direction — do not merge yet.
+      </p>
+
+      <!-- A — CONTROL -->
+      <article class="variant" id="variant-a" aria-labelledby="variant-a-label">
+        <header class="variant-head">
+          <h3 id="variant-a-label" class="variant-label">
+            <span class="variant-key">A</span> CONTROL
+          </h3>
+          <p class="variant-note dl-mono">Phase 1A baseline — nearly unchanged.</p>
+        </header>
+
+        <div class="mini-home mini-home--a dl-crt" aria-label="Variant A control homepage prototype">
+          <div class="mini-home__bg" aria-hidden="true"></div>
+          <p class="mini-home__meta dl-pixel-label">VALDIVIA · CL · OPEN / REMOTE</p>
+          <h4 class="mini-home__name dl-display">
+            <span class="mini-home__name-line">RAFA</span>
+            <span class="mini-home__name-line mini-home__name-line--offset">ROJAS</span>
+          </h4>
+          <p class="mini-home__role">SOFTWARE ENGINEER</p>
+          <p class="mini-home__stack dl-mono">PYTHON / ELIXIR / APIs / SYSTEMS</p>
+          <div class="mini-home__cta">
+            <BevelButton href="/projects" variant="editorial">SELECTED WORK</BevelButton>
+            <BevelButton href="/about">ABOUT.TXT</BevelButton>
+            <a class="dl-link dl-link--invert mini-home__mail" href="mailto:rafarojasv6@gmail.com">EMAIL</a>
+          </div>
+          <div class="mini-home__float">
+            <WinWindow title="note — engineering.txt" variant="editorial">
+              <p class="dl-mono mini-home__note">
+                Optimize for backends another engineer can extend: explicit data rules, migrations you can trust, tests on parsers and payment edges.
+              </p>
+              <p class="mini-home__note-link">
+                <a class="dl-link dl-link--invert" href="/experience">experience →</a>
+              </p>
+            </WinWindow>
+          </div>
+          <div class="mini-home__slash" aria-hidden="true">/</div>
+          <div class="mini-home__bar" aria-hidden="true"></div>
+        </div>
+      </article>
+
+      <!-- B — COLLISION -->
+      <article class="variant" id="variant-b" aria-labelledby="variant-b-label">
+        <header class="variant-head">
+          <h3 id="variant-b-label" class="variant-label">
+            <span class="variant-key">B</span> COLLISION
+          </h3>
+          <p class="variant-note dl-mono">
+            ENGINEERING.TXT overlaps the identity / stack zone. Controlled collision.
+          </p>
+        </header>
+
+        <div class="mini-home mini-home--b dl-crt" aria-label="Variant B collision homepage prototype">
+          <div class="mini-home__bg" aria-hidden="true"></div>
+          <div class="mini-home__plane" aria-hidden="true"></div>
+          <p class="mini-home__meta dl-pixel-label">VALDIVIA · CL · OPEN / REMOTE</p>
+          <h4 class="mini-home__name dl-display">
+            <span class="mini-home__name-line">RAFA</span>
+            <span class="mini-home__name-line mini-home__name-line--offset">ROJAS</span>
+          </h4>
+          <p class="mini-home__role mini-home__role--b">SOFTWARE ENGINEER</p>
+          <p class="mini-home__stack dl-mono">PYTHON / ELIXIR / APIs / SYSTEMS</p>
+          <div class="mini-home__cta">
+            <BevelButton href="/projects" variant="editorial">SELECTED WORK</BevelButton>
+            <BevelButton href="/about">ABOUT.TXT</BevelButton>
+            <a class="dl-link dl-link--invert mini-home__mail" href="mailto:rafarojasv6@gmail.com">EMAIL</a>
+          </div>
+          <div class="mini-home__float">
+            <WinWindow title="note — engineering.txt" variant="editorial">
+              <p class="dl-mono mini-home__note">
+                Optimize for backends another engineer can extend: explicit data rules, migrations you can trust, tests on parsers and payment edges.
+              </p>
+              <p class="mini-home__note-link">
+                <a class="dl-link dl-link--invert" href="/experience">experience →</a>
+              </p>
+            </WinWindow>
+          </div>
+          <div class="mini-home__slash" aria-hidden="true">/</div>
+          <div class="mini-home__bar" aria-hidden="true"></div>
+        </div>
+      </article>
+
+      <!-- C — EDITORIAL -->
+      <article class="variant" id="variant-c" aria-labelledby="variant-c-label">
+        <header class="variant-head">
+          <h3 id="variant-c-label" class="variant-label">
+            <span class="variant-key">C</span> EDITORIAL
+          </h3>
+          <p class="variant-note dl-mono">
+            Largest compositional risk — role type, asymmetry, interruption, window placement.
+          </p>
+        </header>
+
+        <div class="mini-home mini-home--c dl-crt" aria-label="Variant C editorial homepage prototype">
+          <div class="mini-home__bg mini-home__bg--c" aria-hidden="true"></div>
+          <div class="mini-home__slab" aria-hidden="true"></div>
+          <p class="mini-home__meta dl-pixel-label">VALDIVIA · CL · OPEN / REMOTE</p>
+          <h4 class="mini-home__name dl-display">
+            <span class="mini-home__name-line">RAFA</span>
+            <span class="mini-home__name-line mini-home__name-line--offset">ROJAS</span>
+          </h4>
+          <p class="mini-home__role mini-home__role--c">
+            <span class="role-soft">SOFT</span><span class="role-ware">WARE</span>
+            <span class="role-eng">ENGINEER</span>
+          </p>
+          <p class="mini-home__stack dl-mono">PYTHON / ELIXIR / APIs / SYSTEMS</p>
+          <div class="mini-home__cta mini-home__cta--c">
+            <BevelButton href="/projects" variant="editorial">SELECTED WORK</BevelButton>
+            <BevelButton href="/about">ABOUT.TXT</BevelButton>
+            <a class="dl-link dl-link--invert mini-home__mail" href="mailto:rafarojasv6@gmail.com">EMAIL</a>
+          </div>
+          <div class="mini-home__float">
+            <WinWindow title="note — engineering.txt" variant="editorial">
+              <p class="dl-mono mini-home__note">
+                Optimize for backends another engineer can extend: explicit data rules, migrations you can trust, tests on parsers and payment edges.
+              </p>
+              <p class="mini-home__note-link">
+                <a class="dl-link dl-link--invert" href="/experience">experience →</a>
+              </p>
+            </WinWindow>
+          </div>
+          <div class="mini-home__slash mini-home__slash--c" aria-hidden="true">/</div>
+          <div class="mini-home__bar" aria-hidden="true"></div>
+        </div>
+      </article>
+    </section>
+      </div>
+    </details>
+
+    <footer class="dl-lab-foot">
+      <p class="dl-mono">
+        END PHASE 1G · primary: E (interactions + cursors) ·
+        <a class="dl-link dl-link--invert" href="#variant-e">jump to E</a>
+        ·
+        <a class="dl-link dl-link--invert" href="#variant-d">compare D</a>
+        ·
+        <a class="dl-link dl-link--invert" href="/">return home</a>
+      </p>
+    </footer>
+  </div>
+</DesignLabLayout>
+
+<style>
+  /* —— Name font study (Phase 2A.3) —— */
+  .nf-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 900px) {
+    .nf-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+
+  .nf-spec__meta h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1rem;
+  }
+
+  .nf-spec__meta .dl-mono {
+    margin: 0 0 0.75rem;
+    font-size: 12px;
+    color: #404040;
+  }
+
+  .nf-field {
+    padding: 1.25rem 1.1rem 1.35rem;
+    background: linear-gradient(180deg, #002b7f 0%, #001a66 100%);
+    border: 1px solid #000;
+    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .nf-name {
+    margin: 0;
+    line-height: 0.88;
+  }
+
+  .nf-name__a,
+  .nf-name__b {
+    display: block;
+    font-size: clamp(48px, 7vw, 72px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+
+  .nf-name__a {
+    color: #e8e5d8;
+  }
+
+  .nf-name__b {
+    margin-left: 1.1em;
+    color: #d6b13f;
+  }
+
+  .nf-name--a .nf-name__a,
+  .nf-name--a .nf-name__b {
+    font-family: Impact, Haettenschweiler, "Arial Narrow", sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+
+  .nf-name--a .nf-name__b {
+    text-shadow: 2px 2px 0 #001040;
+  }
+
+  .nf-name--b .nf-name__a,
+  .nf-name--b .nf-name__b {
+    font-family: "Trebuchet MS", Geneva, Arial, sans-serif;
+    font-weight: 900;
+  }
+
+  .nf-name--b .nf-name__b {
+    text-shadow: 2px 2px 0 #001040;
+  }
+
+  .nf-name--c .nf-name__a,
+  .nf-name--c .nf-name__b {
+    font-family: "Arial Black", "Arial Bold", Impact, Arial, sans-serif;
+    font-weight: 900;
+  }
+
+  .nf-name--c .nf-name__a {
+    text-shadow: 3px 3px 0 #001040;
+  }
+
+  .nf-name--c .nf-name__b {
+    text-shadow: 3px 3px 0 #001040;
+  }
+
+  /* —— 01 Raw materials —— */
+  .raw-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 900px) {
+    .raw-grid {
+      grid-template-columns: 1.1fr 0.9fr 1.2fr;
+      align-items: start;
+      gap: 1.5rem;
+    }
+  }
+
+  .raw-swatches {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+
+  .swatch {
+    min-height: 4.5rem;
+    display: flex;
+    align-items: flex-end;
+    padding: 0.4rem;
+    border-radius: 0;
+  }
+
+  .swatch span {
+    font-family: var(--dl-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    background: rgba(0, 0, 0, 0.55);
+    color: #fff;
+    padding: 2px 4px;
+  }
+
+  .swatch--cobalt {
+    background: var(--dl-cobalt);
+    grid-column: span 2;
+    min-height: 6rem;
+  }
+  .swatch--acid {
+    background: var(--dl-acid);
+  }
+  .swatch--acid span {
+    color: #000;
+    background: rgba(255, 255, 255, 0.65);
+  }
+  .swatch--magenta {
+    background: var(--dl-magenta);
+  }
+  .swatch--yellow {
+    background: var(--dl-yellow);
+  }
+  .swatch--yellow span {
+    color: #000;
+    background: rgba(255, 255, 255, 0.55);
+  }
+  .swatch--purple {
+    background: var(--dl-purple);
+  }
+  .swatch--grey {
+    background: var(--dl-grey-face);
+    box-shadow: var(--dl-bevel-out);
+  }
+  .swatch--grey span {
+    color: #000;
+    background: transparent;
+  }
+
+  .raw-pairings {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .pair {
+    padding: 0.75rem 0.85rem;
+    border-radius: 0;
+  }
+
+  .pair__text {
+    margin: 0.35rem 0 0;
+    font-family: var(--dl-mono);
+    font-size: 12px;
+  }
+
+  .pair--a {
+    background: var(--dl-cobalt-deep);
+    color: var(--dl-acid);
+    border-left: 6px solid var(--dl-acid);
+  }
+
+  .pair--b {
+    background: var(--dl-magenta);
+    color: var(--dl-yellow);
+    border-left: 6px solid var(--dl-yellow);
+  }
+
+  .pair--c {
+    background: var(--dl-paper);
+    color: var(--dl-black);
+    border-bottom: 4px solid var(--dl-purple);
+  }
+
+  .raw-type {
+    position: relative;
+    padding: 0.5rem 0;
+  }
+
+  .type-blast {
+    font-size: clamp(3rem, 12vw, 5.5rem);
+  }
+
+  .type-mono-row {
+    margin: 1rem 0 0.5rem;
+    font-size: 12px;
+    color: var(--dl-acid);
+  }
+
+  .type-symbols {
+    margin: 0.5rem 0;
+    font-family: var(--dl-mono);
+    font-size: 1.25rem;
+    color: var(--dl-yellow);
+    letter-spacing: 0.35em;
+  }
+
+  .type-num {
+    position: absolute;
+    right: 0;
+    top: 2.5rem;
+    font-family: var(--dl-display);
+    font-size: clamp(4rem, 18vw, 7rem);
+    line-height: 0.8;
+    color: var(--dl-magenta);
+    opacity: 0.85;
+    mix-blend-mode: screen;
+    pointer-events: none;
+    letter-spacing: -0.06em;
+  }
+
+  /* —— 02 Windows —— */
+  .win-studies {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .win-studies {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .win-inactive-study {
+      grid-column: 1 / -1;
+      max-width: 22rem;
+    }
+  }
+
+  .inset-field {
+    padding: 0.65rem 0.75rem;
+  }
+
+  .inset-editorial {
+    padding: 0.75rem;
+    background: #0d1020;
+    box-shadow: var(--dl-bevel-in);
+    border-left: 4px solid var(--dl-acid);
+  }
+
+  /* —— 03 CRT —— */
+  .crt-compare {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  @media (min-width: 700px) {
+    .crt-compare {
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+  }
+
+  .crt-panel {
+    padding: 1.1rem 1.15rem 1.25rem;
+    border-radius: 0;
+    min-height: 10rem;
+  }
+
+  .crt-panel--raw {
+    background: var(--dl-paper);
+    color: var(--dl-black);
+    box-shadow: var(--dl-bevel-out);
+  }
+
+  .crt-panel--crt {
+    background: #050818;
+    color: var(--dl-offwhite);
+    box-shadow:
+      inset 0 0 0 2px var(--dl-acid),
+      4px 4px 0 var(--dl-magenta);
+  }
+
+  .crt-copy {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 36ch;
+  }
+
+  .crt-copy--on-dark {
+    color: var(--dl-offwhite);
+  }
+
+  /* —— 04 Mini homepage variants (Phase 1B) —— */
+  .variant-intro {
+    margin: -0.5rem 0 1.75rem;
+    font-size: 12px;
+    color: var(--dl-acid);
+    max-width: 40rem;
+  }
+
+  .variant {
+    margin-top: 2.5rem;
+  }
+
+  .variant:first-of-type {
+    margin-top: 0;
+  }
+
+  .variant-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1.25rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .variant-label {
+    margin: 0;
+    font-family: var(--dl-display);
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--dl-offwhite);
+    line-height: 1;
+  }
+
+  .variant-key {
+    display: inline-block;
+    min-width: 1.4em;
+    padding: 0.1em 0.25em;
+    margin-right: 0.35rem;
+    background: var(--dl-yellow);
+    color: var(--dl-black);
+    box-shadow: 3px 3px 0 var(--dl-magenta);
+  }
+
+  .variant-note {
+    margin: 0;
+    font-size: 11px;
+    color: var(--dl-acid);
+    max-width: 36rem;
+  }
+
+  .mini-home {
+    position: relative;
+    min-height: min(92vh, 720px);
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    overflow: hidden;
+    background: var(--dl-cobalt-ink);
+    box-shadow:
+      inset 0 0 0 3px var(--dl-yellow),
+      8px 10px 0 rgba(0, 0, 0, 0.4);
+  }
+
+  .mini-home__bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(115deg, transparent 55%, rgba(255, 0, 170, 0.22) 55%, rgba(255, 0, 170, 0.22) 62%, transparent 62%),
+      linear-gradient(0deg, rgba(0, 26, 128, 0.9), transparent 45%),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 11px,
+        rgba(57, 255, 20, 0.04) 11px,
+        rgba(57, 255, 20, 0.04) 12px
+      );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .mini-home__bg--c {
+    background:
+      linear-gradient(128deg, transparent 42%, rgba(122, 31, 255, 0.35) 42%, rgba(122, 31, 255, 0.35) 48%, transparent 48%),
+      linear-gradient(115deg, transparent 58%, rgba(255, 0, 170, 0.28) 58%, rgba(255, 0, 170, 0.28) 72%, transparent 72%),
+      linear-gradient(0deg, rgba(0, 26, 128, 0.92), transparent 50%),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 11px,
+        rgba(57, 255, 20, 0.05) 11px,
+        rgba(57, 255, 20, 0.05) 12px
+      );
+  }
+
+  .mini-home__plane,
+  .mini-home__slab {
+    pointer-events: none;
+    position: absolute;
+    z-index: 0;
+  }
+
+  /* Hard offset plane behind collision window (B) */
+  .mini-home__plane {
+    display: none;
+  }
+
+  /* Yellow paper slab under editorial role (C) */
+  .mini-home__slab {
+    display: none;
+  }
+
+  .mini-home > *:not(.mini-home__bg):not(.mini-home__plane):not(.mini-home__slab):not(.mini-home__slash):not(.mini-home__bar):not(.mini-home__float) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .mini-home__float {
+    z-index: 4;
+  }
+
+  .mini-home__meta {
+    margin: 0;
+    color: var(--dl-acid);
+  }
+
+  .mini-home__name {
+    margin: 1.25rem 0 0;
+    font-size: clamp(3.5rem, 16vw, 8.5rem);
+    color: var(--dl-offwhite);
+  }
+
+  .mini-home__name-line {
+    display: block;
+  }
+
+  .mini-home__name-line--offset {
+    color: var(--dl-yellow);
+    margin-left: clamp(0rem, 8vw, 4.5rem);
+    margin-top: 0.05em;
+  }
+
+  .mini-home__role {
+    margin: 1.25rem 0 0;
+    font-family: var(--dl-mono);
+    font-size: clamp(0.85rem, 2.5vw, 1.05rem);
+    letter-spacing: 0.28em;
+    color: var(--dl-magenta);
+    text-transform: uppercase;
+  }
+
+  .mini-home__role--b {
+    letter-spacing: 0.32em;
+    margin-left: 0.25rem;
+  }
+
+  /* C: SOFTWARE ENGINEER as graphic composition */
+  .mini-home__role--c {
+    margin: 0.85rem 0 0;
+    font-family: var(--dl-display);
+    font-size: clamp(1.35rem, 5.5vw, 2.65rem);
+    letter-spacing: -0.03em;
+    line-height: 0.92;
+    color: var(--dl-magenta);
+    max-width: 18ch;
+    position: relative;
+    z-index: 2;
+  }
+
+  .mini-home__role--c .role-soft {
+    display: inline-block;
+    color: var(--dl-magenta);
+  }
+
+  .mini-home__role--c .role-ware {
+    display: inline-block;
+    margin-left: 0.12em;
+    color: var(--dl-offwhite);
+    background: var(--dl-magenta);
+    padding: 0 0.12em 0.02em;
+    box-shadow: 4px 4px 0 var(--dl-yellow);
+  }
+
+  .mini-home__role--c .role-eng {
+    display: block;
+    margin-top: 0.12em;
+    margin-left: clamp(1.5rem, 8vw, 4.5rem);
+    color: var(--dl-acid);
+    letter-spacing: 0.08em;
+    font-family: var(--dl-mono);
+    font-size: 0.42em;
+    font-weight: 700;
+  }
+
+  .mini-home__stack {
+    margin: 0.5rem 0 0;
+    font-size: 12px;
+    color: var(--dl-offwhite);
+    letter-spacing: 0.08em;
+    max-width: 28rem;
+  }
+
+  .mini-home--c .mini-home__stack {
+    margin-top: 0.85rem;
+    margin-left: clamp(0rem, 4vw, 1.5rem);
+    border-left: 3px solid var(--dl-yellow);
+    padding-left: 0.65rem;
+  }
+
+  .mini-home__cta {
+    margin-top: 1.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem 1rem;
+  }
+
+  .mini-home__cta--c {
+    margin-top: 2rem;
+    max-width: 20rem;
+  }
+
+  .mini-home__mail {
+    font-size: 13px;
+    letter-spacing: 0.12em;
+  }
+
+  .mini-home__note {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .mini-home__note-link {
+    margin: 0.65rem 0 0;
+  }
+
+  .mini-home__float {
+    margin-top: 2rem;
+    max-width: 22rem;
+  }
+
+  .mini-home__slash {
+    display: none;
+  }
+
+  .mini-home__bar {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 10px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--dl-acid) 0 12px,
+      var(--dl-magenta) 12px 24px,
+      var(--dl-yellow) 24px 36px,
+      var(--dl-purple) 36px 48px
+    );
+    z-index: 2;
+  }
+
+  /* —— Desktop compositions —— */
+  @media (min-width: 900px) {
+    .mini-home__name-line--offset {
+      text-shadow: 4px 4px 0 var(--dl-magenta);
+    }
+
+    .mini-home__slash {
+      display: block;
+      position: absolute;
+      right: 8%;
+      top: 12%;
+      font-family: var(--dl-display);
+      font-size: clamp(8rem, 22vw, 14rem);
+      line-height: 0.8;
+      color: var(--dl-acid);
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* A — CONTROL: baseline float */
+    .mini-home--a .mini-home__float {
+      position: absolute;
+      right: clamp(1rem, 4vw, 2.5rem);
+      bottom: 3.5rem;
+      margin-top: 0;
+      width: min(22rem, 38%);
+      transform: rotate(-2deg);
+    }
+
+    /* B — COLLISION: window bites into ROJAS / stack */
+    .mini-home--b {
+      padding-bottom: 4rem;
+    }
+
+    .mini-home--b .mini-home__plane {
+      display: block;
+      width: min(24rem, 42%);
+      height: 10rem;
+      right: clamp(0.75rem, 3vw, 2.25rem);
+      top: 11.25rem;
+      background: var(--dl-yellow);
+      box-shadow: 6px 6px 0 var(--dl-purple);
+      transform: rotate(1.5deg);
+    }
+
+    .mini-home--b .mini-home__float {
+      position: absolute;
+      right: clamp(1.25rem, 4.5vw, 3rem);
+      top: 10.5rem;
+      bottom: auto;
+      margin-top: 0;
+      width: min(22rem, 40%);
+      transform: rotate(-3.5deg);
+      z-index: 4;
+    }
+
+    .mini-home--b .mini-home__name {
+      max-width: 72%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .mini-home--b .mini-home__role--b,
+    .mini-home--b .mini-home__stack {
+      position: relative;
+      z-index: 5;
+      max-width: 52%;
+    }
+
+    .mini-home--b .mini-home__cta {
+      position: relative;
+      z-index: 5;
+      max-width: 52%;
+      margin-top: 2.5rem;
+    }
+
+    /* C — EDITORIAL: role as graphic, window cuts left / overlaps stack */
+    .mini-home--c {
+      min-height: min(94vh, 760px);
+      padding-left: clamp(1.25rem, 3vw, 2rem);
+      padding-right: clamp(1.5rem, 5vw, 3.5rem);
+    }
+
+    .mini-home--c .mini-home__slab {
+      display: block;
+      left: clamp(1rem, 4vw, 2.5rem);
+      top: 17.5rem;
+      width: min(16rem, 34%);
+      height: 4.25rem;
+      background: var(--dl-yellow);
+      box-shadow:
+        5px 5px 0 var(--dl-magenta),
+        10px 10px 0 var(--dl-purple);
+      transform: rotate(-1.5deg);
+      z-index: 1;
+    }
+
+    .mini-home--c .mini-home__role--c {
+      margin-top: -0.35rem;
+    }
+
+    .mini-home--c .mini-home__slash--c {
+      right: auto;
+      left: 58%;
+      top: 6%;
+      color: var(--dl-yellow);
+      opacity: 0.14;
+      transform: rotate(12deg);
+    }
+
+    .mini-home--c .mini-home__float {
+      position: absolute;
+      left: clamp(-0.45rem, -1vw, 0);
+      top: 21.5rem;
+      bottom: auto;
+      margin-top: 0;
+      width: min(21rem, 36%);
+      transform: rotate(2.5deg);
+      z-index: 4;
+      box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.45);
+    }
+
+    .mini-home--c .mini-home__cta--c {
+      margin-left: auto;
+      margin-right: 0;
+      margin-top: 3.5rem;
+      justify-content: flex-end;
+      max-width: 22rem;
+      position: relative;
+      z-index: 5;
+    }
+
+    .mini-home--c .mini-home__name {
+      max-width: 78%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .mini-home--c .mini-home__stack {
+      max-width: 48%;
+      position: relative;
+      z-index: 5;
+    }
+  }
+
+  /* —— Mobile: collapse overlaps, keep attitude —— */
+  @media (max-width: 899px) {
+    .mini-home {
+      min-height: auto;
+      padding-bottom: 2rem;
+    }
+
+    .mini-home__float {
+      transform: none !important;
+      position: relative !important;
+      left: auto !important;
+      right: auto !important;
+      top: auto !important;
+      bottom: auto !important;
+      width: auto !important;
+      max-width: 100%;
+      margin-top: 1.5rem;
+      z-index: 1 !important;
+    }
+
+    .mini-home__plane,
+    .mini-home__slab {
+      display: none !important;
+    }
+
+    .mini-home--b .mini-home__name,
+    .mini-home--b .mini-home__stack,
+    .mini-home--b .mini-home__cta,
+    .mini-home--c .mini-home__name,
+    .mini-home--c .mini-home__stack {
+      max-width: none;
+    }
+
+    .mini-home--c .mini-home__cta--c {
+      margin-left: 0;
+      justify-content: flex-start;
+      max-width: none;
+    }
+
+    .mini-home__role--c {
+      max-width: none;
+    }
+
+    .mini-home__role--c .role-eng {
+      margin-left: 1rem;
+    }
+
+    .type-num {
+      position: static;
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 4rem;
+      opacity: 0.7;
+      mix-blend-mode: normal;
+    }
+  }
+
+  /* —— D / INTERNET 2001 —— */
+  .d-lede {
+    margin: -0.35rem 0 1.1rem;
+    max-width: 42rem;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--dl-offwhite);
+  }
+
+  .d-test {
+    margin: 0.85rem 0 0;
+    font-size: 11px;
+    color: var(--dl-acid);
+    max-width: 44rem;
+  }
+
+  .inet-stage {
+    position: relative;
+    padding: 11px 7px 14px;
+    background: var(--dl-cobalt-deep);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+  }
+
+  .inet-desktop {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.04) 2px,
+        rgba(0, 0, 0, 0.04) 3px
+      );
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .inet-browser {
+    position: relative;
+    z-index: 1;
+    max-width: 920px;
+    margin: 0 auto;
+    background: var(--dl-grey-face);
+    box-shadow: var(--dl-bevel-out);
+    font-family: Tahoma, Verdana, "MS Sans Serif", sans-serif;
+    font-size: 11px;
+    color: var(--dl-black);
+  }
+
+  .inet-titlebar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 3px 3px 5px;
+    background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+    color: #fff;
+    font-family: Tahoma, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    user-select: none;
+  }
+
+  .inet-titlebar__icon {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    background:
+      linear-gradient(135deg, #fff 0 2px, transparent 2px),
+      linear-gradient(45deg, #39ff14 0 40%, #0033cc 40% 70%, #ffe600 70%);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+  }
+
+  .inet-titlebar__text {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .inet-titlebar__ctl {
+    display: flex;
+    gap: 2px;
+  }
+
+  .inet-titlebar__ctl span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 14px;
+    background: var(--dl-grey-face);
+    color: #000;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    box-shadow:
+      inset 1px 1px 0 #fff,
+      inset -1px -1px 0 #404040;
+  }
+
+  .inet-menubar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 11px;
+    padding: 2px 6px 3px;
+    background: var(--dl-grey-face);
+    border-bottom: 1px solid var(--dl-grey-shadow);
+    font-size: 11px;
+  }
+
+  .inet-menubar span {
+    cursor: default;
+  }
+
+  .inet-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 5px 5px;
+    background: var(--dl-grey-face);
+    border-bottom: 1px solid var(--dl-grey-hilite);
+    box-shadow: inset 0 -1px 0 var(--dl-grey-shadow);
+  }
+
+  .inet-toolbar__label {
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  .inet-address {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 4px;
+    background: #fff;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 11px;
+  }
+
+  .inet-address__ico {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    background: linear-gradient(180deg, #39ff14 0 50%, #0033cc 50%);
+    box-shadow: inset 0 0 0 1px #808080;
+  }
+
+  .inet-address__url {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .inet-go {
+    flex-shrink: 0;
+    padding: 2px 10px !important;
+    font-size: 11px !important;
+    font-family: Tahoma, sans-serif !important;
+    font-weight: 400 !important;
+  }
+
+  .inet-page {
+    background: #fff;
+    color: #000;
+    border-top: 1px solid var(--dl-grey-shadow);
+  }
+
+  .inet-layout {
+    display: grid;
+    grid-template-columns: 128px 1fr;
+    gap: 0;
+    min-height: 340px;
+  }
+
+  .inet-side {
+    padding: 7px 7px 11px;
+    background: #d4d0c8;
+    border-right: 1px solid var(--dl-grey-shadow);
+    box-shadow: inset -1px 0 0 var(--dl-grey-hilite);
+  }
+
+  .inet-side__head {
+    margin: 0 0 5px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #000080;
+  }
+
+  .inet-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .inet-nav__a {
+    display: block;
+    padding: 2px 3px;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
+    color: #0000ee;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .inet-nav__a:hover {
+    color: #ff00aa;
+    background: #fff;
+  }
+
+  .inet-nav__a--here {
+    font-weight: 700;
+    color: #000;
+    text-decoration: none;
+    background: #fff;
+    box-shadow: var(--dl-bevel-in);
+  }
+
+  .inet-hr {
+    margin: 9px 0 7px;
+    border: 0;
+    border-top: 1px solid var(--dl-grey-shadow);
+    border-bottom: 1px solid var(--dl-grey-hilite);
+  }
+
+  .inet-sys {
+    margin: 0;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  .inet-sys div {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 3px;
+    margin-bottom: 3px;
+  }
+
+  .inet-sys dt {
+    margin: 0;
+    color: #404040;
+  }
+
+  .inet-sys dd {
+    margin: 0;
+    color: #000;
+  }
+
+  .inet-led {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-right: 3px;
+    vertical-align: middle;
+    background: var(--dl-acid);
+    box-shadow:
+      inset 1px 1px 0 #9dff88,
+      inset -1px -1px 0 #1a8800,
+      0 0 0 1px #404040;
+  }
+
+  .inet-led--sm {
+    width: 6px;
+    height: 6px;
+  }
+
+  .inet-counter {
+    color: #000080;
+    font-weight: 700;
+  }
+
+  .inet-badge {
+    margin-top: 11px;
+    width: 88px;
+    height: 31px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 2px 3px;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        #0033cc 0 2px,
+        #001a80 2px 4px
+      ),
+      repeating-linear-gradient(
+        0deg,
+        transparent 0 2px,
+        rgba(57, 255, 20, 0.25) 2px 3px
+      );
+    border: 1px solid #000;
+    box-shadow: inset 1px 1px 0 #39ff14;
+  }
+
+  .inet-badge__px {
+    width: 9px;
+    height: 9px;
+    background: var(--dl-yellow);
+    box-shadow: 1px 1px 0 #000;
+  }
+
+  .inet-badge__cap {
+    font-family: "Courier New", monospace;
+    font-size: 9px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.55);
+    padding: 0 2px;
+  }
+
+  .inet-tiny {
+    margin: 9px 0 0;
+    font-family: "Courier New", monospace;
+    font-size: 9px;
+    line-height: 1.35;
+    color: #404040;
+  }
+
+  .inet-main {
+    padding: 11px 14px 16px 12px;
+    font-family: Verdana, Geneva, Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.45;
+    background: #fff;
+  }
+
+  .inet-name {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: #000080;
+    line-height: 1.15;
+  }
+
+  .inet-role {
+    margin: 3px 0 0;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 12px;
+    color: #008000;
+  }
+
+  .inet-intro {
+    margin: 11px 0 0;
+    max-width: 46ch;
+    font-size: 12px;
+    color: #000;
+  }
+
+  .inet-inset {
+    margin-top: 11px;
+    padding: 5px 7px 6px;
+    background: #f7f7f0;
+    max-width: 220px;
+  }
+
+  .inet-inset__label {
+    margin: 0 0 3px;
+    font-family: "Courier New", monospace;
+    font-size: 10px;
+    color: #808080;
+  }
+
+  .inet-skills {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #000;
+  }
+
+  .inet-h {
+    margin: 14px 0 0;
+    font-family: Tahoma, Verdana, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #000;
+    letter-spacing: 0.06em;
+  }
+
+  .inet-dots {
+    margin: 2px 0 7px;
+    font-family: "Courier New", monospace;
+    font-size: 10px;
+    color: #808080;
+    letter-spacing: 0.12em;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .inet-projects {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .inet-projects li {
+    margin: 0 0 11px;
+    padding: 0 0 7px;
+    border-bottom: 1px dotted #808080;
+  }
+
+  .inet-projects li:last-child {
+    border-bottom: 0;
+  }
+
+  .inet-proj__id {
+    margin: 0;
+    font-family: Tahoma, Verdana, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: #000080;
+  }
+
+  .inet-proj__stack {
+    margin: 2px 0 3px;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    color: #404040;
+  }
+
+  .inet-link {
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 11px;
+    color: #0000ee;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .inet-link:hover {
+    color: #ff00aa;
+  }
+
+  .inet-link--visited {
+    color: #551a8b;
+  }
+
+  .inet-more {
+    margin: 7px 0 0;
+    font-size: 11px;
+    color: #404040;
+  }
+
+  .inet-statusbar {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 1px 3px;
+    background: var(--dl-grey-face);
+    border-top: 1px solid var(--dl-grey-hilite);
+    box-shadow: inset 0 1px 0 var(--dl-grey-shadow);
+    font-family: Tahoma, sans-serif;
+    font-size: 10px;
+    color: #000;
+    min-height: 18px;
+  }
+
+  .inet-statusbar__done,
+  .inet-statusbar__zone,
+  .inet-statusbar__online {
+    padding: 1px 5px;
+    box-shadow: var(--dl-bevel-in);
+    background: var(--dl-grey-inset);
+  }
+
+  .inet-statusbar__sep {
+    width: 3px;
+  }
+
+  .inet-statusbar__grow {
+    flex: 1;
+  }
+
+  .inet-statusbar span:nth-child(3) {
+    padding: 1px 5px;
+    box-shadow: var(--dl-bevel-in);
+    background: var(--dl-grey-inset);
+  }
+
+  /* Previous experiments accordion */
+  .prev-exp {
+    margin-top: 2.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.18);
+  }
+
+  .prev-exp__sum {
+    cursor: pointer;
+    padding: 0.65rem 0.85rem;
+    font-family: var(--dl-mono);
+    font-size: 11px;
+    color: var(--dl-offwhite);
+    list-style: none;
+  }
+
+  .prev-exp__sum::-webkit-details-marker {
+    display: none;
+  }
+
+  .prev-exp__sum::before {
+    content: "[+] ";
+    color: var(--dl-acid);
+  }
+
+  .prev-exp[open] .prev-exp__sum::before {
+    content: "[-] ";
+  }
+
+  .prev-exp__body {
+    padding: 0 0.75rem 1.5rem;
+    border-top: 1px solid rgba(57, 255, 20, 0.25);
+  }
+
+  /* Mobile: stack columns, keep browser shell readable */
+  @media (max-width: 700px) {
+    .inet-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .inet-side {
+      border-right: 0;
+      border-bottom: 1px solid var(--dl-grey-shadow);
+      box-shadow: none;
+      padding-bottom: 9px;
+    }
+
+    .inet-nav {
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 5px 9px;
+    }
+
+    .inet-sys {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px 11px;
+    }
+
+    .inet-sys div {
+      grid-template-columns: auto 1fr;
+    }
+
+    .inet-badge {
+      display: none;
+    }
+
+    .inet-menubar {
+      display: none;
+    }
+
+    .inet-name {
+      font-size: 20px;
+    }
+
+    .inet-statusbar {
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+  }
+
+  @media (min-width: 701px) and (max-width: 1024px) {
+    .inet-layout {
+      grid-template-columns: 118px 1fr;
+    }
+
+    .inet-browser {
+      max-width: 100%;
+    }
+  }
+
+  /* —— E / INTERNET 2002 HYBRID · PHASE 1F ERA PALETTE —— */
+  #variant-e {
+    --era-web-deep: #001a66;
+    --era-web-mid: #002b7f;
+    --era-web: #003399;
+    --era-navy: #000080;
+    --era-grey: #c0c0c0;
+    --era-grey-warm: #d4d0c8;
+    --era-paper: #e8e5d8;
+    --era-link: #0000ee;
+    --era-visited: #551a8b;
+    --era-term: #00a85a;
+    --era-term-dk: #007a42;
+    --era-cyan: #00a0b0;
+    --era-gold: #c9a227;
+    --era-gold-hi: #d6b13f;
+    --era-orange: #c96b2c;
+    --era-teal: #0b4f4c;
+    --era-ink: #0a1516;
+    --era-offwhite: #e8e5d8;
+    /* Interaction-state accents (mostly hover/focus/active) */
+    --hot-green: #39ff14;
+    --hot-yellow: #ffe600;
+    --hot-purple: #9b30ff;
+    --hot-magenta: #e6007a;
+    --hot-cobalt: #1a66ff;
+  }
+
+  #variant-e .d-test--era {
+    color: var(--era-term);
+  }
+
+  .hyb-page {
+    background: var(--era-web-deep);
+  }
+
+  .hyb-layout {
+    min-height: 420px;
+  }
+
+  .hyb-side {
+    background: #b8b4ac;
+    background-image: linear-gradient(180deg, #d0ccc4 0%, #b8b4ac 40%, #a8a49c 100%);
+  }
+
+  .hyb-browser .inet-nav__a:hover {
+    color: var(--era-visited);
+    background: #fff;
+  }
+
+  .hyb-browser .inet-led {
+    background: var(--era-term);
+    box-shadow:
+      inset 1px 1px 0 #4fd68a,
+      inset -1px -1px 0 var(--era-term-dk),
+      0 0 0 1px #404040;
+  }
+
+  .hyb-browser .inet-address__ico {
+    background: linear-gradient(180deg, var(--era-term) 0 50%, var(--era-navy) 50%);
+  }
+
+  .hyb-browser .inet-titlebar__icon {
+    background:
+      linear-gradient(135deg, #fff 0 2px, transparent 2px),
+      linear-gradient(45deg, var(--era-term) 0 40%, var(--era-navy) 40% 70%, var(--era-gold) 70%);
+  }
+
+  .hyb-browser .inet-link {
+    color: var(--era-link);
+  }
+
+  .hyb-browser .inet-link:hover {
+    color: var(--era-orange);
+  }
+
+  .hyb-browser .inet-link--visited {
+    color: var(--era-visited);
+  }
+
+  .hyb-main {
+    padding: 9px 11px 13px 10px;
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.045) 2px,
+        rgba(0, 0, 0, 0.045) 3px
+      ),
+      linear-gradient(180deg, var(--era-web-mid) 0%, var(--era-web-deep) 55%, #001040 100%);
+    color: var(--era-offwhite);
+    border-left: 1px solid #000040;
+  }
+
+  .hyb-id {
+    margin: 0 0 9px;
+    padding: 7px 7px 5px;
+    border: 1px solid #003399;
+    background: linear-gradient(180deg, #002b7f 0%, #001a66 100%);
+    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .hyb-path {
+    margin: 0 0 5px;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 9px;
+    color: var(--era-cyan);
+    letter-spacing: 0.02em;
+  }
+
+  .hyb-id__row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 7px;
+  }
+
+  .hyb-name {
+    margin: 0;
+    line-height: 0.88;
+  }
+
+  .hyb-name__a,
+  .hyb-name__b {
+    display: block;
+    font-family: Arial Black, "Arial Bold", Impact, Arial, sans-serif;
+    font-size: clamp(48px, 6.2vw, 68px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+
+  .hyb-name__a {
+    color: var(--era-offwhite);
+  }
+
+  .hyb-name__b {
+    margin-left: 1.1em;
+    color: var(--era-gold-hi);
+    text-shadow: 2px 2px 0 #001040;
+  }
+
+  .hyb-new {
+    flex-shrink: 0;
+    margin-top: 5px;
+    padding: 1px 4px;
+    font-family: "Courier New", monospace;
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--era-ink);
+    background: var(--era-gold);
+    border: 1px solid #000;
+    box-shadow: 1px 1px 0 #000;
+  }
+
+  .hyb-role {
+    margin: 7px 0 0;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 12px;
+    color: var(--era-term);
+    letter-spacing: 0.04em;
+  }
+
+  .hyb-check {
+    margin-top: 7px;
+    height: 5px;
+    background:
+      repeating-linear-gradient(
+        90deg,
+        var(--era-gold) 0 4px,
+        #001a66 4px 8px,
+        var(--era-cyan) 8px 12px,
+        #001a66 12px 16px
+      );
+    border: 1px solid #000;
+  }
+
+  .hyb-mod {
+    margin: 0 0 7px;
+    border: 1px solid #000;
+    background: var(--era-paper);
+    color: #000;
+  }
+
+  .hyb-mod__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 7px;
+    padding: 3px 6px;
+    font-family: Tahoma, Verdana, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #fff;
+    border-bottom: 1px solid #000;
+  }
+
+  .hyb-mod__meta {
+    font-family: "Courier New", monospace;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0;
+    opacity: 0.85;
+  }
+
+  .hyb-mod__bar--cobalt {
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 1px,
+        rgba(0, 0, 0, 0.08) 1px,
+        rgba(0, 0, 0, 0.08) 2px
+      ),
+      linear-gradient(90deg, #001a66 0%, #003399 55%, #002b7f 100%);
+  }
+
+  .hyb-mod__bar--metal {
+    color: #000;
+    background: linear-gradient(180deg, #fff 0%, #c0c0c0 45%, #808080 100%);
+  }
+
+  .hyb-mod__bar--work {
+    background:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 1px,
+        rgba(0, 0, 0, 0.1) 1px,
+        rgba(0, 0, 0, 0.1) 2px
+      ),
+      linear-gradient(90deg, #000080 0%, #002b7f 45%, #0b4f4c 100%);
+  }
+
+  .hyb-mod__bar--links {
+    color: var(--era-ink);
+    background: linear-gradient(180deg, #d6b13f 0%, #c9a227 55%, #a8841c 100%);
+  }
+
+  .hyb-mod__body {
+    padding: 7px 8px 8px;
+    font-family: Verdana, Geneva, Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .hyb-mod__body p {
+    margin: 0;
+  }
+
+  .hyb-skills-body {
+    background: #f0ede3;
+    box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #fff;
+  }
+
+  .hyb-skills {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px 11px;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+
+  .hyb-work-body {
+    padding: 5px;
+    background: var(--era-grey-warm);
+    display: grid;
+    gap: 5px;
+  }
+
+  .hyb-proj {
+    border: 1px solid #404040;
+    background: #fff;
+    padding: 0;
+  }
+
+  .hyb-proj__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    padding: 3px 5px;
+    border-bottom: 1px solid #808080;
+    font-family: Tahoma, Verdana, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .hyb-proj--a .hyb-proj__head {
+    color: #fff;
+    background: linear-gradient(90deg, var(--era-teal) 0%, #006878 55%, var(--era-cyan) 100%);
+    border-left: 4px solid var(--era-term);
+  }
+
+  .hyb-proj--b .hyb-proj__head {
+    color: #fff;
+    background: linear-gradient(90deg, #000080 0%, #2a1a5c 60%, #551a8b 100%);
+    border-left: 4px solid var(--era-gold);
+  }
+
+  .hyb-proj__id {
+    letter-spacing: 0.03em;
+  }
+
+  .hyb-proj__status {
+    font-family: "Courier New", monospace;
+    font-size: 9px;
+    font-weight: 700;
+    color: #b8ffd0;
+    white-space: nowrap;
+  }
+
+  .hyb-proj__status--warn {
+    color: var(--era-gold-hi);
+  }
+
+  .hyb-proj__inner {
+    display: flex;
+    gap: 7px;
+    align-items: flex-start;
+    padding: 5px 6px 6px;
+  }
+
+  .hyb-proj__copy {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .hyb-proj__stack {
+    margin: 4px 6px 0;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    color: #404040;
+  }
+
+  .hyb-proj__inner .hyb-proj__stack {
+    margin: 0;
+  }
+
+  .hyb-proj__blurb {
+    margin: 3px 6px 4px !important;
+    font-size: 11px;
+    color: #000;
+  }
+
+  .hyb-proj__inner .hyb-proj__blurb {
+    margin: 3px 0 4px !important;
+  }
+
+  .hyb-proj .inet-link {
+    margin: 0 6px 6px;
+    display: inline-block;
+  }
+
+  .hyb-proj__inner .inet-link {
+    margin: 0;
+  }
+
+  .hyb-also {
+    font-size: 11px;
+    color: #404040;
+  }
+
+  .hyb-px-wrap {
+    margin-top: 9px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+
+  .hyb-px {
+    display: block;
+    width: 32px;
+    height: 32px;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    border: 1px solid #000;
+    flex-shrink: 0;
+  }
+
+  .hyb-px-cap {
+    font-family: "Courier New", monospace;
+    font-size: 8px;
+    color: #404040;
+  }
+
+  .hyb-meter {
+    margin-top: 9px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .hyb-meter__cap {
+    font-family: "Courier New", monospace;
+    font-size: 9px;
+    color: #404040;
+  }
+
+  .hyb-meter__track {
+    flex: 1;
+    height: 8px;
+    background: #808080;
+    border: 1px solid #000;
+    box-shadow: inset 1px 1px 0 #404040;
+  }
+
+  .hyb-meter__fill {
+    display: block;
+    width: 72%;
+    height: 100%;
+    background: linear-gradient(180deg, #4fd68a 0%, var(--era-term) 45%, var(--era-term-dk) 100%);
+  }
+
+  .hyb-badge {
+    margin-top: 11px;
+    width: 88px;
+    height: 31px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 4px;
+    background:
+      repeating-linear-gradient(90deg, #002b7f 0 2px, #001a66 2px 4px),
+      linear-gradient(180deg, rgba(0, 168, 90, 0.2) 0%, transparent 50%);
+    border: 1px solid #000;
+    box-shadow: inset 1px 1px 0 var(--era-term);
+  }
+
+  .hyb-badge__dot {
+    width: 7px;
+    height: 7px;
+    flex-shrink: 0;
+    background: var(--era-term);
+    box-shadow: 1px 1px 0 #000;
+  }
+
+  .hyb-badge__text {
+    font-family: "Courier New", monospace;
+    font-size: 8px;
+    line-height: 1.15;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 700px) {
+    .hyb-name__a,
+    .hyb-name__b {
+      font-size: clamp(36px, 12vw, 48px);
+    }
+
+    .hyb-name__b {
+      margin-left: 0.55em;
+    }
+
+    .hyb-skills {
+      grid-template-columns: 1fr;
+    }
+
+    .hyb-meter {
+      max-width: 140px;
+    }
+
+    .hyb-px {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  @media (min-width: 701px) and (max-width: 1024px) {
+    .hyb-name__a,
+    .hyb-name__b {
+      font-size: clamp(44px, 5.5vw, 56px);
+    }
+  }
+
+  /* —— PHASE 1G · cursors + interaction states —— */
+  #variant-e .hyb-browser a,
+  #variant-e .hyb-browser button,
+  #variant-e .hyb-browser .inet-nav__a,
+  #variant-e .hyb-browser .inet-link,
+  #variant-e .hyb-browser .inet-go,
+  #variant-e .hyb-browser .hyb-proj {
+    transition: none;
+  }
+
+  #variant-e .hyb-browser ::selection {
+    background: var(--era-gold);
+    color: var(--era-navy);
+  }
+
+  #variant-e .hyb-browser ::-moz-selection {
+    background: var(--era-gold);
+    color: var(--era-navy);
+  }
+
+  /* Semantic technical color (resting, restrained) */
+  #variant-e .hyb-proj__stack {
+    color: #505050;
+  }
+
+  #variant-e .hyb-also .inet-link {
+    font-family: "Courier New", Courier, monospace;
+  }
+
+  #variant-e .inet-sys dd {
+    color: #000;
+  }
+
+  #variant-e .inet-sys div:first-child dd {
+    color: var(--era-term-dk);
+    font-weight: 700;
+  }
+
+  /* Default links */
+  #variant-e .hyb-browser .inet-link {
+    color: var(--era-link);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  #variant-e .hyb-browser .inet-link--visited {
+    color: var(--era-visited);
+  }
+
+  #variant-e .hyb-browser .inet-link:hover {
+    color: var(--era-navy);
+    background: var(--hot-yellow);
+    text-decoration: none;
+  }
+
+  #variant-e .hyb-browser .inet-link:active {
+    color: #fff;
+    background: var(--hot-magenta);
+    text-decoration: none;
+  }
+
+  #variant-e .hyb-browser .inet-link:focus-visible {
+    outline: 2px solid var(--hot-yellow);
+    outline-offset: 2px;
+    background: var(--hot-yellow);
+    color: var(--era-navy);
+    text-decoration: none;
+  }
+
+  /* Navigation */
+  #variant-e .hyb-browser .inet-nav__a {
+    transition: none;
+  }
+
+  #variant-e .hyb-browser .inet-nav__a:not(.inet-nav__a--here):hover {
+    color: var(--era-navy);
+    background: var(--hot-yellow);
+    text-decoration: none;
+    box-shadow: inset 0 0 0 1px var(--era-navy);
+  }
+
+  #variant-e .hyb-browser .inet-nav__a:not(.inet-nav__a--here):active {
+    color: #fff;
+    background: var(--hot-cobalt);
+    text-decoration: none;
+    box-shadow: inset 1px 1px 0 #000040, inset -1px -1px 0 #66aaff;
+  }
+
+  #variant-e .hyb-browser .inet-nav__a:focus-visible {
+    outline: 2px dotted var(--era-ink);
+    outline-offset: 1px;
+    background: var(--hot-yellow);
+    color: var(--era-navy);
+    text-decoration: none;
+  }
+
+  #variant-e .hyb-browser .inet-nav__a--here:focus-visible {
+    outline: 2px dotted var(--hot-green);
+    outline-offset: 1px;
+  }
+
+  #variant-e .hyb-browser .inet-nav__a:hover {
+    color: var(--era-navy);
+  }
+
+  /* Project modules — selectable software rows */
+  #variant-e .hyb-proj--a:hover,
+  #variant-e .hyb-proj--a:focus-within {
+    border-color: var(--era-term);
+    box-shadow: inset 0 0 0 1px var(--hot-green);
+  }
+
+  #variant-e .hyb-proj--a:hover .hyb-proj__head,
+  #variant-e .hyb-proj--a:focus-within .hyb-proj__head {
+    background: linear-gradient(90deg, #0a6a66 0%, #00a0b0 50%, #22dd88 100%);
+    border-left-color: var(--hot-green);
+  }
+
+  #variant-e .hyb-proj--a:hover .hyb-proj__status,
+  #variant-e .hyb-proj--a:focus-within .hyb-proj__status {
+    color: var(--hot-green);
+  }
+
+  #variant-e .hyb-proj--b:hover,
+  #variant-e .hyb-proj--b:focus-within {
+    border-color: var(--era-visited);
+    box-shadow: inset 0 0 0 1px var(--hot-purple);
+  }
+
+  #variant-e .hyb-proj--b:hover .hyb-proj__head,
+  #variant-e .hyb-proj--b:focus-within .hyb-proj__head {
+    background: linear-gradient(90deg, #000080 0%, #551a8b 45%, #9b30ff 100%);
+    border-left-color: var(--hot-yellow);
+  }
+
+  #variant-e .hyb-proj--b:hover .hyb-proj__status--warn,
+  #variant-e .hyb-proj--b:focus-within .hyb-proj__status--warn {
+    color: var(--hot-yellow);
+  }
+
+  /* GO button physics — mechanical bevel only */
+  #variant-e .hyb-browser .inet-go {
+    filter: none !important;
+  }
+
+  #variant-e .hyb-browser .inet-go:hover {
+    filter: none !important;
+    background: #d4d0c8;
+    box-shadow:
+      inset 1px 1px 0 #fff,
+      inset -1px -1px 0 #404040,
+      inset 2px 2px 0 #e8e8e8,
+      inset -2px -2px 0 #808080 !important;
+  }
+
+  #variant-e .hyb-browser .inet-go:focus-visible {
+    outline: 2px dotted var(--era-ink);
+    outline-offset: 1px;
+  }
+
+  #variant-e .hyb-browser .inet-go:active {
+    filter: none !important;
+    transform: none !important;
+    box-shadow:
+      inset 1px 1px 0 #404040,
+      inset -1px -1px 0 #fff,
+      inset 2px 2px 0 #808080,
+      inset -2px -2px 0 #c0c0c0 !important;
+    padding: 3px 9px 1px 11px !important;
+  }
+
+  /* Classic cursors — fine pointer only */
+  @media (pointer: fine) {
+    #variant-e .hyb-browser {
+      cursor: url("/design-lab/cursors/arrow.png") 0 0, default;
+    }
+
+    #variant-e .hyb-browser .hyb-mod__body,
+    #variant-e .hyb-browser .hyb-proj__blurb,
+    #variant-e .hyb-browser .hyb-proj__stack,
+    #variant-e .hyb-browser .inet-address,
+    #variant-e .hyb-browser .hyb-path {
+      cursor: url("/design-lab/cursors/ibeam.png") 11 16, text;
+    }
+
+    #variant-e .hyb-browser a,
+    #variant-e .hyb-browser button,
+    #variant-e .hyb-browser .inet-nav__a,
+    #variant-e .hyb-browser .inet-link,
+    #variant-e .hyb-browser .inet-go {
+      cursor: url("/design-lab/cursors/hand.png") 10 0, pointer;
+    }
+  }
+
+  .dl-lab-foot {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(57, 255, 20, 0.35);
+  }
+
+  .dl-lab-foot p {
+    margin: 0;
+    font-size: 11px;
+    color: var(--dl-offwhite);
+  }
+</style>

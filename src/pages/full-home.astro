@@ -1,0 +1,348 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import PortfolioBrowser from "@/components/PortfolioBrowser.astro";
+import {
+  profile,
+  experience,
+  otherRoles,
+  education,
+} from "@/data/profile";
+import { projects } from "@/data/projects";
+import "@/styles/inet-full-home.css";
+
+const pageTitle = "Full portfolio study";
+const description = profile.seo.home;
+
+const [firstName, ...restName] = profile.name.split(" ");
+const lastName = restName.join(" ") || firstName;
+
+const roleToken = profile.role
+  .toUpperCase()
+  .replace(/[^A-Z0-9]+/g, "_")
+  .replace(/^_|_$/g, "");
+
+/** Split aboutExtended into paragraphs (canonical text, not rewritten). */
+const aboutParagraphs = profile.aboutExtended
+  .trim()
+  .split(/\n\s*\n/)
+  .map((p) => p.replace(/\s+/g, " ").trim())
+  .filter(Boolean);
+
+const skillGroups = [
+  { key: "LANGUAGES", items: profile.skills.languages },
+  { key: "BACKEND", items: profile.skills.backend },
+  { key: "DATABASES", items: profile.skills.databases },
+  { key: "TOOLS", items: profile.skills.tools },
+  { key: "CONCEPTS", items: profile.skills.concepts },
+] as const;
+
+function stackLine(stack: string[]): string {
+  return stack.slice(0, 6).join(" / ");
+}
+
+function listingBlurb(project: (typeof projects)[number]): string {
+  const candidates = [
+    project.subtitle,
+    project.shortDescription,
+    project.engineeringFocus[0],
+  ].filter((s): s is string => Boolean(s?.trim()));
+  return candidates.reduce((a, b) => (a.length <= b.length ? a : b));
+}
+
+function statusLabel(status: string): string {
+  if (status.toLowerCase().includes("employed")) return "MODE: EMPLOYED";
+  if (status.toLowerCase().includes("freelance")) return "MODE: FREELANCE";
+  if (status.toLowerCase().includes("academic")) return "MODE: ACADEMIC";
+  const mode = status.split("/")[0].trim().toUpperCase().slice(0, 14);
+  return `MODE: ${mode}`;
+}
+
+function logWhen(dates: string): string {
+  const months: Record<string, string> = {
+    january: "01",
+    february: "02",
+    march: "03",
+    april: "04",
+    may: "05",
+    june: "06",
+    july: "07",
+    august: "08",
+    september: "09",
+    october: "10",
+    november: "11",
+    december: "12",
+  };
+  return dates
+    .replace(
+      /\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{4})\b/gi,
+      (_, month: string, year: string) =>
+        `${year}.${months[month.toLowerCase()]}`,
+    )
+    .replace(/\bPresent\b/gi, "NOW")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toUpperCase();
+}
+
+function otherYear(dates: string): string {
+  const m = dates.match(/\d{4}/g);
+  if (!m) return dates;
+  return m.length > 1 && m[0] !== m[m.length - 1]
+    ? `${m[0]}–${m[m.length - 1]}`
+    : m[0];
+}
+
+/** Cap bullets for readability while keeping substantially more detail than `/`. */
+function bulletsFor(item: (typeof experience)[number]): string[] {
+  const max = item.featured ? 4 : 3;
+  return item.bullets.slice(0, max);
+}
+---
+
+<BaseLayout title={pageTitle} description={description} shell="inet">
+  <PortfolioBrowser
+    address="http://rafaelrojasvi.github.io/full-home.html"
+    windowTitle="rafaelrojasvi.github.io/full-home - Internet Explorer"
+    objectsLabel={`${projects.length + experience.length} objects`}
+    nodeLabel="node 0027"
+    buildLabel="2026.08"
+    lastUpdated="09 Aug 2026"
+  >
+    <div class="inet-full">
+      <!-- A. IDENTITY -->
+      <header class="inet-id">
+        <p class="inet-path">C:\USERS\RAFA\WWW\FULL_HOME.HTM</p>
+        <div class="inet-id__row">
+          <h1 class="inet-name">
+            <span class="inet-name__a">{firstName}</span>
+            <span class="inet-name__b">{lastName}</span>
+          </h1>
+        </div>
+        <p class="inet-role">[ {roleToken} ]</p>
+        <p class="inet-pronouns">{profile.pronouns} · {profile.location}</p>
+        <div class="inet-check" aria-hidden="true"></div>
+      </header>
+
+      <!-- B. PROFILE -->
+      <section class="inet-section fh-mod" aria-labelledby="fh-about">
+        <header class="fh-mod__bar fh-mod__bar--doc">
+          <h2 id="fh-about">ABOUT_RAFA.TXT</h2>
+          <span class="fh-mod__meta">profile / intro</span>
+        </header>
+        <div class="fh-mod__body fh-prose">
+          {aboutParagraphs.map((para) => <p>{para}</p>)}
+        </div>
+      </section>
+
+      <!-- C. SKILLS -->
+      <section class="inet-section fh-mod" aria-labelledby="fh-skills">
+        <header class="fh-mod__bar fh-mod__bar--ini">
+          <h2 id="fh-skills">SYSTEM_CAPABILITIES.INI</h2>
+          <span class="fh-mod__meta">skills taxonomy</span>
+        </header>
+        <div class="fh-mod__body" style="padding: 8px;">
+          <div class="fh-ini">
+            <div class="fh-ini-grid">
+              {
+                skillGroups.map((group) => (
+                  <div class="fh-ini__section">
+                    <p class="fh-ini__head">[{group.key}]</p>
+                    {group.items.map((item) => (
+                      <p class="fh-ini__row">
+                        <span class="fh-ini__key">{item}</span>=
+                        <span class="fh-ini__val">YES</span>
+                      </p>
+                    ))}
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- D. PROJECTS -->
+      <section class="inet-section fh-mod" aria-labelledby="fh-work">
+        <header class="fh-mod__bar fh-mod__bar--dir">
+          <h2 id="fh-work">SELECTED_WORK / PROJECTS</h2>
+          <span class="fh-mod__meta">dir · {projects.length} entries</span>
+        </header>
+        <div class="fh-work">
+          {
+            projects.map((project, i) => (
+              <article class={`fh-proj fh-proj--${i % 4}`}>
+                <div class="fh-proj__head">
+                  <span>
+                    [{String(i + 1).padStart(2, "0")}]{" "}
+                    {project.title.toUpperCase()}
+                  </span>
+                  <span class="fh-proj__status" title={project.status}>
+                    {statusLabel(project.status)}
+                  </span>
+                </div>
+                <div class="fh-proj__body">
+                  {project.slug === "origenlab" && (
+                    <img
+                      class="inet-px"
+                      src="/design-lab/px-lab.svg"
+                      width="32"
+                      height="32"
+                      alt=""
+                      aria-hidden="true"
+                    />
+                  )}
+                  <div>
+                    <p class="fh-proj__stack">{stackLine(project.stack)}</p>
+                    <p class="fh-proj__blurb">{listingBlurb(project)}</p>
+                    <p>
+                      <a class="inet-link" href={`/projects/${project.slug}`}>
+                        view_project →
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </article>
+            ))
+          }
+          <p style="margin: 2px 4px 0; font-size: 11px;">
+            <a class="inet-link" href="/projects">all_projects.html →</a>
+          </p>
+        </div>
+      </section>
+
+      <!-- E. EXPERIENCE -->
+      <section class="inet-section fh-mod" aria-labelledby="fh-exp">
+        <header class="fh-mod__bar fh-mod__bar--log">
+          <h2 id="fh-exp">WORK_HISTORY.LOG</h2>
+          <span class="fh-mod__meta">employment record</span>
+        </header>
+        <div class="fh-log">
+          {
+            experience.map((item) => (
+              <article class="fh-log__entry">
+                <p class="fh-log__when">{logWhen(item.dates)}</p>
+                <p class="fh-log__org">
+                  {(item.org ?? item.title).toUpperCase()}
+                </p>
+                <p class="fh-log__title">{item.title}</p>
+                <p class="fh-log__loc">{item.location}</p>
+                <ul class="fh-log__bullets">
+                  {bulletsFor(item).map((b) => (
+                    <li>{b}</li>
+                  ))}
+                </ul>
+                {item.dates.toLowerCase().includes("present") && (
+                  <p class="fh-log__status">STATUS: CURRENT</p>
+                )}
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- F. OTHER ROLES -->
+      <section class="inet-section fh-mod" aria-labelledby="fh-other">
+        <header class="fh-mod__bar fh-mod__bar--ini">
+          <h2 id="fh-other">OTHER_PROCESS_HISTORY.TXT</h2>
+          <span class="fh-mod__meta">lower priority</span>
+        </header>
+        <div class="fh-mod__body fh-other">
+          {
+            otherRoles.map((role) => (
+              <p>
+                <span class="fh-other__year">{otherYear(role.dates)}</span>
+                {"  "}
+                {role.title} / {role.org}
+              </p>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- G. EDUCATION -->
+      <section class="inet-section fh-mod" aria-labelledby="fh-edu">
+        <header class="fh-mod__bar fh-mod__bar--dat">
+          <h2 id="fh-edu">EDUCATION.DAT</h2>
+          <span class="fh-mod__meta">academic record</span>
+        </header>
+        <div class="fh-mod__body">
+          {
+            education.map((ed) => (
+              <div class="fh-dat__block">
+                <p class="fh-dat__degree">{ed.degree}</p>
+                <p class="fh-dat__school">{ed.school}</p>
+                <p class="fh-dat__dates">{ed.dates}</p>
+                {ed.detail && <p class="fh-dat__detail">{ed.detail}</p>}
+                {ed.focus && (
+                  <p class="fh-dat__focus">FOCUS: {ed.focus.join(" · ")}</p>
+                )}
+                {ed.grades && (
+                  <ul class="fh-grades" aria-label="Selected grades">
+                    {ed.grades.map((g) => (
+                      <li>
+                        <span class="fh-grades__course">{g.course}</span>
+                        <span class="fh-grades__dots" aria-hidden="true" />
+                        <span class="fh-grades__score">{g.score}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- H. LANGUAGES / INTERESTS -->
+      <section class="inet-section fh-mod" aria-labelledby="fh-user">
+        <header class="fh-mod__bar fh-mod__bar--profile">
+          <h2 id="fh-user">USER_PROFILE.INI</h2>
+          <span class="fh-mod__meta">languages · interests</span>
+        </header>
+        <div class="fh-mod__body">
+          <div class="fh-userini">
+            <div>
+              <p class="fh-userini__head">[LANGUAGES]</p>
+              {
+                profile.humanLanguages.map((lang) => (
+                  <p>
+                    {lang.name} = {lang.level}
+                  </p>
+                ))
+              }
+            </div>
+            <div>
+              <p class="fh-userini__head">[INTERESTS]</p>
+              {profile.interests.map((interest) => <p>{interest}</p>)}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- I. CONTACT -->
+      <section class="inet-section fh-mod" aria-labelledby="fh-connect">
+        <header class="fh-mod__bar fh-mod__bar--connect">
+          <h2 id="fh-connect">CONNECT.EXE</h2>
+          <span class="fh-mod__meta">contact / links</span>
+        </header>
+        <div class="fh-mod__body fh-connect">
+          <p>
+            <a class="inet-link" href={`mailto:${profile.contact.email}`}
+              >email.exe</a
+            >
+            ·
+            <a class="inet-link" href={profile.contact.github}>github.exe</a>
+            ·
+            <a class="inet-link" href={profile.contact.linkedIn}>linkedin.url</a>
+            ·
+            <a class="inet-link" href="/experience">resume.txt</a>
+            ·
+            <a class="inet-link" href="/about">about.txt</a>
+            ·
+            <a class="inet-link" href="/">index.html</a>
+          </p>
+        </div>
+      </section>
+    </div>
+  </PortfolioBrowser>
+</BaseLayout>

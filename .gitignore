@@ -5,3 +5,6 @@ dist
 *.log
 .env
 .env.*
+
+# Local visual-review captures (not production assets)
+design-lab-shots/

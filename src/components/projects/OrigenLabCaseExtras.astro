@@ -1,0 +1,77 @@
+---
+/**
+ * OrigenLab case study: responsibility map inserted after "What runs today".
+ * Content follows the repo's architecture document: each component owns one
+ * thing and carries an explicit list of what it never does.
+ */
+const components = [
+  {
+    name: "apps/web",
+    tech: "Astro, static",
+    owns: "The public marketing site: six equipment families, manufacturer pages, application hubs, one quotation call to action.",
+    never: "Touch operator, CRM, or outbound data.",
+  },
+  {
+    name: "apps/dashboard",
+    tech: "React",
+    owns: "Presentation and operator interaction: eight CRM sections behind Google Workspace sign-in.",
+    never: "Hold truth, compute money, call the database, or hold a secret.",
+  },
+  {
+    name: "apps/api",
+    tech: "FastAPI",
+    owns: "The only business command boundary: authentication checks, validation, idempotency receipts, transactions, domain events.",
+    never: "Ingest mail, call Gmail, render PDFs, or run long jobs.",
+  },
+  {
+    name: "apps/dashboard-proxy",
+    tech: "Cloudflare Worker",
+    owns: "Same-origin access to the API: method and path allowlist, Access service token, origin token, response hardening.",
+    never: "Forward a redirect, a cookie, a non-allowlisted path, or any PUT, PATCH, or DELETE.",
+  },
+  {
+    name: "apps/email-pipeline, then apps/worker",
+    tech: "Python 3.12, uv",
+    owns: "Gmail and PST sync, the single send path, MIME parsing, PDF rendering, ChileCompra fetching, classification, reconciliation.",
+    never: "Write CRM tables directly; the one exception is a single privileged function for quote PDF evidence.",
+  },
+  {
+    name: "PostgreSQL",
+    tech: "Supabase, 7 schemas",
+    owns: "Every durable fact, the closed list of privileged send functions, and the constraints that make the invariants true.",
+    never: "Store bodies, attachments, or PDFs; hold a browser identity; authorise a human.",
+  },
+];
+---
+
+<section
+  class="case-study-section scroll-mt-24 border-t border-ink pt-5"
+  aria-labelledby="origenlab-map-heading"
+  data-reveal
+>
+  <h2 id="origenlab-map-heading" class="text-2xl font-medium tracking-tight text-ink sm:text-3xl">
+    Responsibility map
+  </h2>
+  <p class="mt-4 max-w-prose text-pretty text-base leading-[1.6] text-ink-muted">
+    Each component owns one thing and carries a list of what it must never do.
+    The lists are tested where they can be, and written down where they cannot.
+  </p>
+
+  <dl class="mt-8">
+    {
+      components.map((c) => (
+        <div class="grid gap-x-6 gap-y-3 border-t border-line py-5 sm:grid-cols-12">
+          <dt class="sm:col-span-4">
+            <span class="block font-mono text-sm text-ink">{c.name}</span>
+            <span class="mt-1 block font-mono text-[11px] text-ink-faint">{c.tech}</span>
+          </dt>
+          <dd class="text-sm leading-[1.6] text-ink-muted sm:col-span-5">{c.owns}</dd>
+          <dd class="text-sm leading-[1.6] text-ink-muted sm:col-span-3">
+            <span class="font-medium text-accent">Never</span> {c.never.charAt(0).toLowerCase() + c.never.slice(1)}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+  <div class="rule-soft"></div>
+</section>

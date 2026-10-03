@@ -1,0 +1,103 @@
+---
+interface Props {
+  href?: string;
+  type?: "button" | "submit";
+  pressed?: boolean;
+  variant?: "classic" | "editorial";
+  class?: string;
+}
+
+const {
+  href,
+  type = "button",
+  pressed = false,
+  variant = "classic",
+  class: className = "",
+} = Astro.props;
+
+const Tag = href ? "a" : "button";
+const isEditorial = variant === "editorial";
+---
+
+<Tag
+  {...(href
+    ? { href }
+    : { type })}
+  class:list={[
+    "dl-bevel-btn",
+    isEditorial && "dl-bevel-btn--editorial",
+    pressed && "dl-bevel-btn--pressed",
+    className,
+  ]}
+>
+  <slot />
+</Tag>
+
+<style>
+  .dl-bevel-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0.35rem 0.85rem;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    font-family: var(--dl-ui);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    color: var(--dl-black);
+    background: var(--dl-grey-face);
+    box-shadow:
+      inset 1px 1px 0 var(--dl-grey-hilite),
+      inset -1px -1px 0 var(--dl-grey-dkshadow),
+      inset 2px 2px 0 var(--dl-grey-face),
+      inset -2px -2px 0 var(--dl-grey-shadow);
+  }
+
+  .dl-bevel-btn:hover {
+    filter: brightness(1.05);
+  }
+
+  .dl-bevel-btn:active,
+  .dl-bevel-btn--pressed {
+    box-shadow:
+      inset 1px 1px 0 var(--dl-grey-dkshadow),
+      inset -1px -1px 0 var(--dl-grey-hilite),
+      inset 2px 2px 0 var(--dl-grey-shadow),
+      inset -2px -2px 0 var(--dl-grey-face);
+    padding: 0.4rem 0.8rem 0.3rem 0.9rem;
+  }
+
+  .dl-bevel-btn--editorial {
+    background: var(--dl-acid);
+    color: var(--dl-black);
+    font-family: var(--dl-mono);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 12px;
+    box-shadow:
+      inset 2px 2px 0 #9dff88,
+      inset -2px -2px 0 #1a8800,
+      3px 3px 0 var(--dl-magenta);
+  }
+
+  .dl-bevel-btn--editorial:active,
+  .dl-bevel-btn--editorial.dl-bevel-btn--pressed {
+    box-shadow:
+      inset 2px 2px 0 #1a8800,
+      inset -2px -2px 0 #9dff88,
+      1px 1px 0 var(--dl-magenta);
+    transform: translate(2px, 2px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dl-bevel-btn--editorial:active,
+    .dl-bevel-btn--editorial.dl-bevel-btn--pressed {
+      transform: none;
+    }
+  }
+</style>

@@ -1,305 +1,218 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import SectionHeading from "@/components/SectionHeading.astro";
-import ProjectCard from "@/components/ProjectCard.astro";
-import { profile } from "@/data/profile";
-import { projects } from "@/data/projects";
+import { profile, experience } from "@/data/profile";
+import OrgLogo from "@/components/OrgLogo.astro";
+import { getCaseStudies, getAllProjects } from "@/lib/projects";
 
-const featured = projects;
+const projects = getCaseStudies().slice(0, 4);
+const total = getAllProjects().length;
+
 const pageTitle = "Rafael Rojas";
 const description = profile.seo.home;
+
+const [firstName, ...rest] = profile.name.split(" ");
+const lastName = rest.join(" ");
+
+const current = experience.filter((e) => e.featured).slice(0, 5);
+
+function stackLine(stack: string[], n = 4): string {
+  return stack.slice(0, n).join(", ");
+}
 ---
 
 <BaseLayout title={pageTitle} description={description}>
-  <section
-    class="relative mx-auto max-w-6xl px-4 pb-20 pt-12 sm:px-6 sm:pb-24 sm:pt-16 lg:pt-20"
-  >
-    <div>
-        <p class="font-mono text-xs uppercase tracking-[0.22em] text-accent/90">
-          {profile.location} · open to remote / hybrid
-        </p>
-        <h1
-          class="mt-4 text-balance text-4xl font-semibold tracking-tight text-ink sm:text-5xl lg:text-[3.15rem] lg:leading-[1.08]"
-        >
-          {profile.name}
-        </h1>
-        <p class="mt-2 text-sm text-ink-muted">
-          {profile.pronouns} · {profile.role}
-        </p>
-        <p
-          class="mt-5 font-mono text-[13px] font-medium uppercase tracking-[0.14em] text-ink-muted sm:text-sm"
-        >
-          {profile.tagline}
-        </p>
-        <blockquote
-          class="mt-6 max-w-2xl border-l-2 border-accent/35 pl-5 text-pretty text-lg leading-[1.65] text-ink-muted"
-        >
-          <p class="italic">“{profile.headline}”</p>
-          <footer class="mt-3 font-mono text-xs not-italic text-ink-faint">
-            ― {profile.headlineAttribution},{" "}
-            <cite class="not-italic">{profile.headlineSource}</cite>
-          </footer>
-        </blockquote>
-
-        <div
-          class="mt-8 border-l-2 border-accent/40 pl-5"
-          aria-label="At a glance"
-        >
-          <p class="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-faint">
-            At a glance
-          </p>
-          <ul class="mt-3 space-y-2.5 text-sm leading-snug text-ink-muted">
-            <li class="flex gap-2">
-              <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent/70" />
-              <span>
-                {profile.homeEducation}{" "}
-                <mark
-                  class="rounded-md bg-accent/20 px-1.5 py-0.5 font-semibold text-accent not-italic"
-                  >{profile.homeEducationLocation}</mark
-                >.
-              </span>
-            </li>
-            {profile.atAGlance.map((line) => (
-              <li class="flex gap-2">
-                <span class="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent/70" />
-                <span>{line}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div class="mt-10 flex flex-wrap gap-3">
-          <a
-            href="/projects"
-            class="inline-flex items-center justify-center rounded-lg bg-accent px-5 py-2.5 font-mono text-sm font-semibold uppercase tracking-wider text-surface transition hover:bg-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-          >
-            Projects & case studies
-          </a>
-          <a
-            href="/experience"
-            class="inline-flex items-center justify-center rounded-lg border border-line bg-surface-overlay/50 px-5 py-2.5 font-mono text-sm font-medium uppercase tracking-wider text-ink transition hover:border-accent/35 hover:text-accent"
-          >
-            Experience
-          </a>
-          <a
-            href={`mailto:${profile.contact.email}`}
-            class="inline-flex items-center justify-center rounded-lg border border-transparent px-5 py-2.5 font-mono text-sm font-medium uppercase tracking-wider text-ink-muted underline-offset-4 transition hover:text-accent hover:underline"
-          >
-            Email
-          </a>
-        </div>
-    </div>
-  </section>
-
-  <section
-    class="mx-auto max-w-6xl border-t border-line/60 px-4 py-20 sm:px-6 sm:py-24"
-    aria-labelledby="systems-heading"
-  >
-    <SectionHeading
-      id="systems-heading"
-      eyebrow="Selected work"
-      title="Production backends & integrations"
-      description="Four builds with different constraints: employed data/automation, freelance payments + messaging, academic ledger API, and an NLP evaluation project. Each write-up calls out stack, ownership, and where reliability mattered."
-    />
-    <div class="mt-12 grid gap-7 md:grid-cols-2 md:gap-8">
-      {featured.map((p) => <ProjectCard project={p} featured />)}
-    </div>
-    <p class="mt-12 text-center sm:text-left">
-      <a
-        href="/projects"
-        class="font-mono text-sm font-medium uppercase tracking-wider text-accent transition hover:text-ink"
+  <!-- Masthead: wide grotesk, staggered second line, red block on the grid -->
+  <section class="page pt-8 sm:pt-12 lg:pt-14" aria-labelledby="masthead">
+    <div class="grid-12 items-end">
+      <h1
+        id="masthead"
+        class="display wdth-wide col-span-4 text-[clamp(3rem,11.5vw,9.75rem)] font-semibold sm:col-span-8 lg:col-span-9"
       >
-        All projects →
-      </a>
-    </p>
+        <span class="load-rise block" style="--d: 0ms">{firstName}</span>
+        <span class="load-rise block lg:ml-[11.11%]" style="--d: 120ms">{lastName}<span class="text-accent">.</span></span>
+      </h1>
+      <div
+        class="load-block col-span-2 col-start-3 mt-6 aspect-square w-20 justify-self-end bg-accent sm:col-span-2 sm:col-start-7 sm:mt-0 sm:w-full lg:col-span-3 lg:col-start-10"
+        style="--d: 350ms"
+        aria-hidden="true"
+      ></div>
+    </div>
+
+    <div class="rule load-rule mt-8 sm:mt-10" style="--d: 450ms"></div>
+
+    <div class="grid-12 pt-6 sm:pt-8">
+      <p class="load-rise col-span-4 font-mono text-xs leading-[1.9] text-ink-muted sm:col-span-8 lg:col-span-4" style="--d: 600ms">
+        CTO, OrigenLab and BENKER<br />
+        {profile.location}<br />
+        {profile.pronouns}<br />
+        Open to remote and hybrid roles
+      </p>
+
+      <div class="load-rise col-span-4 mt-8 sm:col-span-8 lg:col-span-7 lg:col-start-6 lg:mt-0" style="--d: 700ms">
+        <p class="text-pretty text-2xl font-normal leading-[1.2] tracking-tight text-ink sm:text-3xl lg:text-[2.5rem]">
+          Backend engineer in Valdivia, Chile. APIs, data pipelines, and
+          operator tools in Python and TypeScript, tested where money or
+          messages move.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a class="btn-solid" href="/projects">View projects</a>
+          <a class="btn" href={`mailto:${profile.contact.email}`}>Email me</a>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section
-    class="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-24"
-    aria-labelledby="build-heading"
-  >
-    <SectionHeading
-      id="build-heading"
-      eyebrow="How I work"
-      title="What I’m strongest at on a backend team"
-    />
-    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+  <!-- Pull quote -->
+  <section class="page mt-24 sm:mt-32" aria-label="Quotation">
+    <figure class="grid-12" data-reveal>
+      <blockquote class="col-span-4 border-l-2 border-accent pl-6 text-pretty text-2xl italic leading-[1.3] tracking-tight text-ink sm:col-span-8 sm:pl-8 sm:text-3xl lg:col-span-9 lg:text-[2.25rem]">
+        {profile.headline}
+      </blockquote>
+      <figcaption class="col-span-4 mt-5 pl-6 text-sm text-ink-muted sm:col-span-8 sm:pl-8 lg:col-span-3 lg:mt-0 lg:self-end lg:pl-0">
+        {profile.headlineAttribution}<br />
+        <cite class="not-italic">{profile.headlineSource}</cite>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- Selected work: editorial index -->
+  <section class="page mt-28 sm:mt-36" aria-labelledby="work-heading">
+    <div class="rule" data-reveal="rule"></div>
+    <div class="grid-12 pt-5" data-reveal>
+      <h2
+        id="work-heading"
+        class="col-span-4 text-3xl font-medium tracking-tight sm:col-span-8 sm:text-4xl lg:col-span-5"
+      >
+        Selected work
+      </h2>
+      <p class="col-span-4 mt-2 font-mono text-xs text-ink-faint sm:col-span-8 lg:col-span-7 lg:mt-3 lg:text-right">
+        {total} projects, {projects.length} featured
+      </p>
+    </div>
+
+    <ol class="mt-10 sm:mt-14">
       {
-        profile.pillars.map((pillar) => (
-          <div class="rounded-xl border border-line bg-surface-overlay/35 px-5 py-6 shadow-card transition hover:border-accent/20">
-            <h3 class="text-base font-semibold leading-snug text-ink">
-              {pillar.title}
-            </h3>
-            <p class="mt-3 text-sm leading-relaxed text-ink-muted">
-              {pillar.body}
-            </p>
-          </div>
+        projects.map((project) => (
+          <li class="border-t border-line" data-reveal>
+            <a
+              href={`/projects/${project.slug}`}
+              class="group row-link grid-12 py-6 no-underline transition-colors sm:py-8"
+            >
+              <span class="folio col-span-4 sm:col-span-1">{project.folio}</span>
+              <div class="col-span-4 sm:col-span-7 lg:col-span-6">
+                <h3 class="row-title text-2xl font-medium leading-tight tracking-tight text-ink group-hover:text-accent sm:text-3xl">
+                  {project.title}
+                </h3>
+                <p class="mt-2 max-w-prose text-pretty text-base leading-[1.5] text-ink-muted">
+                  {project.subtitle}
+                </p>
+              </div>
+              <p class="col-span-3 mt-3 font-mono text-xs leading-relaxed text-ink-muted sm:col-span-5 sm:col-start-2 lg:col-span-3 lg:col-start-auto lg:mt-0">
+                {stackLine(project.stack)}
+              </p>
+              <p class="col-span-1 mt-3 text-right font-mono text-xs tabular-nums text-ink-faint sm:col-span-3 lg:col-span-2 lg:mt-0">
+                {project.years}
+              </p>
+            </a>
+          </li>
         ))
       }
-    </div>
+    </ol>
+    <div class="rule-soft"></div>
   </section>
 
-  <section class="mx-auto max-w-6xl px-4 pb-24 sm:px-6 sm:pb-28">
-    <div
-      id="engineering-terminal"
-      class="overflow-hidden rounded-md shadow-[0_12px_40px_-12px_rgba(0,0,0,0.55)] ring-1 ring-[#3b4261]/80"
-    >
-      <div
-        class="flex items-center gap-3 bg-[#24283b] px-3 py-2 text-[#c0caf5]"
-        role="presentation"
+  <!-- Practice: staggered manifesto, alternating column starts -->
+  <section class="page mt-28 sm:mt-36" aria-labelledby="practice-heading">
+    <div class="rule" data-reveal="rule"></div>
+    <h2 id="practice-heading" class="pt-5 text-3xl font-medium tracking-tight sm:text-4xl" data-reveal>
+      What I optimise for
+    </h2>
+    <ol class="mt-10 sm:mt-14">
+      {
+        profile.pillars.map((pillar, i) => (
+          <li class="grid-12 border-t border-line py-7 sm:py-9" data-reveal>
+            <span class="folio col-span-4 sm:col-span-1">{String(i + 1).padStart(2, "0")}</span>
+            <div
+              class:list={[
+                "col-span-4 mt-3 sm:col-span-7 sm:mt-0 lg:col-span-6",
+                i % 2 === 1 && "lg:col-start-7",
+              ]}
+            >
+              <h3 class="text-2xl font-medium leading-tight tracking-tight text-ink sm:text-3xl">
+                {pillar.title}
+              </h3>
+              <p class="mt-3 max-w-prose text-pretty text-base leading-[1.6] text-ink-muted sm:text-lg">
+                {pillar.body}
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+    <div class="rule-soft"></div>
+  </section>
+
+  <!-- Now: four current engagements, 2 x 2 -->
+  <section class="page mt-28 sm:mt-36" aria-labelledby="now-heading">
+    <div class="rule" data-reveal="rule"></div>
+    <div class="grid-12 pt-5" data-reveal>
+      <h2 id="now-heading" class="col-span-4 text-3xl font-medium tracking-tight sm:col-span-8 sm:text-4xl lg:col-span-5">
+        Currently
+      </h2>
+      <p class="col-span-4 mt-2 text-sm text-ink-muted sm:col-span-8 lg:col-span-7 lg:mt-3 lg:text-right">
+        <a class="link" href="/experience">Full experience and education</a>
+      </p>
+    </div>
+    <ul class="mt-10 grid gap-x-8 gap-y-10 sm:mt-14 sm:grid-cols-2 lg:grid-cols-6">
+      {
+        current.map((role, i) => (
+          <li
+            class:list={[
+              "border-t border-line pt-5",
+              i < 2 ? "lg:col-span-3" : "lg:col-span-2",
+            ]}
+            data-reveal
+            style={`--d: ${(i % 3) * 80}ms`}
+          >
+            <div class="flex items-start justify-between gap-4">
+              <p class="font-mono text-xs tabular-nums text-ink-faint">{role.dates}</p>
+              {role.logo && (
+                <OrgLogo logo={role.logo} name={role.orgShort ?? role.org ?? role.title} href={role.orgUrl} size={24} />
+              )}
+            </div>
+            <h3 class="mt-4 text-xl font-medium tracking-tight text-ink sm:text-2xl">{role.orgShort ?? role.org}</h3>
+            <p class="mt-1 text-base text-ink-muted">{role.title}</p>
+            <p class="mt-4 max-w-prose text-pretty text-[0.9375rem] leading-[1.55] text-ink-muted">
+              {role.bullets[0]}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- Contact: typographic block -->
+  <section class="page mt-28 sm:mt-36" aria-labelledby="contact-heading">
+    <div class="rule" data-reveal="rule"></div>
+    <div class="grid-12 pt-5" data-reveal>
+      <h2
+        id="contact-heading"
+        class="col-span-4 text-3xl font-medium tracking-tight sm:col-span-8 sm:text-4xl lg:col-span-4"
       >
-        <div class="flex gap-1.5" aria-hidden="true">
-          <span class="h-2.5 w-2.5 rounded-full bg-[#f7768e]" />
-          <span class="h-2.5 w-2.5 rounded-full bg-[#e0af68]" />
-          <span class="h-2.5 w-2.5 rounded-full bg-[#9ece6a]" />
-        </div>
-        <span class="min-w-0 flex-1 truncate text-center font-mono text-[11px] sm:text-xs">
-          <span class="text-[#9ece6a]">rafael@portfolio</span>
-          <span class="text-[#565f89]">:</span>
-          <span class="text-[#7aa2f7]"> ~/</span>
-          <span class="text-[#7dcfff]">rafaelrojasvi.github.io</span>
-          <span class="text-[#565f89]"> — </span>
-          <span class="text-[#bb9af7]">iex -S mix</span>
-        </span>
-        <span class="w-[52px] shrink-0 sm:w-14" aria-hidden="true" />
-      </div>
-
-      <div class="space-y-3 bg-[#1a1b26] px-4 py-4 text-[#c0caf5] sm:px-5 sm:py-5">
-        <div id="eng-terminal-output" class="text-sm leading-relaxed" aria-live="polite">
-          <pre
-            class="mb-0 mt-0 max-w-full overflow-x-auto whitespace-pre-wrap break-words font-mono"
-          ><code><span class="text-[#565f89]"># What I default to on backend work</span>
-<span class="text-[#e0af68]">engineering_default</span><span class="text-[#89ddff]"> = </span><span class="text-[#bb9af7]">%{`{`}</span>
-  <span class="text-[#bb9af7]">title:</span> <span class="text-[#9ece6a]">"Engineering default"</span><span class="text-[#89ddff]">,</span>
-  <span class="text-[#bb9af7]">note:</span>
-    <span class="text-[#9ece6a]">"{profile.personalNote}"</span>
-<span class="text-[#c0caf5]">{`}`}</span></code></pre>
-          <p class="mb-0 mt-3 font-mono">
-            <span class="text-[#7aa2f7]">iex(1)&gt;</span>
-            <span class="text-[#c0caf5]">&nbsp;</span>
-            <span class="text-[#e0af68]">Portfolio</span><span class="text-[#565f89]">.</span><span class="text-[#ff9e64]">EngineeringDefault</span><span class="text-[#565f89]">.</span><span class="text-[#7dcfff]">run</span><span class="text-[#c0caf5]">()</span>
-          </p>
-        </div>
-
-        <form id="eng-terminal-form" class="border-t border-[#3b4261] pt-3 font-mono text-sm">
-          <label class="flex items-center gap-2">
-            <span class="inline-flex items-center gap-0.5 whitespace-nowrap">
-              <span class="text-[#7aa2f7]">iex(2)&gt;</span>
-            </span>
-            <input
-              id="eng-terminal-input"
-              type="text"
-              autocomplete="off"
-              spellcheck="false"
-              class="ml-2 min-w-0 w-full border-0 bg-transparent text-[#c0caf5] outline-none placeholder:text-[#565f89]"
-              placeholder="Portfolio.EngineeringDefault.run()"
-            />
-          </label>
-        </form>
+        Hiring or collaborating?
+      </h2>
+      <div class="col-span-4 mt-6 sm:col-span-8 lg:col-span-8 lg:mt-0" data-reveal style="--d: 120ms">
+        <a
+          href={`mailto:${profile.contact.email}`}
+          class="break-all text-2xl font-medium leading-tight tracking-tight text-ink underline decoration-ink/30 decoration-2 underline-offset-8 transition-colors hover:text-accent hover:decoration-accent sm:text-4xl lg:text-5xl"
+        >
+          {profile.contact.email}
+        </a>
+        <ul class="mt-8 flex flex-wrap gap-x-8 gap-y-2 text-sm">
+          <li><a class="link" href={profile.contact.github} rel="noopener noreferrer">GitHub</a></li>
+          <li><a class="link" href={profile.contact.linkedIn} rel="noopener noreferrer">LinkedIn</a></li>
+        </ul>
       </div>
     </div>
   </section>
 </BaseLayout>
-
-<script>
-  const root = document.querySelector("#engineering-terminal");
-  if (root) {
-    const form = root.querySelector("#eng-terminal-form");
-    const input = root.querySelector("#eng-terminal-input");
-    const output = root.querySelector("#eng-terminal-output");
-
-    let hasRun = false;
-    const expectedCmd = "Portfolio.EngineeringDefault.run()";
-
-    function normalizeIexCommand(s) {
-      return s.replace(/\s+/g, "");
-    }
-
-    function escapeHtml(s) {
-      return s.replace(/[&<>"']/g, (ch) => {
-        const map = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
-        return map[ch] ?? ch;
-      });
-    }
-
-    function formatTypedCommandHtml(typed) {
-      if (normalizeIexCommand(typed) === normalizeIexCommand(expectedCmd)) {
-        return (
-          '<span class="text-[#e0af68]">Portfolio</span><span class="text-[#565f89]">.</span>' +
-          '<span class="text-[#ff9e64]">EngineeringDefault</span><span class="text-[#565f89]">.</span>' +
-          '<span class="text-[#7dcfff]">run</span><span class="text-[#c0caf5]">()</span>'
-        );
-      }
-      return escapeHtml(typed);
-    }
-
-    if (form instanceof HTMLFormElement && input instanceof HTMLInputElement && output) {
-      form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const value = input.value.trim();
-        if (!value || hasRun) return;
-
-        const userLine = document.createElement("p");
-        userLine.className = "mt-1 font-mono";
-        userLine.innerHTML =
-          '<span class="text-[#7aa2f7]">iex(2)&gt;</span><span class="text-[#c0caf5]">&nbsp;' +
-          formatTypedCommandHtml(value) +
-          "</span>";
-        output.append(userLine);
-
-        const isCorrect =
-          normalizeIexCommand(value) === normalizeIexCommand(expectedCmd);
-
-        if (!isCorrect) {
-          const err = document.createElement("p");
-          err.className = "mt-1 text-[#f7768e]";
-          err.textContent =
-            "** (UndefinedFunctionError) undefined function: " +
-            value +
-            " is undefined or private";
-          output.append(err);
-          input.value = "";
-          return;
-        }
-
-        hasRun = true;
-        input.disabled = true;
-        input.classList.add("opacity-60", "cursor-not-allowed");
-        input.placeholder = "already executed";
-
-        const loading1 = document.createElement("p");
-        loading1.className = "text-[#565f89]";
-        loading1.textContent = "Compiling 1 file (.ex)";
-
-        const loading2 = document.createElement("p");
-        loading2.className = "text-[#565f89]";
-        loading2.textContent = "Generated portfolio app";
-
-        const loading3 = document.createElement("p");
-        loading3.className = "text-[#565f89]";
-        loading3.textContent = "Running ExUnit with seed 0...";
-
-        const done = document.createElement("p");
-        done.className = "text-[#9ece6a]";
-        done.textContent = "test passed - {:ok, :good_run}";
-
-        window.setTimeout(() => output.append(loading1), 160);
-        window.setTimeout(() => output.append(loading2), 380);
-        window.setTimeout(() => output.append(loading3), 620);
-        window.setTimeout(() => output.append(done), 920);
-        input.value = "";
-      });
-
-      input.addEventListener("keydown", (e) => {
-        if (e.key !== "Tab" || e.shiftKey) return;
-        e.preventDefault();
-        if (hasRun || input.disabled) return;
-
-        const cur = input.value;
-        if (expectedCmd.startsWith(cur) && cur.length < expectedCmd.length) {
-          input.value = expectedCmd;
-        }
-      });
-    }
-  }
-</script>

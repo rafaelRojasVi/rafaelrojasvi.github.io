@@ -1,23 +1,191 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
-import SectionHeading from "@/components/SectionHeading.astro";
-import ProjectCard from "@/components/ProjectCard.astro";
-import { projects } from "@/data/projects";
+import TechPill from "@/components/TechPill.astro";
 import { profile } from "@/data/profile";
+import {
+  getAllProjects,
+  githubSyncedAt,
+  languageTotals,
+  formatDate,
+} from "@/lib/projects";
 
 const title = "Projects";
 const description = profile.seo.projects;
+
+const all = getAllProjects();
+const caseStudies = all.filter((p) => p.kind === "case-study");
+const repoCount = all.filter((p) => p.github).length;
+const privateCount = all.filter((p) => p.visibility === "private").length;
+const totalCommits = all.reduce((n, p) => n + (p.github?.commits ?? 0), 0);
+const languages = languageTotals().slice(0, 6);
 ---
 
 <BaseLayout title={title} description={description}>
-  <div class="mx-auto max-w-6xl px-4 pb-24 pt-12 sm:px-6 sm:pt-16">
-    <SectionHeading
-      eyebrow="Projects"
-      title="Work samples & write-ups"
-      description="Skim the cards for stack and status; open a case study for architecture, data flow, integrations, and what I’d test or harden next. OrigenLab details are sanitized—no client data."
-    />
-    <div class="mt-12 grid gap-7 md:grid-cols-2 md:gap-8">
-      {projects.map((p) => <ProjectCard project={p} />)}
+  <section class="page pt-10 sm:pt-14 lg:pt-16" aria-labelledby="projects-heading">
+    <div class="grid-12 items-end">
+      <h1
+        id="projects-heading"
+        class="display col-span-4 text-[clamp(3rem,9vw,7rem)] sm:col-span-8 lg:col-span-8"
+      >
+        Projects
+      </h1>
+      <p class="col-span-4 mt-4 max-w-prose text-pretty text-base leading-[1.55] text-ink-muted sm:col-span-8 lg:col-span-4 lg:mt-0 lg:pb-2">
+        Every repository I own, with the larger ones written up as case
+        studies. Private work is described without links.
+      </p>
     </div>
-  </div>
+    <div class="rule mt-8 sm:mt-12"></div>
+
+    <dl class="grid-12 gap-y-6 pt-6">
+      <div class="col-span-2 lg:col-span-2">
+        <dt class="meta">Repositories</dt>
+        <dd class="mt-1 font-mono text-2xl tabular-nums text-ink">{repoCount}</dd>
+      </div>
+      <div class="col-span-2 lg:col-span-2">
+        <dt class="meta">Private</dt>
+        <dd class="mt-1 font-mono text-2xl tabular-nums text-ink">{privateCount}</dd>
+      </div>
+      <div class="col-span-2 lg:col-span-2">
+        <dt class="meta">Commits</dt>
+        <dd class="mt-1 font-mono text-2xl tabular-nums text-ink">{totalCommits.toLocaleString("en-GB")}</dd>
+      </div>
+      <div class="col-span-4 sm:col-span-8 lg:col-span-6">
+        <dt class="meta">Main languages</dt>
+        <dd class="mt-1 text-sm leading-[1.7] text-ink">
+          {languages.map((l) => l.name).join(", ")}
+          <span class="block font-mono text-[11px] text-ink-faint">
+            GitHub metadata synced {formatDate(githubSyncedAt)}
+          </span>
+        </dd>
+      </div>
+    </dl>
+  </section>
+
+  <!-- Case studies: long editorial rows -->
+  <section class="page mt-24 sm:mt-32" aria-labelledby="cases-heading">
+    <div class="rule" data-reveal="rule"></div>
+    <div class="grid-12 pt-5" data-reveal>
+      <h2
+        id="cases-heading"
+        class="col-span-4 text-3xl font-medium tracking-tight sm:col-span-8 sm:text-4xl lg:col-span-5"
+      >
+        Case studies
+      </h2>
+      <p class="col-span-4 mt-2 font-mono text-xs text-ink-faint sm:col-span-8 lg:col-span-7 lg:mt-3 lg:text-right">
+        {caseStudies.length} written up
+      </p>
+    </div>
+    <ol class="mt-6">
+      {
+        caseStudies.map((project) => (
+          <li class="border-t border-line" data-reveal>
+            <article class="grid-12 py-10 sm:py-14">
+              <div class="col-span-4 flex items-baseline justify-between sm:col-span-8 lg:col-span-2 lg:block">
+                <span class="folio">{project.folio}</span>
+                <p class="font-mono text-xs tabular-nums text-ink-faint lg:mt-2">{project.years}</p>
+                <p class="hidden font-mono text-xs text-ink-faint lg:mt-1 lg:block">{project.status}</p>
+              </div>
+
+              <div class="col-span-4 mt-4 sm:col-span-8 lg:col-span-7 lg:mt-0">
+                <h3 class="text-3xl font-medium leading-[1.05] tracking-tight text-ink sm:text-4xl">
+                  <a href={`/projects/${project.slug}`} class="transition-colors hover:text-accent">
+                    {project.title}
+                  </a>
+                </h3>
+                <p class="mt-4 max-w-prose text-pretty text-lg leading-[1.45] text-ink">
+                  {project.subtitle}
+                </p>
+                <p class="mt-4 max-w-prose text-pretty text-base leading-[1.6] text-ink-muted">
+                  {project.shortDescription}
+                </p>
+                <div class="mt-6 flex flex-wrap gap-1.5">
+                  {project.stack.slice(0, 8).map((s) => (
+                    <TechPill label={s} />
+                  ))}
+                </div>
+              </div>
+
+              <div class="col-span-4 mt-6 flex flex-row flex-wrap gap-x-6 gap-y-2 text-sm sm:col-span-8 lg:col-span-3 lg:mt-0 lg:flex-col lg:items-end lg:gap-y-3">
+                <a class="link" href={`/projects/${project.slug}`}>Read case study</a>
+                {project.live && (
+                  <a class="link" href={project.live} rel="noopener noreferrer">Live site</a>
+                )}
+                {project.repoUrl && (
+                  <a class="link" href={project.repoUrl} rel="noopener noreferrer">Source on GitHub</a>
+                )}
+                {project.visibility === "private" && (
+                  <span class="font-mono text-xs text-ink-faint">Private repository</span>
+                )}
+              </div>
+            </article>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <!-- All repositories: compact index table -->
+  <section class="page mt-24 sm:mt-32" aria-labelledby="repos-heading">
+    <div class="rule" data-reveal="rule"></div>
+    <div class="grid-12 pt-5" data-reveal>
+      <h2
+        id="repos-heading"
+        class="col-span-4 text-3xl font-medium tracking-tight sm:col-span-8 sm:text-4xl lg:col-span-5"
+      >
+        All repositories
+      </h2>
+      <p class="col-span-4 mt-2 text-sm text-ink-muted sm:col-span-8 lg:col-span-7 lg:mt-3 lg:text-right">
+        <a class="link" href={profile.contact.github} rel="noopener noreferrer">Public profile on GitHub</a>
+      </p>
+    </div>
+
+    <div class="mt-8 overflow-x-auto">
+      <table class="w-full min-w-[720px] border-collapse text-left">
+        <thead>
+          <tr class="border-t border-ink">
+            <th scope="col" class="meta py-3 pr-4 font-normal">No.</th>
+            <th scope="col" class="meta py-3 pr-4 font-normal">Project</th>
+            <th scope="col" class="meta py-3 pr-4 font-normal">Language</th>
+            <th scope="col" class="meta py-3 pr-4 text-right font-normal">Commits</th>
+            <th scope="col" class="meta py-3 pr-4 font-normal">Last push</th>
+            <th scope="col" class="meta py-3 font-normal">Access</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            all.map((p) => (
+              <tr class="border-t border-line align-top" data-reveal>
+                <td class="folio py-4 pr-4">{p.folio}</td>
+                <td class="py-4 pr-4">
+                  <a href={`/projects/${p.slug}`} class="font-medium text-ink transition-colors hover:text-accent">
+                    {p.title}
+                  </a>
+                  {p.github && (
+                    <span class="block font-mono text-[11px] text-ink-faint">{p.github.name}</span>
+                  )}
+                </td>
+                <td class="py-4 pr-4 text-sm text-ink-muted">
+                  {p.github?.primaryLanguage ?? p.stack[0]}
+                </td>
+                <td class="py-4 pr-4 text-right font-mono text-sm tabular-nums text-ink">
+                  {p.github ? p.github.commits : "n/a"}
+                </td>
+                <td class="py-4 pr-4 font-mono text-sm tabular-nums text-ink-muted">
+                  {p.github ? formatDate(p.github.pushedAt) : p.years}
+                </td>
+                <td class="py-4 text-sm">
+                  {p.repoUrl ? (
+                    <a class="link" href={p.repoUrl} rel="noopener noreferrer">Public</a>
+                  ) : (
+                    <span class="text-ink-faint">Private</span>
+                  )}
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+      <div class="rule-soft"></div>
+    </div>
+  </section>
 </BaseLayout>

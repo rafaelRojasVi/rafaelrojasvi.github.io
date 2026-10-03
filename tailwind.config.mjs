@@ -1,49 +1,48 @@
 /** @type {import('tailwindcss').Config} */
+
+/** Token helper: CSS variable holding "r g b" channels so Tailwind opacity modifiers still work. */
+const token = (name) => `rgb(var(${name}) / <alpha-value>)`;
+
 export default {
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     extend: {
       colors: {
         surface: {
-          DEFAULT: "#0c1018",
-          raised: "#111827",
-          overlay: "#151c2c",
+          DEFAULT: token("--c-surface"),
+          raised: token("--c-surface-raised"),
+          overlay: token("--c-surface-overlay"),
         },
         ink: {
-          DEFAULT: "#e8edf5",
-          muted: "#94a3b8",
-          faint: "#64748b",
+          DEFAULT: token("--c-ink"),
+          muted: token("--c-ink-muted"),
+          faint: token("--c-ink-faint"),
         },
         accent: {
-          DEFAULT: "#818cf8",
-          dim: "#6366f1",
-          glow: "rgba(129, 140, 248, 0.35)",
+          DEFAULT: token("--c-accent"),
+          dim: token("--c-accent-dim"),
+          glow: "rgb(var(--c-accent) / 0.2)",
         },
-        line: "rgba(148, 163, 184, 0.12)",
+        line: "rgb(var(--c-ink) / 0.16)",
       },
       fontFamily: {
-        sans: [
-          '"DM Sans"',
-          "ui-sans-serif",
-          "system-ui",
-          "sans-serif",
-        ],
-        mono: [
-          '"JetBrains Mono"',
-          "ui-monospace",
-          "monospace",
-        ],
+        sans: ['"Archivo"', "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ['"JetBrains Mono"', "ui-monospace", "monospace"],
+      },
+      maxWidth: {
+        page: "1320px",
+        prose: "68ch",
       },
       boxShadow: {
-        card: "0 0 0 1px rgba(148, 163, 184, 0.08), 0 24px 48px -24px rgba(0, 0, 0, 0.65)",
-        glow: "0 0 40px -12px var(--tw-shadow-color)",
+        card: "none",
+        glow: "none",
+      },
+      letterSpacing: {
+        display: "-0.035em",
+        meta: "0.08em",
       },
       backgroundImage: {
-        "grid-faint":
-          "linear-gradient(to right, rgba(148,163,184,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(148,163,184,0.06) 1px, transparent 1px)",
-      },
-      animation: {
-        "pulse-slow": "pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        "grid-faint": "none",
       },
     },
   },

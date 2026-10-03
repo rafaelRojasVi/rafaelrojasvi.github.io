@@ -1,41 +1,33 @@
 ---
 interface Props {
   id?: string;
+  /** Kept for compatibility; rendered as a small mono label. Use sparingly. */
   eyebrow?: string;
   title: string;
   description?: string;
-  align?: "left" | "center";
+  /** Visual size: `section` for page sections, `sub` for in-article headings. */
+  size?: "section" | "sub";
 }
 
-const { id, eyebrow, title, description, align = "left" } = Astro.props;
+const { id, eyebrow, title, description, size = "section" } = Astro.props;
 ---
 
-<div
-  class:list={[
-    "max-w-3xl",
-    align === "center" && "mx-auto text-center",
-  ]}
->
-  {
-    eyebrow && (
-      <p class="font-mono text-xs uppercase tracking-[0.22em] text-accent/90">
-        {eyebrow}
-      </p>
-    )
-  }
+<div class="max-w-3xl">
+  {eyebrow && <p class="meta mb-3">{eyebrow}</p>}
   <h2
     id={id}
     class:list={[
-      "mt-3 text-2xl font-semibold tracking-tight text-ink hyphens-none sm:text-3xl",
-      align === "center" && "mx-auto",
+      "font-medium tracking-tight text-ink",
+      size === "section"
+        ? "text-3xl leading-[1.05] sm:text-4xl"
+        : "text-xl leading-tight sm:text-2xl",
     ]}
-    style="text-wrap: pretty;"
   >
     {title}
   </h2>
   {
     description && (
-      <p class="mt-4 max-w-2xl text-pretty text-base leading-relaxed text-ink-muted sm:leading-[1.65]">
+      <p class="mt-4 max-w-prose text-pretty text-base leading-[1.6] text-ink-muted">
         {description}
       </p>
     )

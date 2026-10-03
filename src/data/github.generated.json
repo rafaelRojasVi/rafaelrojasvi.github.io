@@ -1,0 +1,247 @@
+{
+  "syncedAt": "2026-10-02",
+  "owner": "rafaelRojasVi",
+  "repos": {
+    "heavy-ops-platform": {
+      "name": "heavy-ops-platform",
+      "url": "https://github.com/rafaelRojasVi/heavy-ops-platform",
+      "private": true,
+      "archived": false,
+      "description": null,
+      "homepage": null,
+      "createdAt": "2026-08-18",
+      "pushedAt": "2026-10-01",
+      "stars": 0,
+      "primaryLanguage": "Python",
+      "languageShare": {
+        "Python": 68.7,
+        "TypeScript": 28.1,
+        "CSS": 1.9,
+        "Makefile": 0.6,
+        "Dockerfile": 0.3,
+        "JavaScript": 0.2,
+        "Shell": 0.1,
+        "HTML": 0.1,
+        "Mako": 0
+      },
+      "topics": [],
+      "commits": 52
+    },
+    "origenlab": {
+      "name": "origenlab",
+      "url": "https://github.com/rafaelRojasVi/origenlab",
+      "private": false,
+      "archived": false,
+      "description": "OrigenLab monorepo: Astro website, Python email intelligence pipeline, read-only FastAPI operator API, and React dashboard.",
+      "homepage": "https://www.origenlab.cl",
+      "createdAt": "2026-03-21",
+      "pushedAt": "2026-10-01",
+      "stars": 2,
+      "primaryLanguage": "Python",
+      "languageShare": {
+        "Python": 86.1,
+        "TypeScript": 5.5,
+        "PLpgSQL": 3.1,
+        "Shell": 1.9,
+        "Astro": 1.2,
+        "HTML": 1.1,
+        "JavaScript": 0.9,
+        "CSS": 0.1,
+        "Makefile": 0,
+        "Dockerfile": 0,
+        "Mako": 0
+      },
+      "topics": [
+        "astro",
+        "commercial-operations",
+        "email-intelligence",
+        "fastapi",
+        "operator-dashboard",
+        "python",
+        "react",
+        "sqlite",
+        "typescript",
+        "postgresql",
+        "wsl"
+      ],
+      "commits": 1542
+    },
+    "campo-digital-platform": {
+      "name": "campo-digital-platform",
+      "url": "https://github.com/rafaelRojasVi/campo-digital-platform",
+      "private": false,
+      "archived": false,
+      "description": "Monorepo for Campo Digital's LiDAR measurement, forestry GIS management, Transelect applications, and shared geospatial platform services.",
+      "homepage": null,
+      "createdAt": "2026-08-18",
+      "pushedAt": "2026-09-30",
+      "stars": 0,
+      "primaryLanguage": "Python",
+      "languageShare": {
+        "Python": 63.1,
+        "TypeScript": 31.4,
+        "CSS": 4.8,
+        "Jupyter Notebook": 0.2,
+        "Dockerfile": 0.2,
+        "Shell": 0.2,
+        "Makefile": 0.1,
+        "HTML": 0.1,
+        "Mako": 0
+      },
+      "topics": [
+        "forestry",
+        "geospatial",
+        "gis",
+        "lidar",
+        "postgis",
+        "qgis"
+      ],
+      "commits": 171
+    },
+    "newdev-company-knowledge": {
+      "name": "newdev-company-knowledge",
+      "url": "https://github.com/rafaelRojasVi/newdev-company-knowledge",
+      "private": true,
+      "archived": false,
+      "description": "NewDev company knowledge foundation (reference implementation)",
+      "homepage": null,
+      "createdAt": "2026-09-28",
+      "pushedAt": "2026-09-28",
+      "stars": 0,
+      "primaryLanguage": "Python",
+      "languageShare": {
+        "Python": 99.6,
+        "Makefile": 0.4
+      },
+      "topics": [],
+      "commits": 4
+    },
+    "platt-commercial-platform": {
+      "name": "platt-commercial-platform",
+      "url": "https://github.com/rafaelRojasVi/platt-commercial-platform",
+      "private": true,
+      "archived": false,
+      "description": "Private pre-production platform for commercial operations, quotations, studies and process tracking.",
+      "homepage": "https://app.notion.com/p/3c61623e806181a4bd53c1e874c25e17?pvs=204",
+      "createdAt": "2026-08-23",
+      "pushedAt": "2026-09-28",
+      "stars": 0,
+      "primaryLanguage": "TypeScript",
+      "languageShare": {
+        "TypeScript": 50.6,
+        "Python": 38.3,
+        "Shell": 5.7,
+        "PLpgSQL": 4.4,
+        "Makefile": 0.8,
+        "CSS": 0.1,
+        "JavaScript": 0
+      },
+      "topics": [
+        "commercial-operations",
+        "data-science",
+        "dataquality",
+        "nextjs",
+        "process-tracking",
+        "python",
+        "quotation-management",
+        "typescript"
+      ],
+      "commits": 64
+    },
+    "platt-commercial-ops": {
+      "name": "platt-commercial-ops",
+      "url": "https://github.com/rafaelRojasVi/platt-commercial-ops",
+      "private": true,
+      "archived": false,
+      "description": null,
+      "homepage": null,
+      "createdAt": "2026-09-14",
+      "pushedAt": "2026-09-21",
+      "stars": 0,
+      "primaryLanguage": "Python",
+      "languageShare": {
+        "Python": 98.9,
+        "Shell": 1.1
+      },
+      "topics": [],
+      "commits": 3
+    },
+    "kraken": {
+      "name": "kraken",
+      "url": "https://github.com/rafaelRojasVi/kraken",
+      "private": true,
+      "archived": false,
+      "description": null,
+      "homepage": null,
+      "createdAt": "2026-07-04",
+      "pushedAt": "2026-07-13",
+      "stars": 0,
+      "primaryLanguage": "Python",
+      "languageShare": {
+        "Python": 86.7,
+        "Go": 13.3
+      },
+      "topics": [],
+      "commits": 30
+    },
+    "ledger-bank-api": {
+      "name": "ledger-bank-api",
+      "url": "https://github.com/rafaelRojasVi/ledger-bank-api",
+      "private": false,
+      "archived": false,
+      "description": null,
+      "homepage": null,
+      "createdAt": "2025-07-12",
+      "pushedAt": "2026-03-11",
+      "stars": 1,
+      "primaryLanguage": "Elixir",
+      "languageShare": {
+        "Elixir": 97.7,
+        "Shell": 2.2,
+        "Dockerfile": 0.1
+      },
+      "topics": [],
+      "commits": 70
+    },
+    "tattoo-booking-bot": {
+      "name": "tattoo-booking-bot",
+      "url": "https://github.com/rafaelRojasVi/tattoo-booking-bot",
+      "private": false,
+      "archived": false,
+      "description": null,
+      "homepage": null,
+      "createdAt": "2026-01-14",
+      "pushedAt": "2026-02-25",
+      "stars": 0,
+      "primaryLanguage": "Python",
+      "languageShare": {
+        "Python": 98.6,
+        "PowerShell": 0.6,
+        "Shell": 0.5,
+        "Makefile": 0.2,
+        "Dockerfile": 0.1,
+        "Mako": 0
+      },
+      "topics": [],
+      "commits": 43
+    },
+    "go-ws-autobahn": {
+      "name": "go-ws-autobahn",
+      "url": "https://github.com/rafaelRojasVi/go-ws-autobahn",
+      "private": false,
+      "archived": false,
+      "description": null,
+      "homepage": null,
+      "createdAt": "2025-09-24",
+      "pushedAt": "2025-09-24",
+      "stars": 0,
+      "primaryLanguage": "Go",
+      "languageShare": {
+        "Go": 89,
+        "Dockerfile": 11
+      },
+      "topics": [],
+      "commits": 1
+    }
+  }
+}
