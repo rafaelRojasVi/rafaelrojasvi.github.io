@@ -1,0 +1,28 @@
+<!doctype html>
+<!--
+  Source for public/og.png (1200x630 social preview card).
+  To regenerate: serve the repo root over HTTP, open this file at a 1200x630
+  viewport, and screenshot it. Fonts resolve to ../public/fonts/ so the card
+  always uses the site's own Archivo + JetBrains Mono.
+-->
+<html lang="en"><head><meta charset="utf-8">
+<style>
+@font-face { font-family:"Archivo"; font-weight:100 900; font-stretch:62% 125%; src:url("../public/fonts/archivo-latin.woff2") format("woff2"); }
+@font-face { font-family:"JetBrains Mono"; font-weight:400 700; src:url("../public/fonts/jetbrains-mono-latin.woff2") format("woff2"); }
+html,body { margin:0; padding:0; }
+body { width:1200px; height:630px; background:#f4f4f2; color:#111; font-family:"Archivo",sans-serif; -webkit-font-smoothing:antialiased; position:relative; overflow:hidden; }
+.card { position:absolute; inset:0; padding:72px 80px 64px; box-sizing:border-box; display:flex; flex-direction:column; }
+.top { display:flex; justify-content:space-between; align-items:center; font-family:"JetBrains Mono",monospace; font-size:20px; letter-spacing:.08em; text-transform:uppercase; color:#4a4a48; }
+.top .rule { flex:1; height:1px; background:rgba(17,17,17,.16); margin:0 24px; }
+.name { margin-top:auto; font-weight:700; font-stretch:112%; font-size:148px; line-height:.92; letter-spacing:-.035em; color:#111; }
+.name span { display:block; }
+.role { margin-top:28px; font-size:40px; font-weight:400; letter-spacing:-.01em; color:#4a4a48; display:flex; align-items:center; gap:22px; }
+.role .sq { width:26px; height:26px; background:#cf2a21; flex:none; }
+.bottom { margin-top:auto; padding-top:26px; border-top:1px solid rgba(17,17,17,.16); display:flex; justify-content:space-between; font-family:"JetBrains Mono",monospace; font-size:22px; color:#7a7a76; letter-spacing:.02em; }
+</style></head>
+<body><div class="card">
+  <div class="top"><span>Portfolio</span><span class="rule"></span><span>2026</span></div>
+  <div class="name"><span>Rafael</span><span>Rojas</span></div>
+  <div class="role"><span class="sq"></span><span>Junior Backend Software Engineer</span></div>
+  <div class="bottom"><span>Valdivia, Chile</span><span>rafaelrojasvi.github.io</span></div>
+</div></body></html>
