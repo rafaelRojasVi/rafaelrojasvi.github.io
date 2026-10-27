@@ -1,4 +1,4 @@
-// Prints the built /cv page to public/cv/Rafael_Rojas_CV_EN.pdf.
+// Prints the built /cv and /cv/es pages to public/cv/Rafael_Rojas_CV_{EN,ES}.pdf.
 // Run `npm run cv:pdf` after changing src/data/cv.ts, then commit the PDF.
 // Uses the Chromium that Playwright already installed; set CHROME to override.
 import { createServer } from "node:http";
@@ -10,7 +10,10 @@ import { extname, join, resolve } from "node:path";
 import { homedir } from "node:os";
 
 const root = resolve("dist");
-const out = resolve("public/cv/Rafael_Rojas_CV_EN.pdf");
+const targets = [
+  { page: "/cv/", out: resolve("public/cv/Rafael_Rojas_CV_EN.pdf") },
+  { page: "/cv/es/", out: resolve("public/cv/Rafael_Rojas_CV_ES.pdf") },
+];
 
 const types = {
   ".html": "text/html; charset=utf-8",
@@ -34,8 +37,10 @@ async function findChrome() {
   throw new Error("No Chromium found. Run `npx playwright install chromium` or set CHROME.");
 }
 
-if (!existsSync(join(root, "cv/index.html"))) {
-  throw new Error("dist/cv/index.html is missing. Run `npm run build` first.");
+for (const { page } of targets) {
+  if (!existsSync(join(root, page, "index.html"))) {
+    throw new Error(`dist${page}index.html is missing. Run \`npm run build\` first.`);
+  }
 }
 
 const server = createServer(async (req, res) => {
@@ -55,16 +60,18 @@ const { port } = server.address();
 try {
   await mkdir(resolve("public/cv"), { recursive: true });
   const chrome = await findChrome();
-  // Async on purpose: a sync call would block the server Chrome is reading from.
-  await promisify(execFile)(chrome, [
-    "--headless=new",
-    "--disable-gpu",
-    "--no-sandbox",
-    "--no-pdf-header-footer",
-    `--print-to-pdf=${out}`,
-    `http://127.0.0.1:${port}/cv/`,
-  ]);
-  console.log(`Wrote ${out}`);
+  for (const { page, out } of targets) {
+    // Async on purpose: a sync call would block the server Chrome is reading from.
+    await promisify(execFile)(chrome, [
+      "--headless=new",
+      "--disable-gpu",
+      "--no-sandbox",
+      "--no-pdf-header-footer",
+      `--print-to-pdf=${out}`,
+      `http://127.0.0.1:${port}${page}`,
+    ]);
+    console.log(`Wrote ${out}`);
+  }
 } finally {
   server.close();
 }

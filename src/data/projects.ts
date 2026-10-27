@@ -245,7 +245,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "platt-commercial-platform",
+    slug: "benker",
     title: "BENKER Commercial Platform",
     subtitle:
       "Pre-production platform for a heavy-civil-works estimating business: organisations, studies, quotations, approvals, outcomes, and marketing eligibility on one identity layer",
@@ -674,7 +674,7 @@ export const projects: Project[] = [
     ],
   },
   {
-    slug: "platt-commercial-ops",
+    slug: "benker-ops",
     title: "BENKER Ops MCP Servers",
     subtitle:
       "Model Context Protocol servers giving agents read-only Drive and Gmail access, and a separate gated send server, for the commercial platform",
@@ -698,9 +698,9 @@ export const projects: Project[] = [
         id: "packages",
         title: "Packages",
         bullets: [
-          "platt_common: shared auth and client helpers.",
-          "platt_drive_ro and platt_gmail_ro: read-only servers.",
-          "platt_gmail_send: the only package that can send, registered separately.",
+          "A common package: shared auth and client helpers.",
+          "Drive read-only and Gmail read-only: two separate servers.",
+          "Gmail send: the only package that can send, registered separately.",
         ],
       },
     ],

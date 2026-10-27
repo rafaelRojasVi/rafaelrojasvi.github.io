@@ -11,6 +11,8 @@ export const GET: APIRoute = () => {
 
 - [CV (Markdown)](${SITE}/cv.md): full CV as plain Markdown
 - [CV (PDF)](${SITE}/cv/Rafael_Rojas_CV_EN.pdf): the same CV as a two-page PDF
+- [CV en español (Markdown)](${SITE}/cv/es.md): the CV in Spanish
+- [CV en español (PDF)](${SITE}/cv/Rafael_Rojas_CV_ES.pdf): the Spanish CV as a PDF
 
 ## Work
 

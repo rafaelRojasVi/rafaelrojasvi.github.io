@@ -1,0 +1,12 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import CvDocument from "@/components/CvDocument.astro";
+import { cvEs } from "@/data/cv";
+
+const description =
+  "CV de Rafael Rojas, ingeniero de software backend en Valdivia, Chile: CTO de OrigenLab y BENKER, plataforma geoespacial de Campo Digital. Descarga en PDF o lee en Markdown.";
+---
+
+<BaseLayout title="CV en español" description={description} lang="es">
+  <CvDocument cv={cvEs} />
+</BaseLayout>
