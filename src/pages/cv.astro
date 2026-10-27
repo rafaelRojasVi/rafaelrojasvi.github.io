@@ -1,0 +1,423 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { cv, SITE } from "@/data/cv";
+
+const title = "CV";
+const description =
+  "CV of Rafael Rojas, backend software engineer in Valdivia, Chile: CTO of OrigenLab and BENKER, Campo Digital geospatial platform. Download as PDF or read as Markdown.";
+
+const pdfHref = "/cv/Rafael_Rojas_CV_EN.pdf";
+const updated = new Date().toLocaleDateString("en-GB", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+// Links are printed without the protocol so they survive printing and parsing.
+const bare = (href: string) => href.replace(/^https?:\/\/(www\.)?/, "");
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: cv.name,
+  jobTitle: cv.title,
+  email: `mailto:${cv.email}`,
+  url: SITE,
+  address: { "@type": "PostalAddress", addressLocality: "Valdivia", addressCountry: "CL" },
+  sameAs: cv.links.filter((l) => l.href !== SITE).map((l) => l.href),
+  alumniOf: { "@type": "CollegeOrUniversity", name: "University of Westminster" },
+  worksFor: cv.experience
+    .filter((r) => r.dates.endsWith("Present"))
+    .map((r) => ({ "@type": "Organization", name: r.org })),
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <div class="cv-toolbar page flex flex-wrap items-center justify-between gap-4 pt-8 sm:pt-10">
+    <p class="meta">Updated {updated}</p>
+    <div class="flex flex-wrap gap-3">
+      <a class="btn-solid" href={pdfHref} download>Download PDF</a>
+      <a class="btn" href="/cv.md">Markdown</a>
+    </div>
+  </div>
+
+  <article class="cv page mt-8 sm:mt-10" aria-labelledby="cv-name">
+    <header class="cv-masthead">
+      <div class="flex items-start justify-between gap-6">
+        <h1 id="cv-name" class="cv-name display">{cv.name}</h1>
+        <span class="cv-mark" aria-hidden="true"></span>
+      </div>
+      <p class="cv-role">
+        {cv.title}<span class="cv-sep"> · </span>{cv.location}<span class="cv-sep"> · </span>{cv.availability}
+      </p>
+      <ul class="cv-contact">
+        <li><a href={`mailto:${cv.email}`}>{cv.email}</a></li>
+        {cv.links.map((l) => <li><a href={l.href}>{bare(l.href)}</a></li>)}
+      </ul>
+    </header>
+
+    <section class="cv-section" aria-labelledby="cv-summary">
+      <h2 id="cv-summary" class="cv-label">Summary</h2>
+      <p class="cv-summary">{cv.summary}</p>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-expertise">
+      <h2 id="cv-expertise" class="cv-label">Domain expertise</h2>
+      <dl class="cv-skills cv-expertise">
+        {
+          cv.expertise.map((x) => (
+            <div>
+              <dt>{x.area}</dt>
+              <dd>{x.detail}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-experience">
+      <h2 id="cv-experience" class="cv-label">Experience</h2>
+      <ol class="cv-list">
+        {
+          cv.experience.map((r) => (
+            <li class="cv-role-item">
+              <div class="cv-row">
+                <h3 class="cv-heading">
+                  {r.title}, <span class="cv-org">{r.org}</span>
+                </h3>
+                <p class="cv-dates">{r.dates}</p>
+              </div>
+              <p class="cv-context">
+                {r.context} <span class="cv-where">{r.location}.</span>
+              </p>
+              <ul class="cv-bullets">
+                {r.bullets.map((b) => <li>{b}</li>)}
+              </ul>
+              {r.caseStudy && (
+                <p class="cv-evidence">
+                  Case study: <a href={r.caseStudy}>{bare(SITE + r.caseStudy)}</a>
+                </p>
+              )}
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-projects">
+      <h2 id="cv-projects" class="cv-label">Projects</h2>
+      <ul class="cv-list">
+        {
+          cv.projects.map((p) => (
+            <li class="cv-role-item">
+              <div class="cv-row">
+                <h3 class="cv-heading">
+                  {p.name}, <span class="cv-org">{p.stack}</span>
+                </h3>
+              </div>
+              <p class="cv-context">{p.summary}</p>
+              <p class="cv-evidence">
+                <a href={p.href}>{bare(SITE + p.href)}</a>
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-education">
+      <h2 id="cv-education" class="cv-label">Education</h2>
+      <ul class="cv-list">
+        {
+          cv.education.map((e) => (
+            <li class="cv-role-item">
+              <div class="cv-row">
+                <h3 class="cv-heading">
+                  {e.degree}, <span class="cv-org">{e.school}</span>
+                </h3>
+                <p class="cv-dates">{e.dates}</p>
+              </div>
+              {e.detail && <p class="cv-context">{e.detail}</p>}
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-skills">
+      <h2 id="cv-skills" class="cv-label">Skills</h2>
+      <dl class="cv-skills">
+        {
+          cv.skills.map((s) => (
+            <div>
+              <dt>{s.group}</dt>
+              <dd>{s.items}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <section class="cv-section" aria-labelledby="cv-languages">
+      <h2 id="cv-languages" class="cv-label">Languages</h2>
+      <p class="cv-context">{cv.languages}</p>
+    </section>
+
+    <footer class="cv-colophon">
+      Generated from {bare(SITE)}/cv, updated {updated}. Plain-text version for software and agents: {bare(SITE)}/cv.md
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+  /* One column in reading order, so parsers and screen readers meet the
+     content in the same order people do. The label column is visual only. */
+  .cv,
+  .cv-toolbar {
+    max-width: 60rem;
+  }
+  .cv-expertise {
+    @apply space-y-3 sm:space-y-2;
+  }
+  .cv-masthead {
+    @apply border-t-2 border-ink pt-6;
+  }
+  .cv-name {
+    font-size: clamp(2.75rem, 8vw, 5.25rem);
+    font-stretch: 112%;
+  }
+  .cv-mark {
+    @apply mt-2 block h-6 w-6 shrink-0 bg-accent sm:h-8 sm:w-8;
+  }
+  .cv-role {
+    @apply mt-4 text-lg font-medium text-ink sm:text-xl;
+  }
+  .cv-sep {
+    @apply text-ink-faint;
+  }
+  .cv-contact {
+    @apply mt-3 flex flex-wrap gap-x-6 gap-y-1 font-mono text-[13px] text-ink-muted;
+  }
+  .cv-contact a,
+  .cv-evidence a {
+    @apply underline decoration-ink/30 underline-offset-[3px] transition-colors hover:text-accent hover:decoration-accent;
+  }
+
+  .cv-section {
+    @apply mt-10 border-t border-ink pt-4 sm:grid sm:grid-cols-[9rem_1fr] sm:gap-x-8;
+  }
+  .cv-label {
+    @apply font-mono text-[11px] uppercase tracking-meta text-ink-muted sm:pt-1;
+  }
+  .cv-summary {
+    @apply mt-3 max-w-prose text-pretty text-base leading-[1.6] text-ink sm:mt-0;
+  }
+
+  .cv-list {
+    @apply mt-3 sm:mt-0;
+  }
+  .cv-role-item + .cv-role-item {
+    @apply mt-6 border-t border-line pt-6;
+  }
+  .cv-row {
+    @apply flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6;
+  }
+  .cv-heading {
+    @apply text-lg font-medium leading-snug tracking-tight text-ink;
+  }
+  .cv-org {
+    @apply font-normal text-ink-muted;
+  }
+  .cv-dates {
+    @apply shrink-0 whitespace-nowrap font-mono text-[13px] tabular-nums text-ink-muted;
+  }
+  .cv-context {
+    @apply mt-1 max-w-prose text-pretty text-[15px] leading-[1.55] text-ink-muted;
+  }
+  .cv-where {
+    @apply text-ink-faint;
+  }
+  .cv-bullets {
+    @apply mt-3 space-y-1.5;
+  }
+  .cv-bullets li {
+    @apply relative max-w-prose pl-4 text-pretty text-[15px] leading-[1.55] text-ink;
+  }
+  .cv-bullets li::before {
+    content: "";
+    @apply absolute left-0 top-[0.62em] h-[5px] w-[5px] bg-accent;
+  }
+  .cv-evidence {
+    @apply mt-3 font-mono text-[12px] text-ink-muted;
+  }
+
+  .cv-skills {
+    @apply mt-3 space-y-1.5 sm:mt-0;
+  }
+  .cv-skills div {
+    @apply sm:grid sm:grid-cols-[11rem_1fr] sm:gap-x-4;
+  }
+  .cv-skills dt {
+    @apply text-[15px] font-medium text-ink;
+  }
+  .cv-skills dd {
+    @apply text-[15px] leading-[1.55] text-ink-muted;
+  }
+
+  .cv-colophon {
+    @apply mt-12 border-t border-line pt-4 font-mono text-[11px] text-ink-faint;
+  }
+
+  /* Print sizing lives here, not in the global block, so it outranks the
+     scoped screen rules above. Points keep the PDF at two pages. */
+  @media print {
+    .cv-toolbar {
+      display: none;
+    }
+    .cv {
+      max-width: none;
+      margin: 0;
+      padding: 0;
+      font-stretch: 94%;
+    }
+    .cv-masthead {
+      padding-top: 8pt;
+    }
+    .cv-name {
+      font-size: 28pt;
+    }
+    .cv-mark {
+      width: 13pt;
+      height: 13pt;
+      margin-top: 4pt;
+    }
+    .cv-role {
+      margin-top: 5pt;
+      font-size: 11pt;
+    }
+    .cv-contact {
+      margin-top: 3pt;
+      font-size: 7.8pt;
+      column-gap: 14pt;
+    }
+    .cv-section {
+      display: grid;
+      grid-template-columns: 5.6rem 1fr;
+      column-gap: 14pt;
+      margin-top: 10pt;
+      padding-top: 4pt;
+      font-size: 8.6pt;
+    }
+    .cv-label,
+    .cv-dates,
+    .cv-evidence {
+      font-size: 7.2pt;
+    }
+    .cv-label {
+      padding-top: 1.5pt;
+    }
+    .cv-summary,
+    .cv-context,
+    .cv-bullets li,
+    .cv-skills dt,
+    .cv-skills dd {
+      max-width: none;
+      font-size: 8.6pt;
+      line-height: 1.38;
+    }
+    .cv-summary,
+    .cv-list,
+    .cv-skills {
+      margin-top: 0;
+    }
+    .cv-heading {
+      font-size: 9.6pt;
+    }
+    .cv-row {
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12pt;
+      break-after: avoid;
+    }
+    .cv-context {
+      margin-top: 1pt;
+    }
+    .cv-bullets {
+      margin-top: 3pt;
+    }
+    .cv-bullets li {
+      padding-left: 9pt;
+    }
+    .cv-bullets li + li {
+      margin-top: 1.5pt;
+    }
+    .cv-bullets li::before {
+      width: 3.5pt;
+      height: 3.5pt;
+    }
+    .cv-evidence {
+      margin-top: 3pt;
+    }
+    .cv-role-item + .cv-role-item {
+      margin-top: 7pt;
+      padding-top: 6pt;
+    }
+    .cv-skills > div + div {
+      margin-top: 1.5pt;
+    }
+    /* Label and text on one line: a two-column grid would make PDF text
+       extraction read every label first and every description after. */
+    .cv-skills div {
+      display: block;
+    }
+    .cv-skills dt,
+    .cv-skills dd {
+      display: inline;
+    }
+    .cv-skills dt::after {
+      content: ". ";
+    }
+    .cv-bullets li,
+    .cv-context,
+    .cv-skills div {
+      break-inside: avoid;
+    }
+    .cv-colophon {
+      margin-top: 10pt;
+      padding-top: 4pt;
+      font-size: 6.8pt;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+</style>
+
+<style is:global>
+  /* Print: A4, ink on white, no site chrome. */
+  @page {
+    size: A4;
+    margin: 11mm 13mm;
+  }
+  @media print {
+    :root {
+      --c-surface: 255 255 255;
+      --c-ink: 17 17 17;
+      --c-ink-muted: 60 60 58;
+      --c-ink-faint: 105 105 101;
+      --c-accent: 207 42 33;
+    }
+    body > header,
+    body > footer,
+    body > a[href="#main-content"] {
+      display: none !important;
+    }
+    body {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+</style>
