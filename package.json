@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "sync:github": "node scripts/sync-github.mjs"
+    "sync:github": "node scripts/sync-github.mjs",
+    "cv:pdf": "astro build && node scripts/build-cv-pdf.mjs"
   },
   "dependencies": {
     "@astrojs/tailwind": "^5.1.4",

@@ -98,7 +98,7 @@ Outside engineering I read, write, and pay attention to art and music. That most
       "Company knowledge gets the discipline of code: one owner per truth, provenance on every claim, recorded unknowns, and a validator that fails the build when the documents drift. The language model is not the memory. Git is. Outbound email, payments and migrations keep a person in the loop and tests on the fragile paths.",
     ],
     links: [
-      { label: "BENKER Ops MCP Servers", href: "/projects/platt-commercial-ops" },
+      { label: "BENKER Ops MCP Servers", href: "/projects/benker-ops" },
       { label: "NewDev company knowledge base", href: "/projects/newdev-company-knowledge" },
     ],
   },

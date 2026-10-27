@@ -9,6 +9,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   site: "https://rafaelrojasvi.github.io",
   integrations: [tailwind()],
+  // Old project URLs, kept working for links already shared (LinkedIn media).
+  redirects: {
+    "/projects/platt-commercial-platform": "/projects/benker",
+    "/projects/platt-commercial-ops": "/projects/benker-ops",
+  },
   vite: {
     resolve: {
       alias: {
